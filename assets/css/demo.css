@@ -105,3 +105,7 @@
   text-align: center;
   margin-top: 1rem;
 }
+
+.wider-menu {
+  width: 250px; /* Change this value to your desired width */
+}
