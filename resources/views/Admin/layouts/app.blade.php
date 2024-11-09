@@ -209,6 +209,27 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url('/backoffice/drivers') }}">Manage Drivers</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/backoffice/mahasiswa') }}">Mahasiswa</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/backoffice/department') }}">Department</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/backoffice/fakultas') }}">Fakultas</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/backoffice/kelas') }}">Kelas</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/backoffice/violation_type') }}">Violation Types</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/backoffice/violation_level') }}">Violation Levels</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/backoffice/notification') }}">Notifications</a>
+                                </li>
                             </ul>
                         </div>
                     </li>
