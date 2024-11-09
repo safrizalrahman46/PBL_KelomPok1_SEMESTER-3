@@ -13,29 +13,63 @@
         rel="stylesheet">
 
     <style>
-/* Enhanced background text styling for JTI POLINEMA */
-body::before {
-    content: "JTI POLINEMA";
-    position: absolute;
-    font-size: 10em; /* Adjust size to fit your layout */
-    color: rgba(0, 0, 0, 0.08); /* Slightly darker for better visibility */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-weight: bold;
-    letter-spacing: 0.1em;
-    white-space: nowrap;
-    z-index: 0;
-    -webkit-text-stroke: 2px rgba(0, 0, 0, 0.3); /* Thicker outline for visibility */
-    color: transparent; /* Keeps the fill transparent */
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
-}
+        /* Set up background with repeated "JTI POLINEMA" text */
+        body {
+            background-color: #ffffff;
+            /* Background color */
+            font-family: 'Your Font Family', sans-serif;
+            font-size: 2em;
+            /* Adjust font size for the background text */
+            font-weight: bold;
 
-/* Ensure container content appears above the background text */
-.container {
-    position: relative;
-    z-index: 1;
-}
+            /* Background image with text "JTI POLINEMA" in repeating pattern */
+            background-image:
+                url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22 viewBox=%220%200%20100%20100%22%3E%3Ctext x=%2210%22 y=%2210%22 font-family=%22Your%20Font%20Family%22 font-size=%2210%22 fill=%22rgba(0,0,0,0.08)%22%3EJTI%20POLINEMA%3C/text%3E%3C/svg%3E');
+            background-repeat: repeat;
+            /* Repeat the text background */
+            background-size: 100px 100px;
+            /* Ensure proper text size and repetition */
+            background-position: top left;
+        }
+
+        /* Container styling to ensure main content appears on top */
+        .container {
+            position: relative;
+            z-index: 1;
+            background-color: rgba(255, 255, 255, 0.9);
+            /* Slight background to distinguish content */
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        /* Enhanced background text styling for JTI POLINEMA */
+        body::before {
+            content: "JTI POLINEMA";
+            position: absolute;
+            font-size: 10em;
+            /* Adjust size to fit your layout */
+            color: rgba(0, 0, 0, 0.08);
+            /* Slightly darker for better visibility */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+            letter-spacing: 0.1em;
+            white-space: nowrap;
+            z-index: 0;
+            -webkit-text-stroke: 2px rgba(0, 0, 0, 0.3);
+            /* Thicker outline for visibility */
+            color: transparent;
+            /* Keeps the fill transparent */
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+            /* Soft shadow for depth */
+        }
+
+        /* Ensure container content appears above the background text */
+        .container {
+            position: relative;
+            z-index: 1;
+        }
 
         body {
             font-family: 'Questrial', sans-serif;
@@ -53,8 +87,10 @@ body::before {
         body::before {
             content: "JTI POLINEMA";
             position: absolute;
-            font-size: 8em; /* Adjust size as needed */
-            color: rgba(0, 0, 0, 0.05); /* Light opacity for subtle background text */
+            font-size: 8em;
+            /* Adjust size as needed */
+            color: rgba(0, 0, 0, 0.05);
+            /* Light opacity for subtle background text */
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -72,8 +108,10 @@ body::before {
             max-width: 900px;
             background-color: white;
             position: relative;
-            z-index: 1; /* Ensure container content appears over the background text */
+            z-index: 1;
+            /* Ensure container content appears over the background text */
         }
+
         body {
             font-family: 'Questrial', sans-serif;
             display: flex;
@@ -115,8 +153,10 @@ body::before {
         }
 
         .phone-image img {
-            max-width: 300%; /* Increase this percentage for larger size */
-            width: 300px; /* Set a fixed width if needed */
+            max-width: 300%;
+            /* Increase this percentage for larger size */
+            width: 300px;
+            /* Set a fixed width if needed */
             height: auto;
         }
 
@@ -282,19 +322,19 @@ body::before {
             </div>
         </div>
         <div class="right-section">
-            <h2>JTI POLINEMA MELAPOR</h2>
+            <h2>JTI - POLINEMA REPORTS</h2>
 
             @if (session()->has('success'))
-            <div class="alert alert-success">
-                {{ session()->get('success') }}
-            </div>
+                <div class="alert alert-success">
+                    {{ session()->get('success') }}
+                </div>
             @endif
 
 
             @error('error')
-            <div class="alert alert-danger">
-                <strong class="text-danger">{{ $message }}</strong>
-            </div>
+                <div class="alert alert-danger">
+                    <strong class="text-danger">{{ $message }}</strong>
+                </div>
             @enderror
 
 
@@ -306,7 +346,7 @@ body::before {
                     <input type="text" id="email" name="email" value="{{ old('email') }}"
                         placeholder="Enter your email">
                     @if ($errors->has('email'))
-                    <span class="text-danger">{{ $errors->first('email') }}</span>
+                        <span class="text-danger">{{ $errors->first('email') }}</span>
                     @endif
                 </div>
                 <div class="input-group">
@@ -314,7 +354,7 @@ body::before {
                     <input type="password" id="password" name="password" value="{{ old('password') }}"
                         placeholder="Enter your password">
                     @if ($errors->has('password'))
-                    <span class="text-danger">{{ $errors->first('password') }}</span>
+                        <span class="text-danger">{{ $errors->first('password') }}</span>
                     @endif
                 </div>
                 <button type="submit">Sign In</button>

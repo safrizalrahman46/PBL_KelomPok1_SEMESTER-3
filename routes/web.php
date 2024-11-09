@@ -39,7 +39,7 @@ Route::any('/backoffice/proses_login', [AuthController::class, 'prosesLogin'])->
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/logout', [AuthController::class, 'signout'])->name('signout');
-    Route::post('/logout', [AuthController::class, 'signout'])->name('signout');
+    Route::post('/logout', action: [AuthController::class, 'signout'])->name('signout');
     // ////Masyer Jenis Transaksi
 
     Route::prefix('backoffice')->group(function () {
