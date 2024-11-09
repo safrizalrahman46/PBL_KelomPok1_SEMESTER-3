@@ -127,7 +127,191 @@
                 </button>
             </div>
         </nav>
+        {{--  New  --}}
         <div class="container-fluid page-body-wrapper">
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/dashboard') }}">
+                            <i class="icon-grid menu-icon"></i>
+                            <span class="menu-title">Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#masterData" aria-expanded="false" aria-controls="masterData">
+                            <i class="icon-book menu-icon"></i>
+                            <span class="menu-title">Master Data</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="masterData">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/backoffice/admins') }}">Admin</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/backoffice/dosen') }}">Dosen</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/backoffice/mahasiswa') }}">Mahasiswa</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/backoffice/department') }}">Department</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/backoffice/fakultas') }}">Fakultas</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/backoffice/kelas') }}">Kelas</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/backoffice/violation_type') }}">Violation Types</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/backoffice/violation_level') }}">Violation Levels</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/backoffice/notification') }}">Notifications</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#penaltyManagement" aria-expanded="false" aria-controls="penaltyManagement">
+                            <i class="icon-book menu-icon"></i>
+                            <span class="menu-title">Penalty Management</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="penaltyManagement">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/backoffice/pelanggaran_mahasiswa') }}">Student Violations</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/backoffice/komisi_discipline_decision') }}">Discipline Decisions</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#userManagement" aria-expanded="false" aria-controls="userManagement">
+                            <i class="fas fa-users menu-icon"></i>
+                            <span class="menu-title">User  Management</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="userManagement">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/backoffice/users') }}">Manage Users</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/backoffice/drivers') }}">Manage Drivers</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#rewardManagement" aria-expanded="false" aria-controls="rewardManagement">
+                            <i class="fas fa-gift menu-icon"></i>
+                            <span class="menu-title">Reward Management</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="rewardManagement">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/backoffice/reward_points') }}">Reward Points</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/backoffice/reward_archive') }}">Reward Archive</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#reports" aria-expanded="false" aria-controls="reports">
+                            <i class="icon-paper menu-icon"></i>
+                            <span class="menu-title">Reports</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="reports">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/backoffice/violation_report') }}">Violation Reports</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/backoffice/admin_task_log') }}">Admin Task Logs</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#dpaManagement" aria-expanded="false" aria-controls="dpaManagement">
+                            <i class="icon-user menu-icon"></i>
+                            <span class="menu-title">DPA Management</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="dpaManagement">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/backoffice/dpa') }}">DPA List</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#disciplineCommittee" aria-expanded="false" aria-controls="disciplineCommittee">
+                            <i class="icon-shield menu-icon"></i>
+                            <span class="menu-title">Discipline Committee</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="disciplineCommittee">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/backoffice/komite_disiplin_mahasiswa') }}">Committee Members</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#settings" aria-expanded="false" aria-controls="settings">
+                            <i class="icon-cog menu-icon"></i>
+                            <span class="menu-title">Settings</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="settings">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/backoffice/system_settings') }}">System Settings</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                </ul>
+            </nav>
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    @yield('content')
+                </div>
+                <footer class="footer">
+                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright ©
+                            2024 By Tommy Kreatif</span>
+                    </div>
+                </footer>
+            </div>
+        </div>
+
+        {{--  OLD  --}}
+
+        {{--  <div class="container-fluid page-body-wrapper">
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
@@ -330,23 +514,6 @@
                             </ul>
                         </div>
                     </li>
-                    {{--  <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#systemLogs" aria-expanded="false" aria-controls="systemLogs">
-                            <i class="icon-paper menu-icon"></i>
-                            <span class="menu-title">System Logs</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="collapse" id="systemLogs">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('/backoffice/laporan-gaji') }}">Failed Jobs</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('/backoffice/laporan-gaji') }}">Migrations</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>  --}}
 
 
 
@@ -365,7 +532,10 @@
                     </div>
                 </footer>
             </div>
-        </div>
+        </div>  --}}
+
+
+
     </div>
 
     <script>

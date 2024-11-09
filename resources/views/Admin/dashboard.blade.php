@@ -6,7 +6,7 @@
 <div class="row">
     <div class="col-md-12">
         <h3 class="font-weight-bold">Welcome, {{ Auth::user()->name }}</h3>
-        <h6 class="font-weight-normal mb-4">This dashboard represents current data on our Rental (Bot Rental)</h6>
+        <h6 class="font-weight-normal mb-4">This dashboard represents current data on our Violation Report</h6>
     </div>
 </div>
 
@@ -73,7 +73,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Favorite Rent Cars for {{ date('M Y') }}</h4>
+                <h4 class="card-title">Task Admin Log {{ date('M Y') }}</h4>
                 <div class="row">
                     <!-- Pie Chart -->
                     <div class="col-md-6">
