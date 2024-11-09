@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bot Rental Apps</title>
-    <link rel="shortcut icon" href="{{ asset('/public/') }}/logo2.png" />
+    <link rel="shortcut icon" href="{{ asset('/public/') }}/POLINEMA-LOGO.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -13,6 +13,67 @@
         rel="stylesheet">
 
     <style>
+/* Enhanced background text styling for JTI POLINEMA */
+body::before {
+    content: "JTI POLINEMA";
+    position: absolute;
+    font-size: 10em; /* Adjust size to fit your layout */
+    color: rgba(0, 0, 0, 0.08); /* Slightly darker for better visibility */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    z-index: 0;
+    -webkit-text-stroke: 2px rgba(0, 0, 0, 0.3); /* Thicker outline for visibility */
+    color: transparent; /* Keeps the fill transparent */
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+}
+
+/* Ensure container content appears above the background text */
+.container {
+    position: relative;
+    z-index: 1;
+}
+
+        body {
+            font-family: 'Questrial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f8f9fa;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Background text styling */
+        body::before {
+            content: "JTI POLINEMA";
+            position: absolute;
+            font-size: 8em; /* Adjust size as needed */
+            color: rgba(0, 0, 0, 0.05); /* Light opacity for subtle background text */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+            z-index: 0;
+            font-weight: bold;
+        }
+
+        .container {
+            display: flex;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            width: 80%;
+            max-width: 900px;
+            background-color: white;
+            position: relative;
+            z-index: 1; /* Ensure container content appears over the background text */
+        }
         body {
             font-family: 'Questrial', sans-serif;
             display: flex;
@@ -54,9 +115,11 @@
         }
 
         .phone-image img {
-            max-width: 100%;
+            max-width: 300%; /* Increase this percentage for larger size */
+            width: 300px; /* Set a fixed width if needed */
             height: auto;
         }
+
 
         .right-section {
             display: flex;
@@ -215,11 +278,11 @@
     <div class="container">
         <div class="left-section">
             <div class="phone-image">
-                <img src="{{ asset('public/logo.png') }}" alt="Phone" height="200" width="200">
+                <img src="{{ asset('public/POLINEMA-LOGO.png') }}" alt="Phone" height="200" width="200">
             </div>
         </div>
         <div class="right-section">
-            <h2>Bot Rental - Management</h2>
+            <h2>JTI POLINEMA MELAPOR</h2>
 
             @if (session()->has('success'))
             <div class="alert alert-success">

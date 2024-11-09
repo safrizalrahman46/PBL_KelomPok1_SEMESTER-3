@@ -86,7 +86,7 @@ class AuthController extends Controller
     {
         FacadesSession::flush();
         Auth::logout();
-        return Redirect('/backoffice/login');
+        return Redirect('/');
     }
 
 }

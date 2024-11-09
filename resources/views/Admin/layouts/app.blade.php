@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{{ asset('public/template/') }}/css/vertical-layout-light/style.css">
     <link rel="stylesheet"
         href="{{ asset('public/template/') }}/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
-    <link rel="shortcut icon" href="{{ asset('public//') }}/logo.png" />
+    <link rel="shortcut icon" href="{{ asset('public//') }}/POLINEMA-LOGO.png" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -81,10 +81,10 @@
         <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
                 <a class="navbar-brand brand-logo mr-5" href="{{ url('/') }}">
-                    <img src="{{ asset('public/logo2.png') }}" class="mr-2" alt="logo" />
+                    <img src="{{ asset('public/POLINEMA-LOGO.png') }}" class="mr-2" alt="logo" />
                 </a>
                 <a class="navbar-brand brand-logo-mini" href="{{ url('/') }}">
-                    <img src="{{ asset('public/logo2.png') }}" alt="logo" />
+                    <img src="{{ asset('public/POLINEMA-LOGO.png') }}" alt="logo" />
                 </a>
             </div>
             <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
@@ -198,20 +198,20 @@
                     </li>
 
                     <li class="nav-item">
-<<<<<<< HEAD
+
                         <a class="nav-link" data-toggle="collapse" href="#deliveryCharges" aria-expanded="false" aria-controls="deliveryCharges">
                             <i class="fas fa-truck "></i>
-=======
+
                         <a class="nav-link" data-toggle="collapse" href="#deliveryCharges" aria-expanded="false"
                             aria-controls="deliveryCharges">
                             <i class="icon-paper menu-icon"></i>
->>>>>>> 29310d3ed2dc48e20029383bb1011b91b54d7a37
+
                             <span class="menu-title">Delivery & Pickup Charges</span>
                             <i class="menu-arrow"></i>
                         </a>
                         <div class="collapse" id="deliveryCharges">
 
-<<<<<<< HEAD
+
                                 <ul class="nav flex-column sub-menu">
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ url('/backoffice/Delivery-pickup-charges') }}"> Delivery Pickup Charges</a>
@@ -231,8 +231,7 @@
                             <i class="menu-arrow"></i>
                         </a>
                         <div class="collapse" id="tourPackages">
-=======
->>>>>>> 29310d3ed2dc48e20029383bb1011b91b54d7a37
+
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url('/backoffice/Delivery-pickup-charges') }}">
@@ -247,14 +246,14 @@
                     </li>
 
                     <li class="nav-item">
-<<<<<<< HEAD
+
                         <a class="nav-link" data-toggle="collapse" href="#areaZones" aria-expanded="false" aria-controls="areaZones">
                             <i class="fas fa-map-marker-alt menu-icon"></i>
-=======
+
                         <a class="nav-link" data-toggle="collapse" href="#areaZones" aria-expanded="false"
                             aria-controls="areaZones">
                             <i class="icon-paper menu-icon"></i>
->>>>>>> 29310d3ed2dc48e20029383bb1011b91b54d7a37
+
                             <span class="menu-title">Area Zones</span>
                             <i class="menu-arrow"></i>
                         </a>
@@ -267,7 +266,7 @@
                         </div>
                     </li>
 
-<<<<<<< HEAD
+
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="collapse" href="#promotions" aria-expanded="false" aria-controls="promotions">
                             <i class="fas fa-gift menu-icon"></i>
@@ -286,14 +285,14 @@
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="collapse" href="#userManagement" aria-expanded="false" aria-controls="userManagement">
                             <i class="fas fa-users menu-icon"></i>
-=======
+
 
 
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="collapse" href="#userManagement" aria-expanded="false"
                             aria-controls="userManagement">
                             <i class="icon-paper menu-icon"></i>
->>>>>>> 29310d3ed2dc48e20029383bb1011b91b54d7a37
+
                             <span class="menu-title">User Management</span>
                             <i class="menu-arrow"></i>
                         </a>
@@ -313,7 +312,7 @@
                             </ul>
                         </div>
                     </li>
-<<<<<<< HEAD
+
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="collapse" href="#Deposit" aria-expanded="false" aria-controls="Deposit">
                             <i class="fas fa-wallet menu-icon"></i>
@@ -352,9 +351,6 @@
 
 
 
-
-=======
->>>>>>> 29310d3ed2dc48e20029383bb1011b91b54d7a37
 
                 </ul>
             </nav>
