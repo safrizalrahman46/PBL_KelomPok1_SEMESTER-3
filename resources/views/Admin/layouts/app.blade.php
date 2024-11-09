@@ -251,7 +251,7 @@
 
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="collapse" href="#dpaManagement" aria-expanded="false" aria-controls="dpaManagement">
-                            <i class="icon-user menu-icon"></i>
+                            <i class="fas fa-user-graduate menu-icon"></i>
                             <span class="menu-title">DPA Management</span>
                             <i class="menu-arrow"></i>
                         </a>
@@ -266,7 +266,7 @@
 
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="collapse" href="#disciplineCommittee" aria-expanded="false" aria-controls="disciplineCommittee">
-                            <i class="icon-shield menu-icon"></i>
+                            <i class="fas fa-user-shield menu-icon"></i>
                             <span class="menu-title">Discipline Committee</span>
                             <i class="menu-arrow"></i>
                         </a>
