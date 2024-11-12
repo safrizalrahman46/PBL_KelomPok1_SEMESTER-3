@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Web CarRentalApp</title>
+    <title>Web Report Violation</title>
     <!-- Core CSS and JS -->
     <link rel="stylesheet" href="{{ asset('public/template/') }}/vendors/feather/feather.css">
     <link rel="stylesheet" href="{{ asset('public/template/') }}/vendors/ti-icons/css/themify-icons.css">
