@@ -13,5 +13,5 @@ $koneksi = new mysqli($servername, $username, $password, $dbname);
 //     echo "Koneksi Sukses";
 // }
 
-// $sql = "SELECT * FROM users"; 
+// $sql = "SELECT * FROM users
 ?>
