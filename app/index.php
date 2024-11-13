@@ -30,7 +30,7 @@
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <?php include('dashboard.php');?>
+    <?php include('data_mahasiswa.php');?>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
