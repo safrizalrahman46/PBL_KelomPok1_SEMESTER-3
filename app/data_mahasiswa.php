@@ -57,13 +57,13 @@
                   <?php }?>
                   </tbody>
                   <tfoot>
-                  <tr>
+                  <!-- <tr>
                     <th>Rendering engine</th>
                     <th>Browser</th>
                     <th>Platform(s)</th>
                     <th>Engine version</th>
                     <th>CSS grade</th>
-                  </tr>
+                  </tr> -->
                   </tfoot>
                 </table>
               </div>
