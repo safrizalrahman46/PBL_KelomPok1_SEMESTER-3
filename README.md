@@ -21,33 +21,14 @@ To set up the system locally, follow these steps:
 
 1. **Clone the Repository**:
     ```bash
-    git clone https://github.com/yourusername/sib-3g.git
+    git clone https://github.com/yourusername/sib-2g.git
     cd sib-3g
     ```
 
-2. **Install Dependencies**:
-    ```bash
-    composer install
-    npm install
-    ```
-
-3. **Set Up the Database**:
+2. **Set Up the Database**:
     - Create a new database named `tatib3`.
     - Import the provided SQL file to set up the database schema and initial data.
 
-4. **Configure Environment Variables**:
-    - Copy the `.env.example` file to `.env` and update the database credentials and other necessary configurations.
-
-5. **Run Migrations**:
-    ```bash
-    php artisan migrate
-    php artisan db:seed
-    ```
-
-6. **Start the Development Server**:
-    ```bash
-    php artisan serve
-    ```
 
 ## Usage
 - **Admin Panel**: Access the admin panel to manage users, view reports, and configure system settings.
@@ -69,4 +50,4 @@ For any questions or support, please contact the project maintainers at [email@e
 
 ---
 
-Thank you for using the Sistem Informasi Tata Tertib di Polinema (SIB 3G)! We hope this system helps in maintaining a disciplined and productive environment at Polinema.
+Thank you for using the Sistem Informasi Tata Tertib di Polinema (SIB 2G)! We hope this system helps in maintaining a disciplined and productive environment at Polinema.
