@@ -91,7 +91,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form >
+        <form method="get" action="add/tambah_data.php">
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="inputId">ID</label>
