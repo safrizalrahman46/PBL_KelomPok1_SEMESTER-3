@@ -93,10 +93,15 @@
 
       <form method="get" action="add/tambah_data.php">
 
-      <div class="modal-body">
-       
+        <div class="modal-body">
+
           <div class="form-row">
-          
+
+            <div class="form-group col-md-6">
+              <label for="inputId">No</label>
+              <input type="text" class="form-control" id="inputId" name="id" placeholder="ID">
+            </div>
+
             <div class="form-group col-md-6">
               <label for="inputName">Name</label>
               <input type="text" class="form-control" id="inputName" name="name" placeholder="Name">
@@ -115,7 +120,7 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="inputNIM">NIM</label>
-              <input type="text" class="form-control" id="inputNIM" name="NIM" placeholder="NIM" >
+              <input type="text" class="form-control" id="inputNIM" name="NIM" placeholder="NIM">
             </div>
             <div class="form-group col-md-6">
               <label for="inputUsername">Username</label>
@@ -139,23 +144,23 @@
             </div>
             <div class="form-group col-md-3">
               <label for="inputSemester">Semester</label>
-              <input type="number" class="form-control" id="inputSemester" name="semester" placeholder="Semester" >
+              <input type="number" class="form-control" id="inputSemester" name="semester" placeholder="Semester">
             </div>
             <div class="form-group col-md-3">
               <label for="inputTingkat">Tingkat</label>
-              <input type="number" class="form-control" id="inputTingkat" name="tingkat" placeholder="Tingkat" >
+              <input type="number" class="form-control" id="inputTingkat" name="tingkat" placeholder="Tingkat">
             </div>
           </div>
 
-   
-
-      </div>
 
 
-      <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save changes</button>
-      </div>
+        </div>
+
+
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
     </div>
 
     </form>
