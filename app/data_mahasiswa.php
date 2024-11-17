@@ -21,7 +21,7 @@
                 <tr>
                   <th>No</th>
                   <th>Name</th>
-                  <th>Department ID</th>
+                  <th>Department</th>
                   <th>Email</th>
                   <th>NIM</th>
                   <th>Username</th>
@@ -37,14 +37,21 @@
               <tbody>
                 <?php
                 $no = 0;
-                $query = mysqli_query($koneksi, "SELECT * FROM mahasiswa");
+                $query = mysqli_query($koneksi, "
+                SELECT m.*, d.name AS department_name 
+                FROM mahasiswa m 
+                INNER JOIN department d 
+                ON m.department_id = d.id
+            ");
+                
+                // $query = mysqli_query($koneksi, "SELECT * FROM mahasiswa");
                 while ($mhs = mysqli_fetch_array($query)) {
                   $no++;
                 ?>
                   <tr>
                     <td width='5%'><?php echo $no; ?></td>
                     <td><?php echo $mhs['name']; ?></td>
-                    <td><?php echo $mhs['department_id']; ?></td>
+                    <td><?php echo $mhs['department_name']; ?></td>
                     <td><?php echo $mhs['email']; ?></td>
                     <td><?php echo $mhs['NIM']; ?></td>
                     <td><?php echo $mhs['username']; ?></td>
@@ -107,16 +114,36 @@
               <input type="text" class="form-control" id="inputName" name="name" placeholder="Name">
             </div>
           </div>
+
           <div class="form-row">
-            <div class="form-group col-md-6">
+            <!-- <div class="form-group col-md-6">
               <label for="inputDepartmentId">Department ID</label>
               <input type="text" class="form-control" id="inputDepartmentId" name="department_id" placeholder="Department ID">
-            </div>
+            </div> -->
+
+            <div class="form-group col-md-6">
+            <label for="inputDepartmentId">Department</label>
+            <select class="form-control" id="inputDepartmentId" name="department_id" required>
+              <option value="" disabled selected>Pilih Department</option>
+              <?php
+              include("../../conf/config.php");
+              $query = mysqli_query($koneksi, "SELECT * FROM department");
+              while ($dept = mysqli_fetch_array($query)) {
+                echo "<option value='{$dept['id']}'>{$dept['name']}</option>";
+              }
+              ?>
+            </select>
+          </div>
+
+
+
             <div class="form-group col-md-6">
               <label for="inputEmail">Email</label>
               <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Email">
             </div>
           </div>
+
+          
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="inputNIM">NIM</label>
