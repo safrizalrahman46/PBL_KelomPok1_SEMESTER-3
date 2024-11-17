@@ -96,10 +96,7 @@
       <div class="modal-body">
        
           <div class="form-row">
-            <!-- <div class="form-group col-md-6">
-              <label for="inputId">ID</label>
-              <input type="text" class="form-control" id="inputId" name="id" placeholder="ID" required>
-            </div> -->
+          
             <div class="form-group col-md-6">
               <label for="inputName">Name</label>
               <input type="text" class="form-control" id="inputName" name="name" placeholder="Name">
@@ -118,7 +115,7 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="inputNIM">NIM</label>
-              <input type="text" class="form-control" id="inputNIM" name="NIM" placeholder="NIM" required>
+              <input type="text" class="form-control" id="inputNIM" name="NIM" placeholder="NIM" >
             </div>
             <div class="form-group col-md-6">
               <label for="inputUsername">Username</label>
@@ -142,11 +139,11 @@
             </div>
             <div class="form-group col-md-3">
               <label for="inputSemester">Semester</label>
-              <input type="number" class="form-control" id="inputSemester" name="semester" placeholder="Semester" required>
+              <input type="number" class="form-control" id="inputSemester" name="semester" placeholder="Semester" >
             </div>
             <div class="form-group col-md-3">
               <label for="inputTingkat">Tingkat</label>
-              <input type="number" class="form-control" id="inputTingkat" name="tingkat" placeholder="Tingkat" required>
+              <input type="number" class="form-control" id="inputTingkat" name="tingkat" placeholder="Tingkat" >
             </div>
           </div>
 

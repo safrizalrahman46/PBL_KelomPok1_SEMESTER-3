@@ -11,8 +11,18 @@
 // echo "Semester: " . $semester . "<br>";
 // echo "Tingkat: " . $tingkat . "<br>";
 
+$name = $_GET['name'];
+$department_id = $_GET['department_id'];
+$email = $_GET['email'];
+$NIM = $_GET['NIM'];
+$username = $_GET['username'];
+$password = $_GET['password'];
+$total_violation_points = $_GET['total_violation_points'];
+$total_reward_points = $_GET['total_reward_points'];
+$semester = $_GET['semester'];
+$tingkat = $_GET['tingkat'];
 include("../../conf/config.php");
-$query = " ";
+$query = mysqli_query($koneksi, "INSERT INTO mahasiswa (id,name,department_id,email,NIM,username,password,total_violation_points,total_reward_points,semester,tingkat) VALUES('7', 'nadhif', '3', 'nadhif@gmail.com', '123456789', 'nadhif', 'penjagahati', '0', '0', '3', '2')");
 // echo  $_GET['name'];
 // echo  $_GET['department_id'];
 // echo  $_GET['email'];
@@ -25,14 +35,5 @@ $query = " ";
 // echo  $_GET['tingkat'];
 
 
-// $name = $_GET['name'];
-// $department_id = $_GET['department_id'];
-// $email = $_GET['email'];
-// $NIM = $_GET['NIM'];
-// $username = $_GET['username'];
-// $password = $_GET['password'];
-// $total_violation_points = $_GET['total_violation_points'];
-// $total_reward_points = $_GET['total_reward_points'];
-// $semester = $_GET['semester'];
-// $tingkat = $_GET['tingkat'];
+
 ?>
