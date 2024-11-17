@@ -12,6 +12,12 @@ Sistem Informasi Tata Tertib di Polinema (SIB 2G) is a comprehensive information
 
 ![App Screenshot](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrhotRdpL-DPOGJoCJpGkRnjXtURePL0CEDjkO0i7jEeW7rZmO5tHT2rdjJ4fMcOVjeo1SbFugiq-qBv17xoMmxqZA_j5iNaRQFOiFra7-fzDGHnbODkMe2Xm4If7BoYrN3MgSsEV6HMXTNaOMlbGqdJZOI2QUu8YAn6qG_JcTzB3vg5xBTAZ0kBrnnFoU/w601-h299/MAHASISWA%20FORM.png)
 
+![MAHASISWA FORM 2](https://github.com/user-attachments/assets/1602e865-c010-4173-be02-3995636002cb)
+
+## HASIL FITUR DOWNLOAD
+![FITUR DOWNLOAD EXCEL](https://github.com/user-attachments/assets/e6ddf0c9-05f8-45b1-9d21-366dc8bbea14)
+![FITUR DOWNLOAD PDF](https://github.com/user-attachments/assets/7b6d16b5-d727-49a7-805d-3278dcff05fe)
+
 ## Features
 - **User Management**: Manage different user roles such as students, faculty, staff, and administrators.
 - **Violation and Reward Points**: Track and manage violation and reward points for students.
