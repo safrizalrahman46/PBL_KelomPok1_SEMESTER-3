@@ -46,7 +46,7 @@ We welcome contributions from the community! To contribute, follow these steps:
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
 ## Contact
-For any questions or support, please contact the project maintainers at [email@example.com](mailto:email@example.com).
+For any questions or support, please contact the project maintainers at [email@example.com](mailto:safrrizalrahman46@gmail.com).
 
 ---
 
