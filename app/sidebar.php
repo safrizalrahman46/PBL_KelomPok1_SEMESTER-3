@@ -23,6 +23,13 @@
       </div>
 
       <!-- Sidebar Menu -->
-   <?php include('menu/superadmin.php');?>
+      <?php
+        if ($_SESSION['level'] == 'admin') {
+            include('menu/superadmin.php');
+        } else {
+            include('menu/operator.php');
+        }
+        ?>
+
       <!-- /.sidebar-menu -->
     </div>
