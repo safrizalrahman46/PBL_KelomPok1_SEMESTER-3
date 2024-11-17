@@ -11,16 +11,18 @@
 // echo "Semester: " . $semester . "<br>";
 // echo "Tingkat: " . $tingkat . "<br>";
 
-echo = $_GET['name'];
-echo = $_GET['department_id'];
-echo = $_GET['email'];
-echo = $_GET['NIM'];
-echo = $_GET['username'];
-echo = $_GET['password'];
-echo = $_GET['total_violation_points'];
-echo = $_GET['total_reward_points'];
-echo = $_GET['semester'];
-echo = $_GET['tingkat'];
+include("../../conf/config.php");
+$query = " ";
+// echo  $_GET['name'];
+// echo  $_GET['department_id'];
+// echo  $_GET['email'];
+// echo  $_GET['NIM'];
+// echo  $_GET['username'];
+// echo  $_GET['password'];
+// echo  $_GET['total_violation_points'];
+// echo  $_GET['total_reward_points'];
+// echo  $_GET['semester'];
+// echo  $_GET['tingkat'];
 
 
 // $name = $_GET['name'];
