@@ -60,7 +60,8 @@
                     <td><?php echo $mhs['total_reward_points']; ?></td>
                     <td><?php echo $mhs['semester']; ?></td>
                     <td><?php echo $mhs['tingkat']; ?></td>
-                    <td>X</td>
+                    <td><a href="delete/hapus_data.php?id=<?php echo $mhs['id']; ?>" class="btn btn-sm btn-danger">Hapus</a></td>
+
 
                   </tr>
 
