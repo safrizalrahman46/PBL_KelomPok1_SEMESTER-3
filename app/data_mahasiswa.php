@@ -90,8 +90,11 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+
+      <form method="get" action="add/tambah_data.php">
+
       <div class="modal-body">
-        <form method="get" action="add/tambah_data.php">
+       
           <div class="form-row">
             <!-- <div class="form-group col-md-6">
               <label for="inputId">ID</label>
@@ -147,14 +150,18 @@
             </div>
           </div>
 
-        </form>
+   
 
       </div>
+
+
       <div class="modal-footer justify-content-between">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
+
+    </form>
     <!-- /.modal-content -->
   </div>
   <!-- /.modal-dialog -->
