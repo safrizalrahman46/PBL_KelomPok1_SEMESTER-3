@@ -3,6 +3,14 @@
 
 <?php 
 session_start();
+
+
+if (!isset($_SESSION['nama'])) {
+    header('Location: ../index.php?session=expired');
+    exit();
+}
+
+
 include('header.php');?>
 <?php include('../conf/config.php');?>
 <body class="hold-transition sidebar-mini layout-fixed">
