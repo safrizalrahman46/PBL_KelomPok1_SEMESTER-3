@@ -40,7 +40,7 @@ include('header.php');?>
             include('data_mahasiswa.php');
         }
         else{
-          include('dashboard.php');
+          include('not_found.php');
         }
     }
     ?>
