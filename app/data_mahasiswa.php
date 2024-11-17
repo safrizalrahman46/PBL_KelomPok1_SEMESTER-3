@@ -60,7 +60,7 @@
                     <td><?php echo $mhs['total_reward_points']; ?></td>
                     <td><?php echo $mhs['semester']; ?></td>
                     <td><?php echo $mhs['tingkat']; ?></td>
-                    <td><a onclick="hapus_data()"  class="btn btn-sm btn-danger">Hapus</a></td>
+                    <td><a onclick ="hapus_data()"  class="btn btn-sm btn-danger">Hapus</a></td>
 
 
                   </tr>
@@ -196,3 +196,9 @@
   </div>
   <!-- /.modal-dialog -->
 </div>
+
+<script>
+  function hapus_data(){
+    alert('ok');
+  };
+</script>
