@@ -93,10 +93,10 @@
       <div class="modal-body">
         <form method="get" action="add/tambah_data.php">
           <div class="form-row">
-            <div class="form-group col-md-6">
+            <!-- <div class="form-group col-md-6">
               <label for="inputId">ID</label>
               <input type="text" class="form-control" id="inputId" name="id" placeholder="ID" required>
-            </div>
+            </div> -->
             <div class="form-group col-md-6">
               <label for="inputName">Name</label>
               <input type="text" class="form-control" id="inputName" name="name" placeholder="Name">
