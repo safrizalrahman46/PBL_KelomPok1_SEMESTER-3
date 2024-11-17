@@ -60,7 +60,7 @@
                     <td><?php echo $mhs['total_reward_points']; ?></td>
                     <td><?php echo $mhs['semester']; ?></td>
                     <td><?php echo $mhs['tingkat']; ?></td>
-                    <td><a onclick ="hapus_data()"  class="btn btn-sm btn-danger">Hapus</a></td>
+                    <td><a onclick ="hapus_data(<?php echo $mhs['id'];?>)"  class="btn btn-sm btn-danger">Hapus</a></td>
 
 
                   </tr>
@@ -198,7 +198,31 @@
 </div>
 
 <script>
-  function hapus_data(){
-    alert('ok');
-  };
+function hapus_data(data_id) {
+    // alert('ok');
+    // window.location = "delete/hapus_data.php?id=" + data_id;
+
+//     Swal.fire({
+//     title: "Good job!",
+//     text: "You clicked the button!",
+//     icon: "success"
+// });
+
+      Swal.fire({
+        title: "APAKAH ANDA YAKIN UNTUK MENGAHAPUS DATANYA?",
+        // showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Save",
+        confirmButtonText: 'Hapus Data',
+        confirmButtonColor: '#FF0000', // Red color in hex
+
+        // denyButtonText: `Don't save`
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          window.location = ("delete/hapus_data.php?id=" + data_id)
+        }
+      });
+}
 </script>
+
