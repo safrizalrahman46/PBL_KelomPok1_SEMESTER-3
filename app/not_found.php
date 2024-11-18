@@ -13,7 +13,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body text-center">
-              <img src="/app/dist/img/not-found.png">
+              <img src="../app/dist/img/not-found.png">
               </div>
               <!-- /.card-body -->
             </div>
