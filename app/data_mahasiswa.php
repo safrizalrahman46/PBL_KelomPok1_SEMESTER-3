@@ -30,6 +30,7 @@
                   <th>Total Reward Points</th>
                   <th>Semester</th>
                   <th>Tingkat</th>
+                  <th>Foto</th>
                   <th>Action</th>
 
                 </tr>
@@ -60,6 +61,11 @@
                     <td><?php echo $mhs['total_reward_points']; ?></td>
                     <td><?php echo $mhs['semester']; ?></td>
                     <td><?php echo $mhs['tingkat']; ?></td>
+
+                    <td>
+                    <img src="foto/<?php echo $mhs['foto']; ?>" width="100px" class="img-thumbnail">
+                    </td>
+
                     <td>
                       <a onclick ="hapus_data(<?php echo $mhs['id'];?>)"  class="btn btn-sm btn-danger">Hapus</a>
                       <a href="index.php?page=edit-data&id=<?php echo $mhs['id']; ?>" class="btn btn-sm btn-success">Edit</a>
@@ -98,13 +104,13 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Large Modal</h4>
+        <h4 class="modal-title">TAMBAH DATA</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
 
-      <form method="get" action="add/tambah_data.php">
+      <form method="POST" action="add/tambah_data.php"  enctype="multipart/form-data">
 
         <div class="modal-body">
 
@@ -185,7 +191,11 @@
             </div>
           </div>
 
-
+          <div class="form-group col-md-6">
+        <label for="inputFoto">Foto</label>
+        <input type="file" class="form-control" id="inputFoto" name="foto" accept="image/*">
+    </div>
+    
 
         </div>
 
