@@ -127,14 +127,25 @@ $view = mysqli_fetch_array($query);
                     </div>
 
                     <div class="col-sm-6">
-                    <label class="form-label" for="customFile">Upload FOTO</label>
-                    <input type="file" class="form-control" id="customFile" />
+                    <label class="form-label" for="customFile">Upload Foto</label>
+                    <input type="file" name="foto" class="form-control" id="customFile" />
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-sm-12">
+                        <img src="foto/<?php echo $view['foto']; ?>" width="500px" class="rounded float-right">
+                    </div>
+                    </div>
+                    <div class="row">
+                    <button type="submit" class="btn btn-sm btn-info">Simpan</button>
                     </div>
 
-                  </div>
                   <!-- <br> -->
                   <!-- <but:ton class="btn btn-sm btn-info">Simpan3/buttonE -->
+                  <!-- <div class="row">
                   <button type="submit" class="btn btn-sm btn-info">Simpan</button>
+                  </div> -->
                 </form>
               </div>
               <!-- /.card-body -->
