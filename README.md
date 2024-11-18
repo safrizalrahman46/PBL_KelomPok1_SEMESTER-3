@@ -8,7 +8,6 @@ Sistem Informasi Tata Tertib di Polinema (SIB 2G) is a comprehensive information
 ## PROSES DEBUGGING
 
 ![App Screenshot](![DEBUGGING](https://github.com/user-attachments/assets/285d66e4-3bde-4189-856f-5d0daf49f634)
-)
 
 ## HALAMAN LOGIN
 
