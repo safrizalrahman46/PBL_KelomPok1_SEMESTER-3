@@ -25,7 +25,7 @@ $view = mysqli_fetch_array($query);
                     <div class="col-sm-6">
                       <div class="form-group">
                         <label>Name</label>
-                        <input type="text" name="name" class="form-control" placeholder="Enter Name">
+                        <input type="text" name="name" class="form-control" placeholder="Enter Name" value="<?php echo $view['name'];?>">
                       </div>
                     </div>
                   </div>
@@ -35,9 +35,10 @@ $view = mysqli_fetch_array($query);
                       <!-- select -->
                       <div class="form-group">
                         <label>Department</label>
-                        <select name="department_id" class="form-control">
+                        <select name="department_id" class="form-control" >
                           <?php foreach ($departments as $department): ?>
-                            <option value="<?php echo $department['id']; ?>"><?php echo $department['name']; ?></option>
+                            <!-- value="<?php echo $view['department_id'];?>" -->
+                            <option value="<?php echo $department['id']; ?>"><?php echo $department['name'];?> </option>
                           <?php endforeach; ?>
                         </select>
                       </div>
@@ -45,7 +46,7 @@ $view = mysqli_fetch_array($query);
                     <div class="col-sm-6">
                       <div class="form-group">
                         <label>Email</label>
-                        <input type="email" name="email" class="form-control" placeholder="Enter Email">
+                        <input type="email" name="email" class="form-control" placeholder="Enter Email" value="<?php echo $view['email'];?>">
                       </div>
                     </div>
                   </div>
