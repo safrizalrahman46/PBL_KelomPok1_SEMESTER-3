@@ -1,92 +1,25 @@
+<section class="content">
+<div class="container-fluid">
    <!-- general form elements disabled -->
    <div class="card card-warning">
-              <div class="card-header">
+   <div class="card-header">
                 <h3 class="card-title">General Elements</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form>
+                <form action="submit_form.php" method="post">
                   <div class="row">
                     <div class="col-sm-6">
                       <!-- text input -->
                       <div class="form-group">
-                        <label>Text</label>
-                        <input type="text" class="form-control" placeholder="Enter ...">
+                        <label>ID</label>
+                        <input type="text" name="id" class="form-control" placeholder="Enter ID">
                       </div>
                     </div>
                     <div class="col-sm-6">
                       <div class="form-group">
-                        <label>Text Disabled</label>
-                        <input type="text" class="form-control" placeholder="Enter ..." disabled>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <!-- textarea -->
-                      <div class="form-group">
-                        <label>Textarea</label>
-                        <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
-                      </div>
-                    </div>
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                        <label>Textarea Disabled</label>
-                        <textarea class="form-control" rows="3" placeholder="Enter ..." disabled></textarea>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- input states -->
-                  <div class="form-group">
-                    <label class="col-form-label" for="inputSuccess"><i class="fas fa-check"></i> Input with
-                      success</label>
-                    <input type="text" class="form-control is-valid" id="inputSuccess" placeholder="Enter ...">
-                  </div>
-                  <div class="form-group">
-                    <label class="col-form-label" for="inputWarning"><i class="far fa-bell"></i> Input with
-                      warning</label>
-                    <input type="text" class="form-control is-warning" id="inputWarning" placeholder="Enter ...">
-                  </div>
-                  <div class="form-group">
-                    <label class="col-form-label" for="inputError"><i class="far fa-times-circle"></i> Input with
-                      error</label>
-                    <input type="text" class="form-control is-invalid" id="inputError" placeholder="Enter ...">
-                  </div>
-
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <!-- checkbox -->
-                      <div class="form-group">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox">
-                          <label class="form-check-label">Checkbox</label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" checked>
-                          <label class="form-check-label">Checkbox checked</label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" disabled>
-                          <label class="form-check-label">Checkbox disabled</label>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-6">
-                      <!-- radio -->
-                      <div class="form-group">
-                        <div class="form-check">
-                          <input class="form-check-input" type="radio" name="radio1">
-                          <label class="form-check-label">Radio</label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="radio" name="radio1" checked>
-                          <label class="form-check-label">Radio checked</label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="radio" disabled>
-                          <label class="form-check-label">Radio disabled</label>
-                        </div>
+                        <label>Name</label>
+                        <input type="text" name="name" class="form-control" placeholder="Enter Name">
                       </div>
                     </div>
                   </div>
@@ -95,58 +28,82 @@
                     <div class="col-sm-6">
                       <!-- select -->
                       <div class="form-group">
-                        <label>Select</label>
-                        <select class="form-control">
-                          <option>option 1</option>
-                          <option>option 2</option>
-                          <option>option 3</option>
-                          <option>option 4</option>
-                          <option>option 5</option>
+                        <label>Department</label>
+                        <select name="department_id" class="form-control">
+                          <?php foreach ($departments as $department): ?>
+                            <option value="<?php echo $department['id']; ?>"><?php echo $department['name']; ?></option>
+                          <?php endforeach; ?>
                         </select>
                       </div>
                     </div>
                     <div class="col-sm-6">
                       <div class="form-group">
-                        <label>Select Disabled</label>
-                        <select class="form-control" disabled>
-                          <option>option 1</option>
-                          <option>option 2</option>
-                          <option>option 3</option>
-                          <option>option 4</option>
-                          <option>option 5</option>
-                        </select>
+                        <label>Email</label>
+                        <input type="email" name="email" class="form-control" placeholder="Enter Email">
                       </div>
                     </div>
                   </div>
 
                   <div class="row">
                     <div class="col-sm-6">
-                      <!-- Select multiple-->
+                      <!-- text input -->
                       <div class="form-group">
-                        <label>Select Multiple</label>
-                        <select multiple class="form-control">
-                          <option>option 1</option>
-                          <option>option 2</option>
-                          <option>option 3</option>
-                          <option>option 4</option>
-                          <option>option 5</option>
-                        </select>
+                        <label>NIM</label>
+                        <input type="text" name="NIM" class="form-control" placeholder="Enter NIM">
                       </div>
                     </div>
                     <div class="col-sm-6">
                       <div class="form-group">
-                        <label>Select Multiple Disabled</label>
-                        <select multiple class="form-control" disabled>
-                          <option>option 1</option>
-                          <option>option 2</option>
-                          <option>option 3</option>
-                          <option>option 4</option>
-                          <option>option 5</option>
-                        </select>
+                        <label>Username</label>
+                        <input type="text" name="username" class="form-control" placeholder="Enter Username">
                       </div>
                     </div>
                   </div>
+
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <!-- text input -->
+                      <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" name="password" class="form-control" placeholder="Enter Password">
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label>Total Violation Points</label>
+                        <input type="number" name="total_violation_points" class="form-control" value="0">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <!-- text input -->
+                      <div class="form-group">
+                        <label>Total Reward Points</label>
+                        <input type="number" name="total_reward_points" class="form-control" value="0">
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label>Semester</label>
+                        <input type="number" name="semester" class="form-control" placeholder="Enter Semester">
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label>Tingkat</label>
+                        <input type="number" name="tingkat" class="form-control" placeholder="Enter Tingkat">
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- <but:ton class="btn btn-sm btn-info">Simpan3/buttonE -->
+                  <button type="submit" class="btn btn-sm btn-info">Simpan</button>
                 </form>
               </div>
               <!-- /.card-body -->
             </div>
+            </div>
+
+            </section>
