@@ -13,7 +13,7 @@ $view = mysqli_fetch_array($query);
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form action="submit_form.php" method="post">
+              <form method="get" action="update/update_data.php">
                   <div class="row">
                     <div class="col-sm-6">
                       <!-- text input -->
@@ -70,10 +70,30 @@ $view = mysqli_fetch_array($query);
                   <div class="row">
                     <div class="col-sm-6">
                       <!-- text input -->
+
                       <div class="form-group">
+                            <label>Password</label>
+                            <div style="display: flex; align-items: center;">
+                                <input 
+                                    type="password" 
+                                    id="password" 
+                                    name="password" 
+                                    class="form-control" 
+                                    placeholder="Enter Password" 
+                                    value="<?php echo $view['password']; ?>">
+                                <button 
+                                    type="button" 
+                                    id="togglePassword" 
+                                    class="btn btn-outline-secondary" 
+                                    style="margin-left: 5px;">
+                                    Show
+                                </button>
+                            </div>
+                        </div>
+                      <!-- <div class="form-group">
                         <label>Password</label>
                         <input type="password" name="password" class="form-control" placeholder="Enter Password"  value="<?php echo $view['password'];?>">
-                      </div>
+                      </div> -->
                     </div>
                     <div class="col-sm-6">
                       <div class="form-group">
@@ -114,3 +134,18 @@ $view = mysqli_fetch_array($query);
             </div>
 
             </section>
+
+
+            <script>
+                const togglePassword = document.querySelector("#togglePassword");
+                const passwordField = document.querySelector("#password");
+
+                togglePassword.addEventListener("click", function () {
+                    // Ubah tipe input antara "password" dan "text"
+                    const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+                    passwordField.setAttribute("type", type);
+
+                    // Ganti teks tombol antara "Show" dan "Hide"
+                    this.textContent = type === "password" ? "Show" : "Hide";
+                });
+            </script>
