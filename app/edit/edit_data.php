@@ -111,20 +111,27 @@ $view = mysqli_fetch_array($query);
                         <input type="number" name="total_reward_points" class="form-control" value="<?php echo $view['total_reward_points'];?>">
                       </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-6">
                       <div class="form-group">
                         <label>Semester</label>
                         <input type="number" name="semester" class="form-control" placeholder="Enter Semester" value="<?php echo $view['semester'];?>" >
                       </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-6">
                       <div class="form-group">
                         <label>Tingkat</label>
                         <input type="number" name="tingkat" class="form-control" placeholder="Enter Tingkat" value="<?php echo $view['tingkat'];?>">
                       </div>
+                      
                     </div>
+
+                    <div class="col-sm-6">
+                    <label class="form-label" for="customFile">Default file input example</label>
+                    <input type="file" class="form-control" id="customFile" />
+                    </div>
+
                   </div>
-                  
+                  <!-- <br> -->
                   <!-- <but:ton class="btn btn-sm btn-info">Simpan3/buttonE -->
                   <button type="submit" class="btn btn-sm btn-info">Simpan</button>
                 </form>
