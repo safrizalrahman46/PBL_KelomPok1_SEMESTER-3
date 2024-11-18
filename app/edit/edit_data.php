@@ -13,7 +13,8 @@ $view = mysqli_fetch_array($query);
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-              <form method="get" action="update/update_data.php">
+              <form method="post" action="update/update_data.php" enctype="multipart/form-data">
+              <!-- <form method="get" action="update/update_data.php"> -->
                   <div class="row">
                     <div class="col-sm-6">
                       <!-- text input -->
@@ -126,7 +127,7 @@ $view = mysqli_fetch_array($query);
                     </div>
 
                     <div class="col-sm-6">
-                    <label class="form-label" for="customFile">Default file input example</label>
+                    <label class="form-label" for="customFile">Upload FOTO</label>
                     <input type="file" class="form-control" id="customFile" />
                     </div>
 
