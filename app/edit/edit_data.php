@@ -56,13 +56,13 @@ $view = mysqli_fetch_array($query);
                       <!-- text input -->
                       <div class="form-group">
                         <label>NIM</label>
-                        <input type="text" name="NIM" class="form-control" placeholder="Enter NIM">
+                        <input type="text" name="NIM" class="form-control" placeholder="Enter NIM"  value="<?php echo $view['NIM'];?>">
                       </div>
                     </div>
                     <div class="col-sm-6">
                       <div class="form-group">
                         <label>Username</label>
-                        <input type="text" name="username" class="form-control" placeholder="Enter Username">
+                        <input type="text" name="username" class="form-control" placeholder="Enter Username"  value="<?php echo $view['username'];?>">
                       </div>
                     </div>
                   </div>
@@ -72,13 +72,13 @@ $view = mysqli_fetch_array($query);
                       <!-- text input -->
                       <div class="form-group">
                         <label>Password</label>
-                        <input type="password" name="password" class="form-control" placeholder="Enter Password">
+                        <input type="password" name="password" class="form-control" placeholder="Enter Password"  value="<?php echo $view['password'];?>">
                       </div>
                     </div>
                     <div class="col-sm-6">
                       <div class="form-group">
                         <label>Total Violation Points</label>
-                        <input type="number" name="total_violation_points" class="form-control" value="0">
+                        <input type="number" name="total_violation_points" class="form-control" value="0" value="<?php echo $view['total_violation_points'];?>">
                       </div>
                     </div>
                   </div>
@@ -88,19 +88,19 @@ $view = mysqli_fetch_array($query);
                       <!-- text input -->
                       <div class="form-group">
                         <label>Total Reward Points</label>
-                        <input type="number" name="total_reward_points" class="form-control" value="0">
+                        <input type="number" name="total_reward_points" class="form-control" value="<?php echo $view['total_reward_points'];?>">
                       </div>
                     </div>
                     <div class="col-sm-3">
                       <div class="form-group">
                         <label>Semester</label>
-                        <input type="number" name="semester" class="form-control" placeholder="Enter Semester">
+                        <input type="number" name="semester" class="form-control" placeholder="Enter Semester" value="<?php echo $view['semester'];?>" >
                       </div>
                     </div>
                     <div class="col-sm-3">
                       <div class="form-group">
                         <label>Tingkat</label>
-                        <input type="number" name="tingkat" class="form-control" placeholder="Enter Tingkat">
+                        <input type="number" name="tingkat" class="form-control" placeholder="Enter Tingkat" value="<?php echo $view['tingkat'];?>">
                       </div>
                     </div>
                   </div>
