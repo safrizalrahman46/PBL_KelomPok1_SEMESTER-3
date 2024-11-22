@@ -69,7 +69,21 @@
                     <td>
                       <a onclick ="hapus_data(<?php echo $mhs['id'];?>)"  class="btn btn-sm btn-danger">Hapus</a>
                       <a href="index.php?page=edit-data&id=<?php echo $mhs['id']; ?>" class="btn btn-sm btn-success">Edit</a>
-                      <a class="view-data btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-view" data-nim="<?php echo $mhs['NIM'];?>">View Data</a>
+                      <a class="view-data btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-view" 
+                        data-id="<?php echo $mhs['id'];?>"
+                        data-name="<?php echo $mhs['name'];?>"
+                        data-department_id="<?php echo $mhs['department_id'];?>"
+                        data-email="<?php echo $mhs['email'];?>"
+                        data-nim="<?php echo $mhs['NIM'];?>"
+                        data-username="<?php echo $mhs['username'];?>"
+                        data-password="<?php echo $mhs['password'];?>"
+                        data-total-violation-points="<?php echo $mhs['total_violation_points'];?>"
+                        data-total-reward-points="<?php echo $mhs['total_reward_points'];?>"
+                        data-semester="<?php echo $mhs['semester'];?>"
+                        data-tingkat="<?php echo $mhs['tingkat'];?>"
+                        data-foto="<?php echo $mhs['foto'];?>"
+                      >View Data</a>
+
 
                       <!-- <a href="index.php?page=edit-data" class="btn btn-sm btn-success">Edit</a> -->
                     </td>
@@ -226,85 +240,51 @@
         </button>
       </div>
 
-      <form method="get" action="add/tambah_data.php"  enctype="multipart/form-data">
-
-        <div class="modal-body">
-
-          <div class="form-row">
-
-            <div class="form-group col-md-6">
-          NOMOR : <div id="id"> </div> 
-          </div>
-
-            <div class="form-group col-md-6">
-            NAMA : <div> id="name"</div> 
-            </div>
-          </div>
-
-          <div class="form-row">
-            <!-- <div class="form-group col-md-6">
-              <label for="inputDepartmentId">Department ID</label>
-              <input type="text" class="form-control" id="inputDepartmentId" name="department_id" placeholder="Department ID">
-            </div> -->
-
-            <div class="form-group col-md-6">
-            DEPARTMENT : <div> id="department"</div> 
-          </div>
-
-
-
-            <div class="form-group col-md-6">
-            EMAIL : <div> id="email"</div> 
-            </div>
-          </div>
-
-          
-          <div class="form-row">
-            <div class="form-group col-md-6">
-            NIM : <span> id="NIM"</span> 
-            </div>
-            <div class="form-group col-md-6">
-            USERNAME : <div> id="username"</div> 
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-            PASSWORD : <div> id="Password"</div> 
-            </div>
-            <div class="form-group col-md-6">
-            TOTAL VIOLATION REPORT : <div> id="total_violation_points"</div> 
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-            TOTAL REWARD POINTS : <div> id="total_reward_points"</div> 
-            </div>
-            <div class="form-group col-md-3">
-            SEMESTER : <div> id="semester"</div> 
-            </div>
-            <div class="form-group col-md-3">
-            TINGKAT : <div> id="tingkat"</div> 
-          </div>
-
-          <div class="form-group col-md-6">
-          FOTO : <div> id="foto"</div> 
-    </div>
-    
-
+      <div class="modal-body">
+        <div class="form-row">
+          <div class="col">NOMOR: <span id="id"></span></div>
+          <div class="col">NAMA: <span id="name"></span></div>
         </div>
 
-
-        <div class="modal-footer justify-content-between">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
+        <div class="form-row">
+          <div class="col">DEPARTMENT: <span id="department_id"></span></div>
+          <div class="col">EMAIL: <span id="email"></span></div>
         </div>
-    </div>
 
-    </form>
-    <!-- /.modal-content -->
+        <div class="form-row">
+          <div class="col">NIM: <span id="nim"></span></div>
+          <div class="col">USERNAME: <span id="username"></span></div>
+        </div>
+
+        <div class="form-row">
+          <div class="col">PASSWORD: <span id="password"></span></div>
+          <div class="col">TOTAL VIOLATION REPORT: <span id="total_violation_points"></span></div>
+        </div>
+
+        <div class="form-row">
+          <div class="col">TOTAL REWARD POINTS: <span id="total_reward_points"></span></div>
+          <div class="form-group col-md-3">SEMESTER: <span id="semester"></span></div>
+          <div class="form-group col-md-3">TINGKAT: <span id="tingkat"></span></div>
+        </div>
+
+        <div class="form-row">
+          <div class="col">
+            FOTO: 
+            <div id="foto-container">
+              <img id="foto" src="" alt="Foto Mahasiswa" style="width:100px;">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
   </div>
-  <!-- /.modal-dialog -->
 </div>
+
 
 
 

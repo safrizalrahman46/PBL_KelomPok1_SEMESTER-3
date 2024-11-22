@@ -90,11 +90,18 @@
 
     //     console.log(nim);
     // });
+
+//     $('.view-data').click(function() {
+//     var nim = $(this).attr('data-nim');
+//     document.getElementById('NIM').innerHTML = nim;
+//     console.log(nim);
+// });
+
     $('.view-data').click(function () {
     // Ambil data dari atribut
     var id = $(this).attr('data-id');
     var name = $(this).attr('data-name');
-    var department = $(this).attr('data-department');
+    var department_id = $(this).attr('data-department_id');
     var email = $(this).attr('data-email');
     var nim = $(this).attr('data-nim');
     var username = $(this).attr('data-username');
@@ -105,10 +112,26 @@
     var tingkat = $(this).attr('data-tingkat');
     var foto = $(this).attr('data-foto');
 
+
+        // Log data untuk debugging
+    //     console.log(`ID: ${id}`);
+    // console.log(`Name: ${name}`);
+    // console.log(`Department ID: ${department_id}`);
+    // console.log(`Email: ${email}`);
+    console.log(`NIM: ${nim}`);
+    // console.log(`Username: ${username}`);
+    // console.log(`Password: ${password}`);
+    // console.log(`Total Violation Points: ${totalViolationPoints}`);
+    // console.log(`Total Reward Points: ${totalRewardPoints}`);
+    // console.log(`Semester: ${semester}`);
+    // console.log(`Tingkat: ${tingkat}`);
+    // console.log(`Foto: ${foto}`);
+
+
     // Masukkan data ke dalam elemen dengan ID masing-masing
     document.getElementById('id').innerHTML = id;
     document.getElementById('name').innerHTML = name;
-    document.getElementById('department').innerHTML = department;
+    document.getElementById('department_id').innerHTML = department_id;
     document.getElementById('email').innerHTML = email;
     document.getElementById('NIM').innerHTML = nim;
     document.getElementById('username').innerHTML = username;
@@ -119,7 +142,8 @@
     document.getElementById('tingkat').innerHTML = tingkat;
     document.getElementById('foto').innerHTML = foto;
 
-    console.log(`NIM: ${nim}, NAME: ${name}`);
+    // $('#modal-view').modal('show');
+
 });
 
 
