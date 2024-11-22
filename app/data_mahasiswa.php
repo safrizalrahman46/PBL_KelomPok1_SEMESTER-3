@@ -226,14 +226,14 @@
         </button>
       </div>
 
-      <form method="POST" action="add/tambah_data.php"  enctype="multipart/form-data">
+      <form method="get" action="add/tambah_data.php"  enctype="multipart/form-data">
 
         <div class="modal-body">
 
           <div class="form-row">
 
             <div class="form-group col-md-6">
-          NOMOR : <div> id="id"</div> 
+          NOMOR : <div id="id"> </div> 
           </div>
 
             <div class="form-group col-md-6">
@@ -248,66 +248,46 @@
             </div> -->
 
             <div class="form-group col-md-6">
-            <label for="inputDepartmentId">Department</label>
-            <select class="form-control" id="inputDepartmentId" name="department_id" required>
-              <option value="" disabled selected>Pilih Department</option>
-              <?php
-              include("../../conf/config.php");
-              $query = mysqli_query($koneksi, "SELECT * FROM department");
-              while ($dept = mysqli_fetch_array($query)) {
-                echo "<option value='{$dept['id']}'>{$dept['name']}</option>";
-              }
-              ?>
-            </select>
+            DEPARTMENT : <div> id="department"</div> 
           </div>
 
 
 
             <div class="form-group col-md-6">
-              <label for="inputEmail">Email</label>
-              <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Email">
+            EMAIL : <div> id="email"</div> 
             </div>
           </div>
 
           
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="inputNIM">NIM</label>
-              <input type="text" class="form-control" id="inputNIM" name="NIM" placeholder="NIM">
+            NIM : <span> id="NIM"</span> 
             </div>
             <div class="form-group col-md-6">
-              <label for="inputUsername">Username</label>
-              <input type="text" class="form-control" id="inputUsername" name="username" placeholder="Username">
+            USERNAME : <div> id="username"</div> 
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="inputPassword">Password</label>
-              <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password">
+            PASSWORD : <div> id="Password"</div> 
             </div>
             <div class="form-group col-md-6">
-              <label for="inputTotalViolationPoints">Total Violation Points</label>
-              <input type="number" class="form-control" id="inputTotalViolationPoints" name="total_violation_points" placeholder="Total Violation Points" value="0">
+            TOTAL VIOLATION REPORT : <div> id="total_violation_points"</div> 
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="inputTotalRewardPoints">Total Reward Points</label>
-              <input type="number" class="form-control" id="inputTotalRewardPoints" name="total_reward_points" placeholder="Total Reward Points" value="0">
+            TOTAL REWARD POINTS : <div> id="total_reward_points"</div> 
             </div>
             <div class="form-group col-md-3">
-              <label for="inputSemester">Semester</label>
-              <input type="number" class="form-control" id="inputSemester" name="semester" placeholder="Semester">
+            SEMESTER : <div> id="semester"</div> 
             </div>
             <div class="form-group col-md-3">
-              <label for="inputTingkat">Tingkat</label>
-              <input type="number" class="form-control" id="inputTingkat" name="tingkat" placeholder="Tingkat">
-            </div>
+            TINGKAT : <div> id="tingkat"</div> 
           </div>
 
           <div class="form-group col-md-6">
-        <label for="inputFoto">Foto</label>
-        <input type="file" class="form-control" id="inputFoto" name="foto" accept="image/*">
+          FOTO : <div> id="foto"</div> 
     </div>
     
 

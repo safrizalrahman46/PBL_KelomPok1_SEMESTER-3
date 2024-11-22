@@ -84,10 +84,43 @@
 // })
 
 
-    $('.view-data').click(function() {
-        var nim = $(this).attr('data-nim');
-        console.log(nim);
-    });
+    // $('.view-data').click(function() {
+    //     var nim = $(this).attr('data-nim');
+    //     document.getElementById('NIM').innerHTML = nim;
+
+    //     console.log(nim);
+    // });
+    $('.view-data').click(function () {
+    // Ambil data dari atribut
+    var id = $(this).attr('data-id');
+    var name = $(this).attr('data-name');
+    var department = $(this).attr('data-department');
+    var email = $(this).attr('data-email');
+    var nim = $(this).attr('data-nim');
+    var username = $(this).attr('data-username');
+    var password = $(this).attr('data-password');
+    var totalViolationPoints = $(this).attr('data-total-violation-points');
+    var totalRewardPoints = $(this).attr('data-total-reward-points');
+    var semester = $(this).attr('data-semester');
+    var tingkat = $(this).attr('data-tingkat');
+    var foto = $(this).attr('data-foto');
+
+    // Masukkan data ke dalam elemen dengan ID masing-masing
+    document.getElementById('id').innerHTML = id;
+    document.getElementById('name').innerHTML = name;
+    document.getElementById('department').innerHTML = department;
+    document.getElementById('email').innerHTML = email;
+    document.getElementById('NIM').innerHTML = nim;
+    document.getElementById('username').innerHTML = username;
+    document.getElementById('Password').innerHTML = password;
+    document.getElementById('total_violation_points').innerHTML = totalViolationPoints;
+    document.getElementById('total_reward_points').innerHTML = totalRewardPoints;
+    document.getElementById('semester').innerHTML = semester;
+    document.getElementById('tingkat').innerHTML = tingkat;
+    document.getElementById('foto').innerHTML = foto;
+
+    console.log(`NIM: ${nim}, NAME: ${name}`);
+});
 
 
 
