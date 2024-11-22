@@ -79,8 +79,16 @@
   });
 
 
-  $('.view-data').click(function(){
-    console.log(10);
-})
+//   $('.view-data').click(function(){
+//     console.log(10);
+// })
+
+
+    $('.view-data').click(function() {
+        var nim = $(this).attr('data-nim');
+        console.log(nim);
+    });
+
+
 
 </script>
