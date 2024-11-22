@@ -79,8 +79,8 @@
   });
 
 
-  $('.view-data').click(function() {
+  $('.view-data').click(function(){
     console.log(10);
-});
+})
 
 </script>
