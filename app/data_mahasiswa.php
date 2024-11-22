@@ -69,7 +69,7 @@
                     <td>
                       <a onclick ="hapus_data(<?php echo $mhs['id'];?>)"  class="btn btn-sm btn-danger">Hapus</a>
                       <a href="index.php?page=edit-data&id=<?php echo $mhs['id']; ?>" class="btn btn-sm btn-success">Edit</a>
-                      <a class="view-data btn btn-sm btn-primary"  data-nim="<?php echo $mhs['NIM'];?>">View Data</a>
+                      <a class="view-data btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-view" data-nim="<?php echo $mhs['NIM'];?>">View Data</a>
 
                       <!-- <a href="index.php?page=edit-data" class="btn btn-sm btn-success">Edit</a> -->
                     </td>
@@ -212,6 +212,121 @@
   </div>
   <!-- /.modal-dialog -->
 </div>
+
+
+<!-- MODAL VIEW DATA -->
+
+<div class="modal fade" id="modal-view">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">VIEW DATA MODAL</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <form method="POST" action="add/tambah_data.php"  enctype="multipart/form-data">
+
+        <div class="modal-body">
+
+          <div class="form-row">
+
+            <div class="form-group col-md-6">
+          NOMOR : <div> id="id"</div> 
+          </div>
+
+            <div class="form-group col-md-6">
+            NAMA : <div> id="name"</div> 
+            </div>
+          </div>
+
+          <div class="form-row">
+            <!-- <div class="form-group col-md-6">
+              <label for="inputDepartmentId">Department ID</label>
+              <input type="text" class="form-control" id="inputDepartmentId" name="department_id" placeholder="Department ID">
+            </div> -->
+
+            <div class="form-group col-md-6">
+            <label for="inputDepartmentId">Department</label>
+            <select class="form-control" id="inputDepartmentId" name="department_id" required>
+              <option value="" disabled selected>Pilih Department</option>
+              <?php
+              include("../../conf/config.php");
+              $query = mysqli_query($koneksi, "SELECT * FROM department");
+              while ($dept = mysqli_fetch_array($query)) {
+                echo "<option value='{$dept['id']}'>{$dept['name']}</option>";
+              }
+              ?>
+            </select>
+          </div>
+
+
+
+            <div class="form-group col-md-6">
+              <label for="inputEmail">Email</label>
+              <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Email">
+            </div>
+          </div>
+
+          
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputNIM">NIM</label>
+              <input type="text" class="form-control" id="inputNIM" name="NIM" placeholder="NIM">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="inputUsername">Username</label>
+              <input type="text" class="form-control" id="inputUsername" name="username" placeholder="Username">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputPassword">Password</label>
+              <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="inputTotalViolationPoints">Total Violation Points</label>
+              <input type="number" class="form-control" id="inputTotalViolationPoints" name="total_violation_points" placeholder="Total Violation Points" value="0">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputTotalRewardPoints">Total Reward Points</label>
+              <input type="number" class="form-control" id="inputTotalRewardPoints" name="total_reward_points" placeholder="Total Reward Points" value="0">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="inputSemester">Semester</label>
+              <input type="number" class="form-control" id="inputSemester" name="semester" placeholder="Semester">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="inputTingkat">Tingkat</label>
+              <input type="number" class="form-control" id="inputTingkat" name="tingkat" placeholder="Tingkat">
+            </div>
+          </div>
+
+          <div class="form-group col-md-6">
+        <label for="inputFoto">Foto</label>
+        <input type="file" class="form-control" id="inputFoto" name="foto" accept="image/*">
+    </div>
+    
+
+        </div>
+
+
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+    </div>
+
+    </form>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+
 
 <script>
 function hapus_data(data_id) {
