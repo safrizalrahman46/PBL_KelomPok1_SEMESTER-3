@@ -69,6 +69,7 @@
                     <td>
                       <a onclick ="hapus_data(<?php echo $mhs['id'];?>)"  class="btn btn-sm btn-danger">Hapus</a>
                       <a href="index.php?page=edit-data&id=<?php echo $mhs['id']; ?>" class="btn btn-sm btn-success">Edit</a>
+                      <a class="btn btn-sm btn-primary" href="#">View Data</a>
 
                       <!-- <a href="index.php?page=edit-data" class="btn btn-sm btn-success">Edit</a> -->
                     </td>

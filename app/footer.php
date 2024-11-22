@@ -77,4 +77,10 @@
       "responsive": true,
     });
   });
+
+
+  $('.view-data').click(function() {
+    console.log(10);
+});
+
 </script>
