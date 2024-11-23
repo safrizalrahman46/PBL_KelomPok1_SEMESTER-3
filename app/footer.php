@@ -157,7 +157,7 @@
 $(document).ready(function() {
     setInterval(function() {
         $('#report-mhs').load("banner.php");
-    }); // Interval waktu dalam milidetik (5000 ms = 5 detik)
+    },1000); // Interval waktu dalam milidetik (5000 ms = 5 detik)
 });
 
 

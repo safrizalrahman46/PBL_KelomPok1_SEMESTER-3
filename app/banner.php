@@ -1,12 +1,16 @@
 <?php
-$query - mysqli_query($koneksi,"SELECT * FROM mahasiswa");
+include("../conf/config.php");
+$query = mysqli_query($koneksi, " SELECT id,
+        (SELECT count(id) FROM mahasiswa WHERE status='Aktif') AS Aktif,
+        (SELECT count(id) FROM mahasiswa WHERE status='Lulus') AS Lulus
+    FROM mahasiswa");
 $view = mysqli_fetch_array($query) ;?>
      
      <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>150</h3>
+                <h3><?php echo $view['Aktif'];?></h3>
 
                 <p>New Orders</p>
               </div>
@@ -21,7 +25,7 @@ $view = mysqli_fetch_array($query) ;?>
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+                <h3><?php echo $view['Lulus'];?><sup style="font-size: 20px">%</sup></h3>
 
                 <p>Bounce Rate</p>
               </div>
