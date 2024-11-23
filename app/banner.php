@@ -3,7 +3,10 @@ include("../conf/config.php");
 $query = mysqli_query($koneksi, " SELECT id,
         (SELECT count(id) FROM mahasiswa WHERE status='Aktif') AS Aktif,
         (SELECT count(id) FROM mahasiswa WHERE status='Lulus') AS Lulus,
+        (SELECT COUNT(id) FROM dosen) AS TotalDosen,
         (SELECT COUNT(id) FROM dosen) AS TotalDosen
+
+        
     FROM mahasiswa");
 $view = mysqli_fetch_array($query) ;?>
      
@@ -13,7 +16,7 @@ $view = mysqli_fetch_array($query) ;?>
               <div class="inner">
                 <h3><?php echo $view['Aktif'];?></h3>
 
-                <p>New Orders</p>
+                <p>MAHASISWA AKTIF</p>
               </div>
               <div class="icon">
                 <i class="ion ion-bag"></i>
@@ -26,9 +29,9 @@ $view = mysqli_fetch_array($query) ;?>
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3><?php echo $view['Lulus'];?><sup style="font-size: 20px">%</sup></h3>
+                <h3><?php echo $view['Lulus'];?><sup style="font-size: 20px"></sup></h3>
 
-                <p>Bounce Rate</p>
+                <p>MAHASISWA LULUS</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -43,7 +46,7 @@ $view = mysqli_fetch_array($query) ;?>
               <div class="inner">
                 <h3><?php echo $view['TotalDosen']; ?></h3>
 
-                <p>User Registrations</p>
+                <p>DOSEN JTI</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
