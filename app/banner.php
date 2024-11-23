@@ -1,5 +1,8 @@
-
-          <div class="col-lg-3 col-6">
+<?php
+$query - mysqli_query($koneksi,"SELECT * FROM tb_mahasiswa");
+$view = mysqli_fetch_array($query) ;?>
+     
+     <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
