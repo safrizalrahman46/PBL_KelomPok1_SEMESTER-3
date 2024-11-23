@@ -240,33 +240,8 @@
         </button>
       </div>
 
-      <div class="modal-body">
-        <div class="form-row">
-          <div class="col">NOMOR: <span id="id"></span></div>
-          <div class="col">NAMA: <span id="name"></span></div>
-        </div>
-
-        <div class="form-row">
-          <div class="col">DEPARTMENT: <span id="department_id"></span></div>
-          <div class="col">EMAIL: <span id="email"></span></div>
-          
-        </div>
-
-        <div class="form-row">
-          <div class="col">NIM: <span id="nim"></span></div>
-          <div class="col">USERNAME: <span id="username"></span></div>
-        </div>
-
-        <div class="form-row">
-          <div class="col">PASSWORD: <span id="password"></span></div>
-          <div class="col">TOTAL VIOLATION REPORT: <span id="total_violation_points"></span></div>
-        </div>
-
-        <div class="form-row">
-          <div class="col">TOTAL REWARD POINTS: <span id="total_reward_points"></span></div>
-          <div class="form-group col-md-3">SEMESTER: <span id="semester"></span></div>
-          <div class="form-group col-md-3">TINGKAT: <span id="tingkat"></span></div>
-        </div>
+      <div class="modal-body" id="hasil-view-data">
+      
 
         <!-- <div class="form-row">
           <div class="col">

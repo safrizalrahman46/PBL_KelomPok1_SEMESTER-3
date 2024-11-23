@@ -112,13 +112,22 @@
     var tingkat = $(this).attr('data-tingkat');
     var foto = $(this).attr('data-foto');
 
-
+    $.ajax({
+    url:"view/view-data-mahasiswa.php",
+    dataType:"html",
+    method:"POST",
+    data:{id:id,name:name,department_id:department_id,email:email,nim:nim,username:username,password:password,totalViolationPoints:totalViolationPoints,totalRewardPoints:totalRewardPoints,semester:semester,tingkat:tingkat,foto:foto},
+    success: function(data){
+      $('#hasil-view-data').html(data);
+    }
+  })
+    console.log(nim);
         // Log data untuk debugging
     //     console.log(`ID: ${id}`);
     // console.log(`Name: ${name}`);
     // console.log(`Department ID: ${department_id}`);
     // console.log(`Email: ${email}`);
-    console.log(nim);
+
     // console.log(`Username: ${username}`);
     // console.log(`Password: ${password}`);
     // console.log(`Total Violation Points: ${totalViolationPoints}`);
@@ -129,18 +138,18 @@
 
 
     // Masukkan data ke dalam elemen dengan ID masing-masing
-    document.getElementById('id').innerHTML = id;
-    document.getElementById('name').innerHTML = name;
-    document.getElementById('department_id').innerHTML = department_id;
-    document.getElementById('email').innerHTML = email;
-    document.getElementById('nim').innerHTML = nim;
-    document.getElementById('username').innerHTML = username;
-    document.getElementById('password').innerHTML = password;
-    document.getElementById('total_violation_points').innerHTML = totalViolationPoints;
-    document.getElementById('total_reward_points').innerHTML = totalRewardPoints;
-    document.getElementById('semester').innerHTML = semester;
-    document.getElementById('tingkat').innerHTML = tingkat;
-    document.getElementById('foto').innerHTML = foto;
+    // document.getElementById('id').innerHTML = id;
+    // document.getElementById('name').innerHTML = name;
+    // document.getElementById('department_id').innerHTML = department_id;
+    // document.getElementById('email').innerHTML = email;
+    // document.getElementById('nim').innerHTML = nim;
+    // document.getElementById('username').innerHTML = username;
+    // document.getElementById('password').innerHTML = password;
+    // document.getElementById('total_violation_points').innerHTML = totalViolationPoints;
+    // document.getElementById('total_reward_points').innerHTML = totalRewardPoints;
+    // document.getElementById('semester').innerHTML = semester;
+    // document.getElementById('tingkat').innerHTML = tingkat;
+    // document.getElementById('foto').innerHTML = foto;
 
     // $('#modal-view').modal('show');
 
