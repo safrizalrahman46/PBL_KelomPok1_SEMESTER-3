@@ -28,6 +28,9 @@
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
+
+    <!-- TAMBAH GAMBAR -->
+    <img src="app/dist/img/JTI.png" alt="Logo JTI" style="width: 100px; display: block; margin: 0 auto 10px;">
       <a href="app/index2.html" class="h1"><b>JTI</b>Melapor</a>
     </div>
     <div class="card-body">
@@ -57,12 +60,12 @@
         </div>
       </form>
 
-      <p class="mb-1">
+      <!-- <p class="mb-1">
         <a href="forgot-password.html">I forgot my password</a>
       </p>
       <p class="mb-0">
         <a href="register.html" class="text-center">Register a new membership</a>
-      </p>
+      </p> -->
     </div>
   </div>
 </div>
