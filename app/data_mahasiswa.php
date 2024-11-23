@@ -249,6 +249,7 @@
         <div class="form-row">
           <div class="col">DEPARTMENT: <span id="department_id"></span></div>
           <div class="col">EMAIL: <span id="email"></span></div>
+          
         </div>
 
         <div class="form-row">
@@ -267,7 +268,7 @@
           <div class="form-group col-md-3">TINGKAT: <span id="tingkat"></span></div>
         </div>
 
-        <div class="form-row">
+        <!-- <div class="form-row">
           <div class="col">
             FOTO: 
             <div id="foto-container">
@@ -275,7 +276,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="modal-footer justify-content-between">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

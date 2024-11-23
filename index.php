@@ -21,6 +21,15 @@
       .swal-wide {
           width: 400px !important; /* Sesuaikan lebar sesuai kebutuhan */
       }
+
+      body {
+    background-image: url('app/dist/img/BG.png'); /* Path relatif ke direktori proyek */
+    background-size: cover; /* Latar belakang akan memenuhi seluruh layar */
+    background-position: center; /* Posisi tengah */
+    background-repeat: no-repeat; /* Tidak mengulang gambar */
+    background-attachment: fixed; /* Background tetap saat scroll */
+  }
+      
   </style>
 </head>
 <body class="hold-transition login-page">
@@ -30,11 +39,11 @@
     <div class="card-header text-center">
 
     <!-- TAMBAH GAMBAR -->
-    <img src="app/dist/img/JTI.png" alt="Logo JTI" style="width: 100px; display: block; margin: 0 auto 10px;">
+    <img src="app/dist/img/JTI.png" alt="Logo JTI" style="width: 200px; display: block; margin: 0 auto 10px;">
       <a href="app/index2.html" class="h1"><b>JTI</b>Melapor</a>
     </div>
     <div class="card-body">
-      <p class="login-box-msg">Sign in to start your session</p>
+      <p class="login-box-msg">LOGIN DULU</p>
 
       <form action="conf/autentikasi.php" method="post">
         <div class="input-group mb-3">

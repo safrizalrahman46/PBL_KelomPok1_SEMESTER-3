@@ -118,7 +118,7 @@
     // console.log(`Name: ${name}`);
     // console.log(`Department ID: ${department_id}`);
     // console.log(`Email: ${email}`);
-    console.log(`NIM: ${nim}`);
+    console.log(nim);
     // console.log(`Username: ${username}`);
     // console.log(`Password: ${password}`);
     // console.log(`Total Violation Points: ${totalViolationPoints}`);
@@ -133,9 +133,9 @@
     document.getElementById('name').innerHTML = name;
     document.getElementById('department_id').innerHTML = department_id;
     document.getElementById('email').innerHTML = email;
-    document.getElementById('NIM').innerHTML = nim;
+    document.getElementById('nim').innerHTML = nim;
     document.getElementById('username').innerHTML = username;
-    document.getElementById('Password').innerHTML = password;
+    document.getElementById('password').innerHTML = password;
     document.getElementById('total_violation_points').innerHTML = totalViolationPoints;
     document.getElementById('total_reward_points').innerHTML = totalRewardPoints;
     document.getElementById('semester').innerHTML = semester;
