@@ -4,7 +4,7 @@ $query = mysqli_query($koneksi, " SELECT id,
         (SELECT count(id) FROM mahasiswa WHERE status='Aktif') AS Aktif,
         (SELECT count(id) FROM mahasiswa WHERE status='Lulus') AS Lulus,
         (SELECT COUNT(id) FROM dosen) AS TotalDosen,
-        (SELECT COUNT(id) FROM dosen) AS TotalDosen
+        (SELECT COUNT(id) FROM dpa) AS TotalDPA
 
         
     FROM mahasiswa");
@@ -59,7 +59,7 @@ $view = mysqli_fetch_array($query) ;?>
             <!-- small box -->
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>65</h3>
+                <h3><?php echo $view['TotalDPA']; ?></h3>
 
                 <p>Unique Visitors</p>
               </div>
