@@ -1,5 +1,5 @@
 <?php
-$query - mysqli_query($koneksi,"SELECT * FROM tb_mahasiswa");
+$query - mysqli_query($koneksi,"SELECT * FROM mahasiswa");
 $view = mysqli_fetch_array($query) ;?>
      
      <div class="col-lg-3 col-6">
