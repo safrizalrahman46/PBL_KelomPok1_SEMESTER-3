@@ -3,6 +3,11 @@
 ## Overview
 Sistem Informasi Tata Tertib di Polinema (SIB 2G) is a comprehensive information system designed to manage and enforce the rules and regulations at Politeknik Negeri Malang (Polinema). This system aims to streamline the process of monitoring and managing student behavior, ensuring a disciplined and conducive learning environment.
 
+## LINK MIRO
+https://miro.com/welcomeonboard/WHBQN0hrMmVTcUkxM3phTk9nYlA1ZVhhaDFNbW4wMGdTWitXYTVIYytWVitvK1VMY3FFYnBmajY2UDlDcE9idm1EdWplMytNTnZ6ZTRyYlB1Sk0wTFEvTDNzbkR2SlBQYUJja25ESytteXN4elBjeEpqd1lLUk5QYjJBcGxlTzMhZQ==?share_link_id=754923302829
+
+## LINK trello
+https://trello.com/b/DnLiB9Mx/pbl
 
 
 ## PROSES DEBUGGING
