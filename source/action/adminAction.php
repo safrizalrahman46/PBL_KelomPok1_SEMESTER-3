@@ -22,8 +22,7 @@ if ($act == 'load') {
             $i,
             $row['nama_admin'],
             $row['email_admin'],
-            '<button class="btn btn-sm btn-warning" 
-onclick="editData(' . $row['id_admin'] . ')"><i class="fa fa-edit"></i></button>  
+            '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_admin'] . ')"><i class="fa fa-edit"></i></button>  
              <button class="btn btn-sm btn-danger" 
 onclick="deleteData(' . $row['id_admin'] . ')"><i class="fa fa-trash"></i></button>'
         ];

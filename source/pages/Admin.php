@@ -96,14 +96,14 @@
 
     function editData(id) {
         $.ajax({
-            url: 'action/adminAction.php?act=get&id' + id,
+            url: 'action/adminAction.php?act=get&id=' + id,
             method: 'post',
             success: function(response) {
                 var data = JSON.parse(response);
                 $('#form-data').modal('show');
                 $('#form-tambah').attr('action',
                     'action/adminAction.php?act=update&id=' + id);
-                    $('#nama_admin').val(data.nama_admin);
+                $('#nama_admin').val(data.nama_admin);
                 $('#email_admin').val(data.email_admin);
                 $('#password_admin').val(data.password_admin);
                 $('#id_kelas').val(data.id_kelas);

@@ -13,7 +13,7 @@ class UserModel extends Model
     }
     public function insertData($data)
     {
-        if ($this->driver == 'sqlsrv') {
+        if ($this->driver == 'mysql') {
             // prepare statement untuk query insert
             $query = $this->db->prepare("insert into {$this->table} (nama, username, password,
             level) values(?,?,?,?)");
@@ -40,7 +40,7 @@ class UserModel extends Model
     }
     public function getData()
     {
-        if ($this->driver == 'sqlsrv') {
+        if ($this->driver == 'mysql') {
             // query untuk mengambil data dari tabel
             return $this->db->query("select * from {$this->table} ")->fetch_all(MYSQLI_ASSOC);
         } else {
@@ -55,7 +55,7 @@ class UserModel extends Model
     }
     public function getDataById($id)
     {
-        if ($this->driver == 'sqlsrv') {
+        if ($this->driver == 'mysql') {
             // query untuk mengambil data berdasarkan id
             $query = $this->db->prepare("select * from {$this->table} where user_id = ?");
             // binding parameter ke query "i" berarti integer. Biar tidak kena SQL Injection
@@ -74,7 +74,7 @@ class UserModel extends Model
     }
     public function updateData($id, $data)
     {
-        if ($this->driver == 'sqlsrv') {
+        if ($this->driver == 'mysql') {
             // query untuk update data
             $query = $this->db->prepare("update {$this->table} set nama = ?, username = ?,
             password = ?, level = ? where user_id = ?");
@@ -103,7 +103,7 @@ class UserModel extends Model
     }
     public function deleteData($id)
     {
-        if ($this->driver == 'sqlsrv') {
+        if ($this->driver == 'mysql') {
             // query untuk delete data
             $query = $this->db->prepare("delete from {$this->table} where user_id = ?");
             // binding parameter ke query
@@ -115,49 +115,49 @@ class UserModel extends Model
             sqlsrv_query($this->db, "delete from {$this->table} where user_id = ?", [$id]);
         }
     }
-    public function getSingleDataByKeyword($column, $keyword)
-{
-    if ($this->driver == 'sqlsrv') {
-        // query untuk mengambil data berdasarkan kolom tertentu
-        $query = sqlsrv_query(
-            $this->db,
-            "SELECT * FROM {$this->table} WHERE {$column} = ?",
-            [$keyword]
-        );
+//     public function getSingleDataByKeyword($column, $keyword)
+// {
+//     if ($this->driver == 'mysql') {
+//         // query untuk mengambil data berdasarkan kolom tertentu
+//         $query = sqlsrv_query(
+//             $this->db,
+//             "SELECT * FROM {$this->table} WHERE {$column} = ?",
+//             [$keyword]
+//         );
         
-        // Periksa apakah query berhasil
-        if ($query === false) {
-            die(print_r(sqlsrv_errors(), true));
-        }
+//         // Periksa apakah query berhasil
+//         if ($query === false) {
+//             die(print_r(sqlsrv_errors(), true));
+//         }
         
-        // Ambil hasil query
-        return sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
-    } else {
-        // query untuk driver lain (contohnya MySQLi)
-        $query = $this->db->prepare("SELECT * FROM {$this->table} WHERE {$column} = ?");
-        $query->bind_param('s', $keyword);
-        $query->execute();
-        return $query->get_result()->fetch_assoc();
-    }
-}
+//         // Ambil hasil query
+//         return sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
+//     } else {
+//         // query untuk driver lain (contohnya MySQLi)
+//         $query = $this->db->prepare("SELECT * FROM {$this->table} WHERE {$column} = ?");
+//         $query->bind_param('s', $keyword);
+//         $query->execute();
+//         return $query->get_result()->fetch_assoc();
+//     }
+// }
 
-    // public function getSingleDataByKeyword($column, $keyword)
-    // {
-    //     if ($this->driver == 'sqlsrv') {
-    //         // query untuk mengambil data berdasarkan id
-    //         $query = $this->db->prepare("select * from {$this->table} where {$column} = ?");
+    public function getSingleDataByKeyword($column, $keyword)
+    {
+        if ($this->driver == 'mysql') {
+            // query untuk mengambil data berdasarkan id
+            $query = $this->db->prepare("select * from {$this->table} where {$column} = ?");
             
-    //         // binding parameter ke query "i" berarti integer. Biar tidak kena SQL Injection
-    //         $query->bind_param('s', $keyword);
-    //         // eksekusi query
-    //         $query->execute();
-    //         return $query->get_result()->fetch_assoc();
-    //     } else {
-    //         // query untuk mengambil data berdasarkan id
-    //         $query = sqlsrv_query($this->db, "select * from {$this->table} where {$column} =
-    //         ?", [$keyword]);
-    //         // ambil hasil query
-    //         return sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
-    //     }
-    // }
+            // binding parameter ke query "i" berarti integer. Biar tidak kena SQL Injection
+            $query->bind_param('s', $keyword);
+            // eksekusi query
+            $query->execute();
+            return $query->get_result()->fetch_assoc();
+        } else {
+            // query untuk mengambil data berdasarkan id
+            $query = sqlsrv_query($this->db, "select * from {$this->table} where {$column} =
+            ?", [$keyword]);
+            // ambil hasil query
+            return sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
+        }
+    }
 }
