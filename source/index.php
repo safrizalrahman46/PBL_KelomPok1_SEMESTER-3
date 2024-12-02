@@ -126,7 +126,7 @@ if ($session->get('is_login') !== true) {
                     include('pages/tenaga_kependidikan.php'); // Halaman untuk tabel dbo.tenaga_kependidikan
                     break;
                 case 'users':
-                    include('pages/users.php'); // Halaman untuk tabel dbo.users
+                    include('pages/Users.php'); // Halaman untuk tabel dbo.users
                     break;
                 case 'violation_level':
                     include('pages/violation_level.php'); // Halaman untuk tabel dbo.violation_level
@@ -137,6 +137,9 @@ if ($session->get('is_login') !== true) {
                 case 'violation_type':
                     include('pages/violation_type.php'); // Halaman untuk tabel dbo.violation_type
                     break;
+                // case 'users':
+                //         include('pages/users.php'); // Halaman untuk tabel dbo.violation_type
+                //         break;
                 default:
                     include('pages/404.php'); // Halaman untuk error 404
                     break;

@@ -181,6 +181,16 @@ fa-search fa-fw"></i></button></div>
                 </a>
             </li>
 
+
+                  <!-- Users -->
+                  <li class="nav-item">
+                <a href="index.php?page=users" class="nav-link">
+                    <i class="nav-icon fas fa-user-tie"></i>
+                    <p>Users</p>
+                </a>
+            </li>
+
+
             <!-- Violation Level -->
             <li class="nav-item">
                 <a href="index.php?page=violation_level" class="nav-link">
