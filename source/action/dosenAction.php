@@ -7,32 +7,34 @@ if ($session->get('is_login') !== true) {
     header('Location: login.php');
 }
 
-include_once('../model/DepartmentModel.php');
+include_once('../model/DosenModel.php');
 include_once('../lib/Secure.php');
 
 $act = isset($_GET['act']) ? strtolower($_GET['act']) : '';
 
 if ($act == 'load') {
-    $department = new DepartmentModel();
-    $data = $department->getData();
+    $dosen = new DosenModel();
+    $data = $dosen->getData();
     $result = [];
     $i = 1;
     foreach ($data as $row) {
         $result['data'][] = [
             $i,
-            $row['name'], // Updated field
-            $row['fakultas_id'], // New field
+            $row['name'],
+            $row['department_id'],
+            $row['email'],
+            $row['NIP'],
+            $row['username'],
             '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id'] . ')"><i class="fa fa-edit"></i></button>  
-             <button class="btn btn-sm btn-danger" 
-onclick="deleteData(' . $row['id'] . ')"><i class="fa fa-trash"></i></button>'
+             <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id'] . ')"><i class="fa fa-trash"></i></button>'
         ];
         $i++;
     }
     echo json_encode($result);
 }
 // if ($act == 'load') {
-//     $department = new DepartmentModel();
-//     $data = $department->getData();
+//     $dosen = new DosenModel();
+//     $data = $dosen->getData();
 //     $result = ['data' => []];
 //     $i = 1;
 //     foreach ($data as $row) {
@@ -53,8 +55,8 @@ onclick="deleteData(' . $row['id'] . ')"><i class="fa fa-trash"></i></button>'
 if ($act == 'get') {
     $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : 0;
 
-    $department = new DepartmentModel();
-    $data = $department->getDataById($id);
+    $dosen = new DosenModel();
+    $data = $dosen->getDataById($id);
     echo json_encode($data);
 }
 
@@ -63,8 +65,8 @@ if ($act == 'save') {
         'name' => antiSqlInjection($_POST['name']),
         'fakultas_id' => antiSqlInjection($_POST['fakultas_id'])
     ];
-    $department = new DepartmentModel();
-    $department->insertData($data);
+    $dosen = new DosenModel();
+    $dosen->insertData($data);
 
     echo json_encode([
         'status' => true,
@@ -79,8 +81,8 @@ if ($act == 'update') {
         'fakultas_id' => antiSqlInjection($_POST['fakultas_id'])
     ];
 
-    $department = new DepartmentModel();
-    $department->updateData($id, $data);
+    $dosen = new DosenModel();
+    $dosen->updateData($id, $data);
 
     echo json_encode([
         'status' => true,
@@ -91,8 +93,8 @@ if ($act == 'update') {
 if ($act == 'delete') {
     $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : 0;
 
-    $department = new DepartmentModel();
-    $department->deleteData($id);
+    $dosen = new DosenModel();
+    $dosen->deleteData($id);
 
     echo json_encode([
         'status' => true,
