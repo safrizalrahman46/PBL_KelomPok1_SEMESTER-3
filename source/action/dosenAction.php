@@ -25,6 +25,7 @@ if ($act == 'load') {
             $row['email'],
             $row['NIP'],
             $row['username'],
+            $row['password'], 
             '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id'] . ')"><i class="fa fa-edit"></i></button>  
              <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id'] . ')"><i class="fa fa-trash"></i></button>'
         ];
@@ -63,7 +64,11 @@ if ($act == 'get') {
 if ($act == 'save') {
     $data = [
         'name' => antiSqlInjection($_POST['name']),
-        'fakultas_id' => antiSqlInjection($_POST['fakultas_id'])
+        'department_id' => antiSqlInjection($_POST['department_id']),
+        'email' => antiSqlInjection($_POST['email']),
+        'NIP' => antiSqlInjection($_POST['NIP']),
+        'username' => antiSqlInjection($_POST['username']),
+        'password' => antiSqlInjection($_POST['password'])
     ];
     $dosen = new DosenModel();
     $dosen->insertData($data);
@@ -78,7 +83,11 @@ if ($act == 'update') {
     $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : 0;
     $data = [
         'name' => antiSqlInjection($_POST['name']),
-        'fakultas_id' => antiSqlInjection($_POST['fakultas_id'])
+        'department_id' => antiSqlInjection($_POST['department_id']),
+        'email' => antiSqlInjection($_POST['email']),
+        'NIP' => antiSqlInjection($_POST['NIP']),
+        'username' => antiSqlInjection($_POST['username']),
+        'password' => antiSqlInjection($_POST['password'])
     ];
 
     $dosen = new DosenModel();
