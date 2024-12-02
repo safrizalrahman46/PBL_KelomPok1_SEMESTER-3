@@ -32,7 +32,7 @@
                     <th>No</th>
                         <th>Nama Admin</th>
                         <th>Email Admin</th>
-                        
+                        <th>Password Admin</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -132,6 +132,13 @@
     $(document).ready(function() {
         tabelData = $('#table-data').DataTable({
             ajax: 'action/adminAction.php?act=load',
+            columns: [
+        { title: "No" },
+        { title: "Nama Admin" },
+        { title: "Email Admin" },
+        { title: "Password Admin" }, // Tambahkan kolom untuk Password Admin
+        { title: "Aksi" }
+    ]
         });
 
         $('#form-tambah').validate({

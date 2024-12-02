@@ -72,13 +72,13 @@ if ($session->get('is_login') !== true) {
                     include('pages/admin.php'); // Halaman untuk tabel dbo.admin
                     break;
                 case 'admin_task_log':
-                    include('pages/admin_task_log.php'); // Halaman untuk tabel dbo.admin_task_log
+                    include('pages/AdminTaskLog.php'); // Halaman untuk tabel dbo.admin_task_log
                     break;
                 case 'department':
                     include('pages/department.php'); // Halaman untuk tabel dbo.department
                     break;
                 case 'dosen':
-                    include('pages/dosen.php'); // Halaman untuk tabel dbo.dosen
+                    include('pages/Dosen.php'); // Halaman untuk tabel dbo.dosen
                     break;
                 case 'dpa':
                     include('pages/dpa.php'); // Halaman untuk tabel dbo.dpa
