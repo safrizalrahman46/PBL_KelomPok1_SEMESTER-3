@@ -130,7 +130,7 @@ if ($session->get('is_login') !== true) {
                     include('pages/Users.php'); // Halaman untuk tabel dbo.users
                     break;
                 case 'violation_level':
-                    include('pages/violation_level.php'); // Halaman untuk tabel dbo.violation_level
+                    include('pages/ViolationLevel.php'); // Halaman untuk tabel dbo.violation_level
                     break;
                 case 'violation_report':
                     include('pages/violation_report.php'); // Halaman untuk tabel dbo.violation_report
