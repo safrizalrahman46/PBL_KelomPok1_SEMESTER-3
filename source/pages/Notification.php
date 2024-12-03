@@ -2,12 +2,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Data Notifikasi </h1>
+                <h1>Notifikasi</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Data Notifikasi </li>
+                    <li class="breadcrumb-item active">Notifikasi</li>
                 </ol>
             </div>
         </div>
@@ -18,7 +18,7 @@
 <section class="content">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Daftar Notifikasi </h3>
+            <h3 class="card-title">Daftar Notifikasi</h3>
             <div class="card-tools">
                 <button type="button" class="btn btn-md btn-primary" onclick="tambahData()">
                     Tambah
@@ -29,13 +29,12 @@
             <table class="table table-sm table-bordered table-striped" id="table-data">
                 <thead>
                     <tr>
-                    <th>No</th>
-                        <th>ID Penerima</th>
+                        <th>No</th>
+                        <th>Penerima ID</th>
                         <th>Pesan</th>
-                        <th>Tanggal Dikirim</th>
-                        <th>Diterima</th>
+                        <th>Tanggal Kirim</th>
+                        <th>Dikonfirmasi</th>
                         <th>Aksi</th>
-                        
                     </tr>
                 </thead>
                 <tbody>
@@ -44,19 +43,14 @@
         </div>
     </div>
 </section>
+
+<!-- Modal untuk form tambah/edit -->
 <div class="modal fade" id="form-data" style="display: none;" aria-hidden="true">
     <form action="action/notificationAction.php?act=save" method="post" id="form-tambah">
-        <!--    Ukuran Modal  
-                modal-sm : Modal ukuran kecil 
-                modal-md : Modal ukuran sedang 
-                modal-lg : Modal ukuran besar 
-                modal-xl : Modal ukuran sangat besar 
-            penerapan setelah class modal-dialog seperti di bawah 
-    -->
         <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Tambah Kelas</h4>
+                    <h4 class="modal-title">Tambah Notifikasi</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
@@ -65,24 +59,22 @@
                     </div>
                     <div class="form-group">
                         <label>Pesan</label>
-                        <input type="text" class="form-control" name="message" id="message">
+                        <textarea class="form-control" name="message" id="message"></textarea>
                     </div>
                     <div class="form-group">
-                        <label>Tanggal Dikirim</label>
+                        <label>Tanggal Kirim</label>
                         <input type="datetime-local" class="form-control" name="date_sent" id="date_sent">
                     </div>
                     <div class="form-group">
-                        <label>Diterima</label>
+                        <label>Dikonfirmasi</label>
                         <select class="form-control" name="acknowledged" id="acknowledged">
-                            <option value="0">Belum Diterima</option>
-                            <option value="1">Diterima</option>
+                            <option value="0">Belum</option>
+                            <option value="1">Ya</option>
                         </select>
                     </div>
                 </div>
-                </div>
                 <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </div>
@@ -107,9 +99,8 @@
             success: function(response) {
                 var data = JSON.parse(response);
                 $('#form-data').modal('show');
-                $('#form-tambah').attr('action',
-                    'action/notificationAction.php?act=update&id=' + id);
-                    $('#recipient_id').val(data.recipient_id);
+                $('#form-tambah').attr('action', 'action/notificationAction.php?act=update&id=' + id);
+                $('#recipient_id').val(data.recipient_id);
                 $('#message').val(data.message);
                 $('#date_sent').val(data.date_sent);
                 $('#acknowledged').val(data.acknowledged);
@@ -118,7 +109,7 @@
     }
 
     function deleteData(id) {
-        if (confirm('Apakah anda yakin?')) {
+        if (confirm('Apakah Anda yakin?')) {
             $.ajax({
                 url: 'action/notificationAction.php?act=delete&id=' + id,
                 method: 'post',
@@ -134,27 +125,10 @@
         }
     }
 
-    
     var tabelData;
     $(document).ready(function() {
         tabelData = $('#table-data').DataTable({
             ajax: 'action/notificationAction.php?act=load',
-            // data: response.data, // Ensure this is the correct path to your data
-            columns: [
-                { title: "No" },
-                { title: "ID Penerima" },
-                { title: "Pesan" },
-                { title: "Tanggal Dikirim" },
-                { title: "Diterima" },
-                { title: "Aksi" }
-            ]
-    //         columns: [
-    //     { title: "No" },
-    //     { title: "Nama Admin" },
-    //     { title: "Email Admin" },
-    //     { title: "Password Admin" }, // Tambahkan kolom untuk Password Admin
-    //     { title: "Aksi" }
-    // ]
         });
 
         $('#form-tambah').validate({
@@ -168,7 +142,8 @@
                     minlength: 5
                 },
                 date_sent: {
-                    required: true
+                    required: true,
+                    date: true
                 },
                 acknowledged: {
                     required: true
@@ -194,7 +169,7 @@
                         var result = JSON.parse(response);
                         if (result.status) {
                             $('#form-data').modal('hide');
-                            tabelData.ajax.reload(); // reload data tabel 
+                            tabelData.ajax.reload();
                         } else {
                             alert(result.message);
                         }
@@ -203,6 +178,4 @@
             }
         });
     });
-
-    
 </script>

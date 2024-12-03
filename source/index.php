@@ -109,13 +109,13 @@ if ($session->get('is_login') !== true) {
                     include('pages/notification.php'); // Halaman untuk tabel dbo.notification
                     break;
                 case 'pelanggaran_mahasiswa':
-                    include('pages/pelanggaran_mahasiswa.php'); // Halaman untuk tabel dbo.pelanggaran_mahasiswa
+                    include('pages/PelanggaranMahasiswa.php'); // Halaman untuk tabel dbo.pelanggaran_mahasiswa
                     break;
                 case 'pelapor':
                     include('pages/pelapor.php'); // Halaman untuk tabel dbo.pelapor
                     break;
                 case 'prodi':
-                    include('pages/prodi.php'); // Halaman untuk tabel dbo.prodi
+                    include('pages/Prodi.php'); // Halaman untuk tabel dbo.prodi
                     break;
                 case 'reward_archive':
                     include('pages/reward_archive.php'); // Halaman untuk tabel dbo.reward_archive
