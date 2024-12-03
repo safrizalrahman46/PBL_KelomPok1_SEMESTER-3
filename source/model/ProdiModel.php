@@ -17,11 +17,11 @@ class ProdiModel extends Model
     public function insertData($data)
     {
         if ($this->driver == 'mysql') {
-            $query = $this->db->prepare("INSERT INTO {$this->table} (nama_prodi, jurusan_id) VALUES (?, ?)");
-            $query->bind_param('si', $data['nama_prodi'], $data['jurusan_id']);
+            $query = $this->db->prepare("INSERT INTO {$this->table} (nama_prodi) VALUES (?)");
+            $query->bind_param('si', $data['nama_prodi']);
             $query->execute();
         } else {
-            sqlsrv_query($this->db, "INSERT INTO {$this->table} (nama_prodi, jurusan_id) VALUES (?, ?)", [
+            sqlsrv_query($this->db, "INSERT INTO {$this->table} (nama_prodi) VALUES (?)", [
                 $data['nama_prodi'],
                 $data['jurusan_id']
             ]);
@@ -58,13 +58,13 @@ class ProdiModel extends Model
     public function updateData($id, $data)
     {
         if ($this->driver == 'mysql') {
-            $query = $this->db->prepare("UPDATE {$this->table} SET nama_prodi = ?, jurusan_id = ? WHERE id_prodi = ?");
-            $query->bind_param('sii', $data['nama_prodi'], $data['jurusan_id'], $id);
+            $query = $this->db->prepare("UPDATE {$this->table} SET nama_prodi = ? WHERE id_prodi = ?");
+            $query->bind_param('sii', $data['nama_prodi'] , $id);
             $query->execute();
         } else {
-            sqlsrv_query($this->db, "UPDATE {$this->table} SET nama_prodi = ?, jurusan_id = ? WHERE id_prodi = ?", [
+            sqlsrv_query($this->db, "UPDATE {$this->table} SET nama_prodi = ? WHERE id_prodi = ?", [
                 $data['nama_prodi'],
-                $data['jurusan_id'],
+                
                 $id
             ]);
         }

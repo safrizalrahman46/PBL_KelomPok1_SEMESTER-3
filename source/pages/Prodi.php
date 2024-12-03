@@ -31,7 +31,7 @@
                     <tr>
                         <th>No</th>
                         <th>Nama Program Studi</th>
-                        <th>Jurusan ID</th>
+                        <!-- <th>Jurusan ID</th> -->
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -55,10 +55,10 @@
                         <label>Nama Program Studi</label>
                         <input type="text" class="form-control" name="nama_prodi" id="nama_prodi" required>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label>Jurusan ID</label>
                         <input type="number" class="form-control" name="jurusan_id" id="jurusan_id">
-                    </div>
+                    </div> -->
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
@@ -74,7 +74,7 @@
         $('#form-data').modal('show');
         $('#form-tambah').attr('action', 'action/prodiAction.php?act=save');
         $('#nama_prodi').val('');
-        $('#jurusan_id').val('');
+        // $('#jurusan_id').val('');
     }
 
     function editData(id) {
@@ -86,7 +86,7 @@
                 $('#form-data').modal('show');
                 $('#form-tambah').attr('action', 'action/prodiAction.php?act=update&id=' + id);
                 $('#nama_prodi').val(data.nama_prodi);
-                $('#jurusan_id').val(data.jurusan_id);
+                // $('#jurusan_id').val(data.jurusan_id);
             }
         });
     }

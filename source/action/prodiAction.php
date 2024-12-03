@@ -20,7 +20,7 @@ if ($act == 'load') {
         $result['data'][] = [
             $i,
             $row['nama_prodi'],
-            $row['jurusan_id'],
+            // $row['jurusan_id'],
             '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_prodi'] . ')"><i class="fa fa-edit"></i></button> 
              <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id_prodi'] . ')"><i class="fa fa-trash"></i></button>'
         ];
@@ -40,7 +40,7 @@ if ($act == 'get') {
 if ($act == 'save') {
     $data = [
         'nama_prodi' => antiSqlInjection($_POST['nama_prodi']),
-        'jurusan_id' => antiSqlInjection($_POST['jurusan_id'])
+        // 'jurusan_id' => antiSqlInjection($_POST['jurusan_id'])
     ];
     $prodi = new ProdiModel();
     $prodi->insertData($data);
@@ -52,7 +52,7 @@ if ($act == 'update') {
     $id = isset($_GET['id']) && ctype_digit($_GET['id']) ? $_GET['id'] : 0;
     $data = [
         'nama_prodi' => antiSqlInjection($_POST['nama_prodi']),
-        'jurusan_id' => antiSqlInjection($_POST['jurusan_id'])
+        // 'jurusan_id' => antiSqlInjection($_POST['jurusan_id'])
     ];
 
     $prodi = new ProdiModel();
