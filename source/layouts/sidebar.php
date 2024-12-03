@@ -46,12 +46,12 @@ fa-search fa-fw"></i></button></div>
             </li>
 
             <!-- Department -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a href="index.php?page=department" class="nav-link">
                     <i class="nav-icon fas fa-building"></i>
                     <p>Department</p>
                 </a>
-            </li>
+            </li> -->
 
             <!-- Dosen -->
             <li class="nav-item">
@@ -70,20 +70,20 @@ fa-search fa-fw"></i></button></div>
             </li>
 
             <!-- Fakultas -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a href="index.php?page=fakultas" class="nav-link">
                     <i class="nav-icon fas fa-university"></i>
                     <p>Fakultas</p>
                 </a>
-            </li>
+            </li> -->
 
             <!-- Jurusan -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a href="index.php?page=jurusan" class="nav-link">
                     <i class="nav-icon fas fa-graduation-cap"></i>
                     <p>Jurusan</p>
                 </a>
-            </li>
+            </li> -->
 
             <!-- Kelas -->
             <li class="nav-item">
@@ -94,28 +94,28 @@ fa-search fa-fw"></i></button></div>
             </li>
 
             <!-- Komisi Discipline Decision -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a href="index.php?page=komisi_discipline_decision" class="nav-link">
                     <i class="nav-icon fas fa-gavel"></i>
                     <p>Komisi Discipline Decision</p>
                 </a>
-            </li>
+            </li> -->
 
             <!-- Komite Disiplin Mahasiswa -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a href="index.php?page=komite_disiplin_mahasiswa" class="nav-link">
                     <i class="nav-icon fas fa-balance-scale"></i>
                     <p>Komite Disiplin Mahasiswa</p>
                 </a>
-            </li>
+            </li> -->
 
             <!-- KPS -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a href="index.php?page=kps" class="nav-link">
                     <i class="nav-icon fas fa-chalkboard-teacher"></i>
                     <p>KPS</p>
                 </a>
-            </li>
+            </li> -->
 
             <!-- Mahasiswa -->
             <li class="nav-item">
@@ -142,12 +142,12 @@ fa-search fa-fw"></i></button></div>
             </li>
 
             <!-- Pelapor -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a href="index.php?page=pelapor" class="nav-link">
                     <i class="nav-icon fas fa-user"></i>
                     <p>Pelapor</p>
                 </a>
-            </li>
+            </li> -->
 
             <!-- Prodi -->
             <li class="nav-item">
@@ -158,28 +158,28 @@ fa-search fa-fw"></i></button></div>
             </li>
 
             <!-- Reward Archive -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a href="index.php?page=reward_archive" class="nav-link">
                     <i class="nav-icon fas fa-archive"></i>
                     <p>Reward Archive</p>
                 </a>
-            </li>
+            </li> -->
 
             <!-- Reward Points -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a href="index.php?page=reward_points" class="nav-link">
                     <i class="nav-icon fas fa-star"></i>
                     <p>Reward Points</p>
                 </a>
-            </li>
+            </li> -->
 
             <!-- Tenaga Kependidikan -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a href="index.php?page=tenaga_kependidikan" class="nav-link">
                     <i class="nav-icon fas fa-user-tie"></i>
                     <p>Tenaga Kependidikan</p>
                 </a>
-            </li>
+            </li> -->
 
 
                   <!-- Users -->
@@ -187,7 +187,7 @@ fa-search fa-fw"></i></button></div>
                 <a href="index.php?page=users" class="nav-link">
                     <i class="nav-icon fas fa-user-tie"></i>
                     <p>Users</p>
-                </a>
+                </a>    
             </li>
 
 
