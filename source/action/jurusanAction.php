@@ -58,11 +58,8 @@ if ($act == 'get') {
 
 if ($act == 'save') {
     $data = [
-        'id_jurusan' => antiSqlInjection($_POST['id_jurusan']),
-        'nama_jurusan' => antiSqlInjection($_POST['nama_jurusan']),
-        'department_id' => antiSqlInjection($_POST['department_id'])
+        'name' => antiSqlInjection($_POST['name'])
     ];
-
     $fakultas = new FakultasModel();
     $fakultas->insertData($data);
 
@@ -75,9 +72,7 @@ if ($act == 'save') {
 if ($act == 'update') {
     $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : 0;
     $data = [
-        'id_jurusan' => antiSqlInjection($_POST['id_jurusan']),
-        'nama_jurusan' => antiSqlInjection($_POST['nama_jurusan']),
-        'department_id' => antiSqlInjection($_POST['department_id'])
+        'name' => antiSqlInjection($_POST['name'])
     ];
 
     $fakultas = new FakultasModel();

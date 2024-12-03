@@ -1,6 +1,6 @@
 <?php
 $use_driver = 'sqlsrv'; // mysql atau sqlsrv
-$host = 'DESKTOP-DV919G1'; // 'localhost';
+$host = 'MSI'; // 'localhost';
 $username = ''; //'sa';
 $password = '';
 $database = 'tatib'; // 'master'
