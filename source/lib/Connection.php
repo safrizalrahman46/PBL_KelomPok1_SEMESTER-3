@@ -22,11 +22,17 @@ if ($use_driver == 'mysql') {
         'PWD' => $password
     ];
     try {
+        echo"<br>mencoba koneksi<br>";
         $db = sqlsrv_connect($host, $credential);
         if (!$db) {
+            echo"<br>Koneksi DB Tidak ada/server mati<br>";
+            
             $msg = sqlsrv_errors();
             die($msg[0]['message']);
+        } else {
+            echo"<br>Koneksi Berhasil<br>";
         }
+
     } catch (Exception $e) {
         die($e->getMessage());
     }

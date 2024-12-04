@@ -13,7 +13,7 @@ class AdminModel extends Model
     }
     public function insertData($data)
     {
-        if ($this->driver == 'mysql') {
+        if ($this->driver == 'sqlsrv') {
             // prepare statement untuk query insert
             $query = $this->db->prepare("insert into {$this->table} (nama_admin, email_admin, password_admin, id_kelas) values(?,?,?,?)");
             // binding parameter ke query, "s" berarti string, "ss" berarti dua string
@@ -27,7 +27,7 @@ class AdminModel extends Model
     }
     public function getData()
     {
-        if ($this->driver == 'mysql') {
+        if ($this->driver == 'sqlsrv') {
             // query untuk mengambil data dari tabel
             return $this->db->query("select * from {$this->table} ")->fetch_all(MYSQLI_ASSOC);
         } else {
@@ -42,7 +42,7 @@ class AdminModel extends Model
     }
     public function getDataById($id)
     {
-        if ($this->driver == 'mysql') {
+        if ($this->driver == 'sqlsrv') {
             // query untuk mengambil data berdasarkan id
             $query = $this->db->prepare("select * from {$this->table} where id_admin =
 ?");
