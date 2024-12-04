@@ -78,9 +78,15 @@ if ($session->get('is_login') === true) {
                             </div>
                         </div> -->
                         <!-- /.col -->
-                        <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                        <div class="d-flex justify-content-between">
+                            <div class="col-4">
+                                <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                            </div>
+                            <div class="col-4">
+                                <a href="http://localhost/PBL_KelomPok1_SEMESTER-3/" class="btn btn-danger btn-block">Back</a>
+                            </div>
                         </div>
+
                         <!-- /.col -->
                     </div>
                 </form>

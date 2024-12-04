@@ -3,7 +3,7 @@ include('Model.php');
 class UserModel extends Model
 {
     protected $db;
-    protected $table = 'users';
+    protected $table = 'tb_users';
     protected $driver;
     public function __construct()
     {
