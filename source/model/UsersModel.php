@@ -160,6 +160,7 @@ public function getTotalRecords()
 //  * @param int    $length       Number of records to fetch
 //  * @param string $searchValue  Search value for filtering
 //  */
+
 public function getFilteredRecords($start, $length, $searchValue)
 {
     if ($this->driver == 'mysql') {
@@ -206,6 +207,52 @@ public function getFilteredRecords($start, $length, $searchValue)
         return $data;
     }
 }
+// public function getFilteredRecords($start, $length, $searchValue)
+// {
+//     if ($this->driver == 'mysql') {
+//         // Build query with search filter
+//         $searchQuery = '';
+//         if (!empty($searchValue)) {
+//             $searchQuery = " WHERE nama LIKE ? OR username LIKE ? OR level LIKE ?";
+//         }
+
+//         // Prepare statement with LIMIT for pagination
+//         $query = $this->db->prepare(
+//             "SELECT * FROM {$this->table}{$searchQuery} LIMIT ?, ?"
+//         );
+
+//         if (!empty($searchValue)) {
+//             $searchValue = '%' . $searchValue . '%';
+//             $query->bind_param('sssii', $searchValue, $searchValue, $searchValue, $start, $length);
+//         } else {
+//             $query->bind_param('ii', $start, $length);
+//         }
+
+//         $query->execute();
+//         return $query->get_result()->fetch_all(MYSQLI_ASSOC);
+//     } else {
+//         // For SQL Server, use OFFSET-FETCH for pagination
+//         $searchQuery = '';
+//         $params = [];
+//         if (!empty($searchValue)) {
+//             $searchQuery = " WHERE nama LIKE ? OR username LIKE ? OR level LIKE ?";
+//             $searchValue = '%' . $searchValue . '%';
+//             $params = [$searchValue, $searchValue, $searchValue];
+//         }
+
+//         $query = sqlsrv_query(
+//             $this->db,
+//             "SELECT * FROM {$this->table}{$searchQuery} ORDER BY user_id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY",
+//             array_merge($params, [$start, $length])
+//         );
+
+//         $data = [];
+//         while ($row = sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC)) {
+//             $data[] = $row;
+//         }
+//         return $data;
+//     }
+// }
 
 
     public function getSingleDataByKeyword($column, $keyword)

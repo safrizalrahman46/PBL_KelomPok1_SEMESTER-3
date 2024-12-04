@@ -1,5 +1,5 @@
 <section class="content-header">
-    <div class ="container-fluid">
+    <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
                 <h1>Pelaporan Pelanggaran</h1>
@@ -59,27 +59,27 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Submitted By</label>
-                        <input type="text" class="form-control" name="submitted_by" id="submitted_by">
+                        <input type="text" class="form-control" name="submitted_by" id="submitted_by" required>
                     </div>
                     <div class="form-group">
                         <label>Violation Type</label>
-                        <input type="text" class="form-control" name="violation_type" id="violation_type">
+                        <input type="text" class="form-control" name="violation_type" id="violation_type" required>
                     </div>
                     <div class="form-group">
                         <label>Report Date</label>
-                        <input type="datetime-local" class="form-control" name="report_date" id="report_date">
+                        <input type="datetime-local" class="form-control" name="report_date" id="report_date" required>
                     </div>
                     <div class="form-group">
                         <label>Status</label>
-                        <input type="text" class="form-control" name="status" id="status">
+                        <input type="text" class="form-control" name="status" id="status" required>
                     </div>
                     <div class="form-group">
                         <label>Reviewed By</label>
-                        <input type="text" class="form-control" name="reviewed_by" id="reviewed_by">
+                        <input type="text" class="form-control" name="reviewed_by" id="reviewed_by" required>
                     </div>
                     <div class="form-group">
                         <label>Resolution Date</label>
-                        <input type="datetime-local" class="form-control" name="resolution_date" id="resolution_date">
+                        <input type="datetime-local" class="form-control" name="resolution_date" id="resolution_date" required>
                     </div>
                     <div class="form-group">
                         <label>Comments</label>
@@ -87,19 +87,19 @@
                     </div>
                     <div class="form-group">
                         <label>DPA Verification Status</label>
-                        <select class="form-control" name="dpa_verification_status" id="dpa_verification_status">
+                        <select class="form-control" name="dpa_verification_status" id="dpa_verification_status" required>
                             <option value="1">Verified</option>
                             <option value="0">Not Verified</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Faculty Involved ID</label>
-                        <input type="text" class="form-control" name="faculty_involved_id" id="faculty_involved_id">
+                        <input type="text" class="form-control" name="faculty_involved_id" id="faculty_involved_id" required>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="submit" class=" btn btn-primary">Simpan</button>
                 </div>
             </div>
         </div>
@@ -107,18 +107,87 @@
 </div>
 
 <script>
+    $(document).ready(function() {
+        $('#form-tambah').validate({
+            rules: {
+                submitted_by: {
+                    required: true
+                },
+                violation_type: {
+                    required: true
+                },
+                report_date: {
+                    required: true
+                },
+                status: {
+                    required: true
+                },
+                reviewed_by: {
+                    required: true
+                },
+                resolution_date: {
+                    required: true
+                },
+                dpa_verification_status: {
+                    required: true
+                },
+                faculty_involved_id: {
+                    required: true
+                }
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            },
+            submitHandler: function(form) {
+                $.ajax({
+                    url: $(form).attr('action'),
+                    method: 'post',
+                    data: $(form).serialize(),
+                    success: function(response) {
+                        var result = JSON.parse(response);
+                        if (result.status) {
+                            $('#form-data').modal('hide');
+                            tabelData.ajax.reload();
+                        } else {
+                            alert(result.message);
+                        }
+                    }
+                });
+            }
+        });
+
+        var tabelData = $('#table-data').DataTable({
+            ajax: 'action/violationReportAction.php?act=load',
+            columns: [
+                { title: "No", data: null, render: function(data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1; // Display row number
+                }},
+                { data: 'submitted_by' },
+                { data: 'violation_type' },
+                { data: 'report_date' },
+                { data: 'status' },
+                { data: 'reviewed_by' },
+                { data: 'resolution_date' },
+                { data: 'comments' },
+                { data: 'dpa_verification_status' },
+                { data: 'faculty_involved_id' },
+                { data: 'action' }
+            ]
+        });
+    });
+
     function tambahData() {
         $('#form-data').modal('show');
-        $('#form-tambah').attr('action', 'action/violationReportAction.php? act=save');
-        $('#submitted_by').val('');
-        $('#violation_type').val('');
-        $('#report_date').val('');
-        $('#status').val('');
-        $('#reviewed_by').val('');
-        $('#resolution_date').val('');
-        $('#comments').val('');
-        $('#dpa_verification_status').val('1');
-        $('#faculty_involved_id').val('');
+        $('#form-tambah').attr('action', 'action/violationReportAction.php?act=save');
+        $('#form-tambah')[0].reset(); // Reset the form fields
     }
 
     function editData(id) {
@@ -158,26 +227,4 @@
             });
         }
     }
-
-    var tabelData;
-    $(document).ready(function() {
-        tabelData = $('#table-data').DataTable({
-            ajax: 'action/violationReportAction.php?act=load',
-            columns: [
-                { title: "No", data: null, render: function(data, type, row, meta) {
-                    return meta.row + meta.settings._iDisplayStart + 1; // Display row number
-                }},
-                { data: 'submitted_by' },
-                { data: 'violation_type' },
-                { data: 'report_date' },
-                { data: 'status' },
-                { data: 'reviewed_by' },
-                { data: 'resolution_date' },
-                { data: 'comments' },
-                { data: 'dpa_verification_status' },
-                { data: 'faculty_involved_id' },
-                { data: 'action' }
-            ]
-        });
-    });
 </script>

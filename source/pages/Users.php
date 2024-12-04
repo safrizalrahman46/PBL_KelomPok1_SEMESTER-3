@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Users</h1>
+                <h1>Users Management</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -29,11 +29,10 @@
             <table class="table table-sm table-bordered table-striped" id="table-data">
                 <thead>
                     <tr>
-                    <th>No</th>
+                        <th>No</th>
                         <th>Nama</th>
                         <th>Username</th>
                         <th>Level</th>
-                        <th>Password</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -43,41 +42,34 @@
         </div>
     </div>
 </section>
+
 <div class="modal fade" id="form-data" style="display: none;" aria-hidden="true">
     <form action="action/usersAction.php?act=save" method="post" id="form-tambah">
-        <!--    Ukuran Modal  
-                modal-sm : Modal ukuran kecil 
-                modal-md : Modal ukuran sedang 
-                modal-lg : Modal ukuran besar 
-                modal-xl : Modal ukuran sangat besar 
-            penerapan setelah class modal-dialog seperti di bawah 
-    -->
         <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Tambah Users</h4>
+                    <h4 class="modal-title">Tambah User</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Nama</label>
-                        <input type="text" class="form-control" name="nama" id="nama">
+                        <input type="text" class="form-control" name="nama" id="nama" required>
                     </div>
                     <div class="form-group">
                         <label>Username</label>
-                        <input type="text" class="form-control" name="username" id="username">
+                        <input type="text" class="form-control" name="username" id="username" required>
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="password" class="form-control" name="password" id="password">
+                        <input type="password" class="form-control" name="password" id="password" required>
                     </div>
                     <div class="form-group">
                         <label>Level</label>
-                        <input type="text" class="form-control" name="level" id="level">
+                        <input type="text" class="form-control" name="level" id="level" required>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </div>
@@ -102,9 +94,8 @@
             success: function(response) {
                 var data = JSON.parse(response);
                 $('#form-data').modal('show');
-                $('#form-tambah').attr('action',
-                    'action/usersAction.php?act=update&id=' + id);
-                    $('#nama').val(data.nama);
+                $('#form-tambah').attr('action', 'action/usersAction.php?act=update&id=' + id);
+                $('#nama').val(data.nama);
                 $('#username').val(data.username);
                 $('#password').val(data.password);
                 $('#level').val(data.level);
@@ -133,14 +124,16 @@
     $(document).ready(function() {
         tabelData = $('#table-data').DataTable({
             ajax: 'action/usersAction.php?act=load',
+            pageLength: 100, //
             columns: [
-            { title: "No" },
-            { title: "Nama" },
-            { title: "Username" },
-            { title: "Level" },
-            { title: "password" },
-            { title: "Aksi" }
-        ]
+                { title: "No", data: null, render: function(data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1; // Display row number
+                }},
+                { data: 'nama' },
+                { data: 'username' },
+                { data: 'level' },
+                { data: 'action' }
+            ]
         });
 
         $('#form-tambah').validate({
@@ -158,8 +151,7 @@
                     minlength: 6
                 },
                 level: {
-                    required: true,
-                    minlength: 1
+                    required: true
                 }
             },
             errorElement: 'span',
@@ -191,6 +183,4 @@
             }
         });
     });
-
-    
 </script>

@@ -12,7 +12,6 @@ include_once('../lib/Secure.php');
 
 $act = isset($_GET['act']) ? strtolower($_GET['act']) : '';
 
-
 if ($act == 'load') {
     // Read DataTables parameters
     $draw = isset($_GET['draw']) ? intval($_GET['draw']) : 1;
@@ -32,13 +31,12 @@ if ($act == 'load') {
     $i = $start + 1;
     foreach ($filteredRecords as $row) {
         $data[] = [
-            $i,
-            htmlspecialchars($row['nama']),
-            htmlspecialchars($row['username']),
-            htmlspecialchars($row['level']),
-            htmlspecialchars($row['password']),
-            '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['user_id'] . ')"><i class="fa fa-edit"></i></button>  
-             <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['user_id'] . ')"><i class="fa fa-trash"></i></button>'
+            'no' => $i, // Add this key for the first column
+            'nama' => htmlspecialchars($row['nama']),
+            'username' => htmlspecialchars($row['username']),
+            'level' => htmlspecialchars($row['level']),
+            'action' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['user_id'] . ')"><i class="fa fa-edit"></i></button>  
+                         <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['user_id'] . ')"><i class="fa fa-trash"></i></button>'
         ];
         $i++;
     }
@@ -47,10 +45,84 @@ if ($act == 'load') {
     echo json_encode([
         'draw' => $draw,
         'recordsTotal' => $totalRecords,
-        'recordsFiltered' => $totalRecords, // Change if filtering logic is applied
-        'data' => $data
+        'recordsFiltered' => count($filteredRecords), // Change this to reflect the number of filtered records
+        'data' => $data // Ensure this key is included
     ]);
 }
+// if ($act == 'load') {
+//     // Read DataTables parameters
+//     $draw = isset($_GET['draw']) ? intval($_GET['draw']) : 1;
+//     $start = isset($_GET['start']) ? intval($_GET['start']) : 0;
+//     $length = isset($_GET['length']) ? intval($_GET['length']) : 10;
+//     $searchValue = isset($_GET['search']['value']) ? $_GET['search']['value'] : '';
+    
+//     $users = new UsersModel();
+
+//     // Fetch total records
+//     $totalRecords = $users->getTotalRecords();
+
+//     // Fetch filtered records
+//     $filteredRecords = $users->getFilteredRecords($start, $length, $searchValue);
+
+//     $data = [];
+//     $i = $start + 1;
+//     foreach ($filteredRecords as $row) {
+//         $data[] = [
+//             'no' => $i, // Add this key for the first column
+//             'nama' => htmlspecialchars($row['nama']),
+//             'username' => htmlspecialchars($row['username']),
+//             'level' => htmlspecialchars($row['level']),
+//             'action' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['user_id'] . ')"><i class="fa fa-edit"></i></button>  
+//                          <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['user_id'] . ')"><i class="fa fa-trash"></i></button>'
+//         ];
+//         $i++;
+//     }
+
+//     // Return response in DataTables format
+//     echo json_encode([
+//         'draw' => $draw,
+//         'recordsTotal' => $totalRecords,
+//         'recordsFiltered' => $totalRecords, // Change if filtering logic is applied 'data' => $data
+//     ]);
+// }
+// if ($act == 'load') {
+//     // Read DataTables parameters
+//     $draw = isset($_GET['draw']) ? intval($_GET['draw']) : 1;
+//     $start = isset($_GET['start']) ? intval($_GET['start']) : 0;
+//     $length = isset($_GET['length']) ? intval($_GET['length']) : 10;
+//     $searchValue = isset($_GET['search']['value']) ? $_GET['search']['value'] : '';
+    
+//     $users = new UsersModel();
+
+//     // Fetch total records
+//     $totalRecords = $users->getTotalRecords();
+
+//     // Fetch filtered records
+//     $filteredRecords = $users->getFilteredRecords($start, $length, $searchValue);
+
+//     $data = [];
+//     $i = $start + 1;
+//     foreach ($filteredRecords as $row) {
+//         $data[] = [
+//             $i,
+//             htmlspecialchars($row['nama']),
+//             htmlspecialchars($row['username']),
+//             htmlspecialchars($row['level']),
+//             htmlspecialchars($row['password']),
+//             '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['user_id'] . ')"><i class="fa fa-edit"></i></button>  
+//              <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['user_id'] . ')"><i class="fa fa-trash"></i></button>'
+//         ];
+//         $i++;
+//     }
+
+//     // Return response in DataTables format
+//     echo json_encode([
+//         'draw' => $draw,
+//         'recordsTotal' => $totalRecords,
+//         'recordsFiltered' => $totalRecords, // Change if filtering logic is applied
+//         'data' => $data
+//     ]);
+// }
 // if ($act == 'load') {
 //     $users = new UsersModel();
 //     $data = $users->getData();
