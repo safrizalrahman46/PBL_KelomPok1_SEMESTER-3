@@ -15,12 +15,12 @@ $act = isset($_GET['act']) ? strtolower($_GET['act']) : '';
 if ($act == 'load') {
     $pelanggaran = new PelanggaranMahasiswaModel();
     $data = $pelanggaran->getData();
-    $result = [];
+    $result = ['data' => []]; // Initialize result with a data array
     $i = 1;
     foreach ($data as $row) {
         $result['data'][] = [
             $i,
-            $row ['mahasiswa_id'],
+            $row['mahasiswa_id'],
             $row['violation_type_id'],
             $row['reported_by'],
             $row['report_date'],
@@ -30,8 +30,28 @@ if ($act == 'load') {
         ];
         $i++;
     }
-    echo json_encode($result);
+    echo json_encode($result); // Return the result
 }
+// if ($act == 'load') {
+//     $pelanggaran = new PelanggaranMahasiswaModel();
+//     $data = $pelanggaran->getData();
+//     $result = [];
+//     $i = 1;
+//     foreach ($data as $row) {
+//         $result['data'][] = [
+//             $i,
+//             $row ['mahasiswa_id'],
+//             $row['violation_type_id'],
+//             $row['reported_by'],
+//             $row['report_date'],
+//             $row['sanction_status'],
+//             '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_pelanggaran'] . ')"><i class="fa fa-edit"></i></button>  
+//              <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id_pelanggaran'] . ')"><i class="fa fa-trash"></i></button>'
+//         ];
+//         $i++;
+//     }
+//     echo json_encode($result);
+// }
 // if ($act == 'load') {
 //     $pelanggaran = new PelanggaranMahasiswaModel();
 //     $data = $pelanggaran->getData();

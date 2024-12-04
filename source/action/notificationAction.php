@@ -15,27 +15,49 @@ $act = isset($_GET['act']) ? strtolower($_GET['act']) : '';
 if ($act == 'load') {
     $notification = new NotificationModel();
     $data = $notification->getData();
-    $result = [];
+    $result = ['data' => []]; // Initialize result with a data array
     $i = 1;
     foreach ($data as $row) {
-        // $statusBadge = $row['status'] === 'Aktif'
-        // ? '<span class="badge badge-pill badge-success">Aktif</span>'
-        // : '<span class="badge badge-pill badge-secondary">Lulus</span>';
-
         $result['data'][] = [
             $i,
             $row['recipient_id'],
             $row['message'],
             $row['date_sent'],
-            $row['acknowledged'] ? 'Diterima' : 'Belum Diterima',
-            // $row['status'],
+            $row['acknowledged'] ,
+            // ? 'Diterima' : 'Belum Diterima',
             '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id'] . ')"><i class="fa fa-edit"></i></button>  
              <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id'] . ')"><i class="fa fa-trash"></i></button>'
         ];
         $i++;
     }
-    echo json_encode($result);
+    echo json_encode($result); // Return the result
+    exit; // Ensure to exit after sending the response
 }
+// if ($act == 'load') {
+//     $notification = new NotificationModel();
+//     $data = $notification->getData();
+//     $result = [];
+//     $i = 1;
+//     foreach ($data as $row) {
+//         // $statusBadge = $row['status'] === 'Aktif'
+//         // ? '<span class="badge badge-pill badge-success">Aktif</span>'
+//         // : '<span class="badge badge-pill badge-secondary">Lulus</span>';
+
+//         $result['data'][] = [
+//             $i,
+//             $row['recipient_id'],
+//             $row['message'],
+//             $row['date_sent'],
+//             $row['acknowledged'] ? 'Diterima' : 'Belum Diterima',
+//             // $row['status'],
+//             '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id'] . ')"><i class="fa fa-edit"></i></button>  
+//              <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id'] . ')"><i class="fa fa-trash"></i></button>'
+//         ];
+//         $i++;
+//     }
+//     echo json_encode($result);
+// }
+
 // if ($act == 'load') {
 //     $notification = new NotificationModel();
 //     $data = $notification->getData();

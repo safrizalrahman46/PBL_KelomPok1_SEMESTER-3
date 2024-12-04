@@ -63,13 +63,13 @@
                     </div>
                     <div class="form-group">
                         <label>Tanggal Kirim</label>
-                        <input type="datetime-local" class="form-control" name="date_sent" id="date_sent">
+                        <input type="date" class="form-control" name="date_sent" id="date_sent">
                     </div>
                     <div class="form-group">
                         <label>Dikonfirmasi</label>
                         <select class="form-control" name="acknowledged" id="acknowledged">
-                            <option value="0">Belum</option>
-                            <option value="1">Ya</option>
+                            <option value="Belum">Belum</option>
+                            <option value="Ya">Ya</option>
                         </select>
                     </div>
                 </div>

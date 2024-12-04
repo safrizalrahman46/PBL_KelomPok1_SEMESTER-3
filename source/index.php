@@ -133,10 +133,10 @@ if ($session->get('is_login') !== true) {
                     include('pages/ViolationLevel.php'); // Halaman untuk tabel dbo.violation_level
                     break;
                 case 'violation_report':
-                    include('pages/violation_report.php'); // Halaman untuk tabel dbo.violation_report
+                    include('pages/ViolationReport.php'); // Halaman untuk tabel dbo.violation_report
                     break;
                 case 'violation_type':
-                    include('pages/violation_type.php'); // Halaman untuk tabel dbo.violation_type
+                    include('pages/ViolationType.php'); // Halaman untuk tabel dbo.violation_type
                     break;
                 // case 'users':
                 //         include('pages/users.php'); // Halaman untuk tabel dbo.violation_type

@@ -25,21 +25,46 @@ class NotificationModel extends Model
             sqlsrv_query($this->db, "insert into {$this->table} (recipient_id, message, date_sent, acknowledged) VALUES (?, ?, ?, ?)", array($data['recipient_id'], $data['message'], $data['date_sent'], $data['acknowledged']));
         }
     }
+
     public function getData()
-    {
-        if ($this->driver == 'mysql') {
-            // query untuk mengambil data dari tabel
-            return $this->db->query("select * from {$this->table} ")->fetch_all(MYSQLI_ASSOC);
-        } else {
-            // query untuk mengambil data dari tabel
-            $query = sqlsrv_query($this->db, "select * from {$this->table}");
-            $data = [];
-            while ($row = sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC)) {
-                $data[] = $row;
-            }
-            return $data;
+{
+    if ($this->driver == 'mysql') {
+        // Query to get data from the table
+        $query = $this->db->query("SELECT * FROM {$this->table}");
+        $data = [];
+        while ($row = $query->fetch_assoc()) {
+            // Format the date_sent field
+            $row['date_sent'] = date('Y-m-d', strtotime($row['date_sent'])); 
+            $data[] = $row;
         }
+        return $data;
+    } else {
+        // Query to get data from the table
+        $query = sqlsrv_query($this->db, "SELECT * FROM {$this->table}");
+        $data = [];
+        while ($row = sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC)) {
+            // Format the date_sent field
+            $row['date_sent'] = $row['date_sent']->format('Y-m-d'); // Adjust format as needed
+            $data[] = $row;
+        }
+        return $data;
     }
+}
+    // public function getData()
+    // {
+    //     if ($this->driver == 'mysql') {
+    //         // query untuk mengambil data dari tabel
+    //         return $this->db->query("select * from {$this->table} ")->fetch_all(MYSQLI_ASSOC);
+    //     } else {
+    //         // query untuk mengambil data dari tabel
+    //         $query = sqlsrv_query($this->db, "select * from {$this->table}");
+    //         $data = [];
+    //         while ($row = sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC)) {
+    //             $data[] = $row;
+    //         }
+    //         return $data;
+    //     }
+    // }
     public function getDataById($id)
     {
         if ($this->driver == 'mysql') {
