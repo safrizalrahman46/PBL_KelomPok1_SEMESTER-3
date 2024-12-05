@@ -14,8 +14,7 @@
         <div class="input-group" data-widget="sidebar-search">
             <input class="form-control form-control-sidebar" type="search"
                 placeholder="Search" aria-label="Search">
-            <div class="input-group-append"><button class="btn btn-sidebar"><i class="fas
-fa-search fa-fw"></i></button></div>
+            <div class="input-group-append"><button class="btn btn-sidebar"><i class="fas fa-search fa-fw"></i></button></div>
         </div>
     </div>
     <!-- Sidebar Menu -->
@@ -37,22 +36,6 @@ fa-search fa-fw"></i></button></div>
                 </a>
             </li>
 
-            <!-- Admin Task Log -->
-            <li class="nav-item">
-                <a href="index.php?page=admin_task_log" class="nav-link">
-                    <i class="nav-icon fas fa-tasks"></i>
-                    <p>Admin Task Log</p>
-                </a>
-            </li>
-
-            <!-- Department -->
-            <!-- <li class="nav-item">
-                <a href="index.php?page=department" class="nav-link">
-                    <i class="nav-icon fas fa-building"></i>
-                    <p>Department</p>
-                </a>
-            </li> -->
-
             <!-- Dosen -->
             <li class="nav-item">
                 <a href="index.php?page=dosen" class="nav-link">
@@ -69,53 +52,44 @@ fa-search fa-fw"></i></button></div>
                 </a>
             </li>
 
-            <!-- Fakultas -->
-            <!-- <li class="nav-item">
-                <a href="index.php?page=fakultas" class="nav-link">
-                    <i class="nav-icon fas fa-university"></i>
-                    <p>Fakultas</p>
-                </a>
-            </li> -->
-
-            <!-- Jurusan -->
-            <!-- <li class="nav-item">
-                <a href="index.php?page=jurusan" class="nav-link">
-                    <i class="nav-icon fas fa-graduation-cap"></i>
-                    <p>Jurusan</p>
-                </a>
-            </li> -->
-
-            <!-- Kelas -->
+            <!-- Jenis Pelanggaran -->
             <li class="nav-item">
-                <a href="index.php?page=kelas" class="nav-link">
-                    <i class="nav-icon fas fa-chalkboard"></i>
-                    <p>Kelas</p>
+                <a href="index.php?page=jenis_pelanggaran" class="nav-link">
+                    <i class="nav-icon fas fa-exclamation-circle"></i>
+                    <p>Jenis Pelanggaran</p>
                 </a>
             </li>
 
-            <!-- Komisi Discipline Decision -->
-            <!-- <li class="nav-item">
-                <a href="index.php?page=komisi_discipline_decision" class="nav-link">
-                    <i class="nav-icon fas fa-gavel"></i>
-                    <p>Komisi Discipline Decision</p>
+            <!-- Lapor Pelanggaran Mahasiswa -->
+            <li class="nav-item">
+                <a href="index.php?page=lapor_pelanggaran_mahasiswa" class="nav-link">
+                    <i class="nav-icon fas fa-file-alt"></i>
+                    <p>Lapor Pelanggaran Mahasiswa</p>
                 </a>
-            </li> -->
+            </li>
 
-            <!-- Komite Disiplin Mahasiswa -->
-            <!-- <li class="nav-item">
-                <a href="index.php?page=komite_disiplin_mahasiswa" class="nav-link">
-                    <i class="nav-icon fas fa-balance-scale"></i>
-                    <p>Komite Disiplin Mahasiswa</p>
+            <!-- Level Pelanggaran -->
+            <li class="nav-item">
+                <a href="index.php?page=level_pelanggaran" class="nav-link">
+                    <i class="nav-icon fas fa-level-up-alt"></i>
+                    <p>Level Pelanggaran</p>
                 </a>
-            </li> -->
+            </li>
 
-            <!-- KPS -->
-            <!-- <li class="nav-item">
-                <a href="index.php?page=kps" class="nav-link">
-                    <i class="nav-icon fas fa-chalkboard-teacher"></i>
-                    <p>KPS</p>
+            <li class="nav-item">
+                <a href="index.php?page=level_pelanggaran" class="nav-link">
+                    <i class="nav-icon fas fa-level-up-alt"></i>
+                    <p>Tipe Pelanggaran</p>
                 </a>
-            </li> -->
+            </li>
+
+            <!-- Log -->
+            <li class="nav-item">
+                <a href="index.php?page=log" class="nav-link">
+                    <i class="nav-icon fas fa-book"></i>
+                    <p>Log Admin</p>
+                </a>
+            </li>
 
             <!-- Mahasiswa -->
             <li class="nav-item">
@@ -125,29 +99,21 @@ fa-search fa-fw"></i></button></div>
                 </a>
             </li>
 
-            <!-- Notification -->
+            <!-- Notifications -->
             <li class="nav-item">
-                <a href="index.php?page=notification" class="nav-link">
+                <a href="index.php?page=notifications" class="nav-link">
                     <i class="nav-icon fas fa-bell"></i>
-                    <p>Notification</p>
+                    <p>Notifications</p>
                 </a>
             </li>
 
-            <!-- Pelanggaran Mahasiswa -->
+            <!-- Notifikasi -->
             <li class="nav-item">
-                <a href="index.php?page=pelanggaran_mahasiswa" class="nav-link">
-                    <i class="nav-icon fas fa-exclamation-circle"></i>
-                    <p>Pelanggaran Mahasiswa</p>
+                <a href="index.php?page=notifikasi" class="nav-link">
+                    <i class="nav-icon fas fa-bell"></i>
+                    <p>Notifikasi</p>
                 </a>
             </li>
-
-            <!-- Pelapor -->
-            <!-- <li class="nav-item">
-                <a href="index.php?page=pelapor" class="nav-link">
-                    <i class="nav-icon fas fa-user"></i>
-                    <p>Pelapor</p>
-                </a>
-            </li> -->
 
             <!-- Prodi -->
             <li class="nav-item">
@@ -157,63 +123,37 @@ fa-search fa-fw"></i></button></div>
                 </a>
             </li>
 
-            <!-- Reward Archive -->
-            <!-- <li class="nav-item">
-                <a href="index.php?page=reward_archive" class="nav-link">
-                    <i class="nav-icon fas fa-archive"></i>
-                    <p>Reward Archive</p>
-                </a>
-            </li> -->
-
-            <!-- Reward Points -->
-            <!-- <li class="nav-item">
-                <a href="index.php?page=reward_points" class="nav-link">
-                    <i class="nav-icon fas fa-star"></i>
-                    <p>Reward Points</p>
-                </a>
-            </li> -->
-
-            <!-- Tenaga Kependidikan -->
-            <!-- <li class="nav-item">
-                <a href="index.php?page=tenaga_kependidikan" class="nav-link">
-                    <i class="nav-icon fas fa-user-tie"></i>
-                    <p>Tenaga Kependidikan</p>
-                </a>
-            </li> -->
-
-
-                  <!-- Users -->
-                  <li class="nav-item">
+            <!-- Users -->
+            <li class="nav-item">
                 <a href="index.php?page=users" class="nav-link">
                     <i class="nav-icon fas fa-user-tie"></i>
                     <p>Users</p>
-                </a>    
-            </li>
-
-
-            <!-- Violation Level -->
-            <li class="nav-item">
-                <a href="index.php?page=violation_level" class="nav-link">
-                    <i class="nav-icon fas fa-level-up-alt"></i>
-                    <p>Violation Level</p>
                 </a>
             </li>
 
+            <!-- Violation Level -->
+            <!-- <li class="nav-item">
+                <a href="index.php?page=violation_level" class="nav-link">
+                    <i class="nav-icon fas fa-level-up-alt"></i>
+                    <p>Level Pelanggaran</p>
+                </a>
+            </li> -->
+
             <!-- Violation Report -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a href="index.php?page=violation_report" class="nav-link">
                     <i class="nav-icon fas fa-file-alt"></i>
                     <p>Violation Report</p>
                 </a>
-            </li>
+            </li> -->
 
             <!-- Violation Type -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a href="index.php?page=violation_type" class="nav-link">
                     <i class="nav-icon fas fa-list"></i>
                     <p>Violation Type</p>
                 </a>
-            </li>
+            </li> -->
             <li class="nav-item">
                 <a href="action/auth.php?act=logout" class="nav-link">
                     <i class="nav-icon fas fa-sign-out-alt"></i>

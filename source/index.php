@@ -70,77 +70,41 @@ if ($session->get('is_login') !== true) {
                     include('pages/dashboard.php');
                     break;
                 case 'admin':
-                    include('pages/admin.php'); // Halaman untuk tabel dbo.admin
-                    break;
-                case 'admin_task_log':
-                    include('pages/AdminTaskLog.php'); // Halaman untuk tabel dbo.admin_task_log
-                    break;
-                case 'department':
-                    include('pages/department.php'); // Halaman untuk tabel dbo.department
+                    include('pages/admin.php'); // Halaman untuk tabel dbo.tb_admin
                     break;
                 case 'dosen':
-                    include('pages/Dosen.php'); // Halaman untuk tabel dbo.dosen
+                    include('pages/dosen.php'); // Halaman untuk tabel dbo.tb_dosen
                     break;
                 case 'dpa':
-                    include('pages/dpa.php'); // Halaman untuk tabel dbo.dpa
+                    include('pages/dpa.php'); // Halaman untuk tabel dbo.tb_dpa
                     break;
-                case 'fakultas':
-                    include('pages/fakultas.php'); // Halaman untuk tabel dbo.fakultas
+                case 'jenis_pelanggaran':
+                    include('pages/jenis_pelanggaran.php'); // Halaman untuk tabel dbo.tb_jenis_pelanggaran
                     break;
-                case 'jurusan':
-                    include('pages/jurusan.php'); // Halaman untuk tabel dbo.jurusan
+                case 'lapor_pelanggaran_mahasiswa':
+                    include('pages/lapor_pelanggaran_mahasiswa.php'); // Halaman untuk tabel dbo.tb_laporpelanggaranmahasiswa
                     break;
-                case 'kelas':
-                    include('pages/kelas.php'); // Halaman untuk tabel dbo.kelas
+                case 'level_pelanggaran':
+                    include('pages/level_pelanggaran.php'); // Halaman untuk tabel dbo.tb_level_pelanggaran
                     break;
-                case 'komisi_discipline_decision':
-                    include('pages/komisi_discipline_decision.php'); // Halaman untuk tabel dbo.komisi_discipline_decision
-                    break;
-                case 'komite_disiplin_mahasiswa':
-                    include('pages/komite_disiplin_mahasiswa.php'); // Halaman untuk tabel dbo.komite_disiplin_mahasiswa
-                    break;
-                case 'kps':
-                    include('pages/kps.php'); // Halaman untuk tabel dbo.kps
+                case 'log':
+                    include('pages/log.php'); // Halaman untuk tabel dbo.tb_log
                     break;
                 case 'mahasiswa':
-                    include('pages/mahasiswa.php'); // Halaman untuk tabel dbo.mahasiswa
+                    include('pages/mahasiswa.php'); // Halaman untuk tabel dbo.tb_mahasiswa
                     break;
-                case 'notification':
-                    include('pages/notification.php'); // Halaman untuk tabel dbo.notification
+                case 'notifications':
+                    include('pages/notifications.php'); // Halaman untuk tabel dbo.tb_notifications
                     break;
-                case 'pelanggaran_mahasiswa':
-                    include('pages/PelanggaranMahasiswa.php'); // Halaman untuk tabel dbo.pelanggaran_mahasiswa
-                    break;
-                case 'pelapor':
-                    include('pages/pelapor.php'); // Halaman untuk tabel dbo.pelapor
+                case 'notifikasi':
+                    include('pages/notifikasi.php'); // Halaman untuk tabel dbo.tb_notifikasi
                     break;
                 case 'prodi':
-                    include('pages/Prodi.php'); // Halaman untuk tabel dbo.prodi
-                    break;
-                case 'reward_archive':
-                    include('pages/reward_archive.php'); // Halaman untuk tabel dbo.reward_archive
-                    break;
-                case 'reward_points':
-                    include('pages/reward_points.php'); // Halaman untuk tabel dbo.reward_points
-                    break;
-                case 'tenaga_kependidikan':
-                    include('pages/tenaga_kependidikan.php'); // Halaman untuk tabel dbo.tenaga_kependidikan
+                    include('pages/prodi.php'); // Halaman untuk tabel dbo.tb_prodi
                     break;
                 case 'users':
-                    include('pages/Users.php'); // Halaman untuk tabel dbo.users
+                    include('pages/users.php'); // Halaman untuk tabel dbo.tb_users
                     break;
-                case 'violation_level':
-                    include('pages/ViolationLevel.php'); // Halaman untuk tabel dbo.violation_level
-                    break;
-                case 'violation_report':
-                    include('pages/ViolationReport.php'); // Halaman untuk tabel dbo.violation_report
-                    break;
-                case 'violation_type':
-                    include('pages/ViolationType.php'); // Halaman untuk tabel dbo.violation_type
-                    break;
-                // case 'users':
-                //         include('pages/users.php'); // Halaman untuk tabel dbo.violation_type
-                //         break;
                 default:
                     include('pages/404.php'); // Halaman untuk error 404
                     break;
