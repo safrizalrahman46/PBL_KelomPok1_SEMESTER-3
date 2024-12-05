@@ -14,22 +14,24 @@ $act = isset($_GET['act']) ? strtolower($_GET['act']) : '';
 
 if ($act == 'load') {
     $admin = new AdminModel();
-    $data = $admin->getData();
+    $data = $admin->getDataForDataTables($_POST);
     $result = [];
     $i = 1;
-    foreach ($data as $row) {
+
+
+    foreach ($data['data'] as $row) {
         $result['data'][] = [
             $i,
             $row['nama_admin'],
             $row['email_admin'],
-            '******',
+            $row['nama_kelas'],
             '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_admin'] . ')"><i class="fa fa-edit"></i></button>  
              <button class="btn btn-sm btn-danger" 
 onclick="deleteData(' . $row['id_admin'] . ')"><i class="fa fa-trash"></i></button>'
         ];
         $i++;
     }
-    echo json_encode($result);
+    echo json_encode($data);
 }
 
 if ($act == 'get') {

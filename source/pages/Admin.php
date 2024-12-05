@@ -3,9 +3,9 @@ require_once('model/KelasModel.php');
 
 
 $classData = new KelasModel();
-$data = $classData->getData();
+$dataKelas = $classData->getData();
 
-print_r($data);
+// print_r($data);
 
 ?>
 
@@ -47,7 +47,7 @@ print_r($data);
                         <th>No</th>
                         <th>Nama Admin</th>
                         <th>Email Admin</th>
-                        <th>Password Admin</th>
+                        <th>Nama Kelas</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -88,7 +88,13 @@ print_r($data);
                         <label>ID Kelas</label>
 
                         <select name="id_kelas" id="id_kelas" class="form-control">
-
+                            <?php 
+                                foreach ($variable as $key => $value) {
+                            ?>  
+                                <option value="<?= $value['id_kelas']; ?>"><?= $value['nama_kelas'] ?></option>
+                            <?php 
+                                }
+                            ?>
                         </select>
                         <!-- <input type="number" class="form-control" name="id_kelas" id="id_kelas"> -->
                     </div>
@@ -149,25 +155,42 @@ print_r($data);
 
     var tabelData;
     $(document).ready(function() {
+        // tabelData = $('#table-data').DataTable({
+        //     ajax: 'action/adminAction.php?act=load',
+        //     columns: [{
+        //             title: "No"
+        //         },
+        //         {
+        //             title: "Nama Admin"
+        //         },
+        //         {
+        //             title: "Email Admin"
+        //         },
+        //         {
+        //             title: "Password Admin"
+        //         }, // Tambahkan kolom untuk Password Admin
+        //         {
+        //             title: "Aksi"
+        //         }
+        //     ]
+        // });
+
+
         tabelData = $('#table-data').DataTable({
-            ajax: 'action/adminAction.php?act=load',
-            columns: [{
-                    title: "No"
-                },
-                {
-                    title: "Nama Admin"
-                },
-                {
-                    title: "Email Admin"
-                },
-                {
-                    title: "Password Admin"
-                }, // Tambahkan kolom untuk Password Admin
-                {
-                    title: "Aksi"
-                }
-            ]
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: 'action/adminAction.php?act=load',
+                type: 'POST',
+            },
+            columns: [
+                { data: 'id_admin' },
+                { data: 'nama_admin' },
+                { data: 'email_admin' },
+                { data: 'nama_kelas' }, // Add nama_kelas
+            ],
         });
+
 
         $('#form-tambah').validate({
             rules: {
