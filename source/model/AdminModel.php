@@ -13,82 +13,78 @@ class AdminModel extends Model
     }
 
     public function getDataForDataTables($request)
-    {
-        // Columns available for ordering and searching
-        $columns = ['id_admin', 'nama_admin', 'email_admin', 'id_kelas', 'nama_kelas']; 
-        
-        // Extract search and pagination parameters
-        $searchValue = isset($request['search']['value']) ? $request['search']['value'] : '';
-        $searchTerm = "%{$searchValue}%";
+{
+    // Columns available for ordering and searching
+    $columns = ['id_admin', 'nama_admin', 'email_admin', 'id_kelas', 'nama_kelas']; 
+
+    // Extract search and pagination parameters
+    $searchValue = isset($request['search']['value']) ? $request['search']['value'] : '';
+    $searchTerm = "%{$searchValue}%";
     
-        $orderColumnIndex = isset($request['order'][0]['column']) ? (int)$request['order'][0]['column'] : 0;
-        $orderDir = isset($request['order'][0]['dir']) && in_array(strtolower($request['order'][0]['dir']), ['asc', 'desc'])
-            ? $request['order'][0]['dir']
-            : 'asc';
+    $orderColumnIndex = isset($request['order'][0]['column']) ? (int)$request['order'][0]['column'] : 0;
+    $orderDir = isset($request['order'][0]['dir']) && in_array(strtolower($request['order'][0]['dir']), ['asc', 'desc'])
+        ? $request['order'][0]['dir']
+        : 'asc';
+
+    $start = isset($request['start']) ? (int)$request['start'] : 0;
+    $length = isset($request['length']) ? (int)$request['length'] : 10;
     
-        $start = isset($request['start']) ? (int)$request['start'] : 0;
-        $length = isset($request['length']) ? (int)$request['length'] : 10;
+    // Ensure column index is valid
+    $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'id_admin';
     
-        // Ensure column index is valid
-        $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'id_admin';
+    // SQL Server query preparation for fetching data
+    $query = "SELECT a.id_admin, a.nama_admin, a.email_admin, k.nama_kelas
+              FROM {$this->table} a
+              LEFT JOIN tb_kelas k ON a.id_kelas = k.id_kelas
+              WHERE a.nama_admin LIKE ? OR a.email_admin LIKE ? OR k.nama_kelas LIKE ?
+              ORDER BY {$orderColumn} {$orderDir}
+              OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+
+    // Prepare parameters for SQL Server
+    $params = [$searchTerm, $searchTerm, $searchTerm, $start, $length];
     
-        // Query preparation
-        $query = "SELECT a.id_admin, a.nama_admin, a.email_admin, k.nama_kelas 
-                  FROM {$this->table} a 
-                  LEFT JOIN tb_kelas k ON a.id_kelas = k.id_kelas
-                  WHERE a.nama_admin LIKE ? OR a.email_admin LIKE ? OR k.nama_kelas LIKE ?
-                  ORDER BY {$orderColumn} {$orderDir}
-                  LIMIT ?, ?";
-        
-        // Fetch data
-        $data = [];
-        if ($this->driver == 'mysql') {
-            $stmt = $this->db->prepare($query);
-            if ($stmt) {
-                $stmt->bind_param('sssii', $searchTerm, $searchTerm, $searchTerm, $start, $length);
-                $stmt->execute();
-                $result = $stmt->get_result();
-                $data = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
-            }
-        } else {
-            // SQL Server (sqlsrv) specific logic (optional, based on your requirements)
-            return [
-                "draw" => intval($request['draw']),
-                "recordsTotal" => 0,
-                "recordsFiltered" => 0,
-                "data" => []
-            ];
+    // Execute the query
+    $stmt = sqlsrv_query($this->db, $query, $params);
+    
+    $data = [];
+    if ($stmt) {
+        while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+            $data[] = $row;
         }
-    
-        // Count total filtered records
-        $queryFiltered = "SELECT COUNT(*) as count FROM {$this->table} a 
-                          LEFT JOIN tb_kelas k ON a.id_kelas = k.id_kelas
-                          WHERE a.nama_admin LIKE ? OR a.email_admin LIKE ? OR k.nama_kelas LIKE ?";
-        $totalFiltered = 0;
-        $stmtFiltered = $this->db->prepare($queryFiltered);
-        if ($stmtFiltered) {
-            $stmtFiltered->bind_param('sss', $searchTerm, $searchTerm, $searchTerm);
-            $stmtFiltered->execute();
-            $resultFiltered = $stmtFiltered->get_result();
-            $totalFiltered = $resultFiltered ? $resultFiltered->fetch_assoc()['count'] : 0;
-        }
-    
-        // Count total records
-        $queryTotal = "SELECT COUNT(*) as count FROM {$this->table}";
-        $totalRecords = 0;
-        $resultTotal = $this->db->query($queryTotal);
-        if ($resultTotal) {
-            $totalRecords = $resultTotal->fetch_assoc()['count'];
-        }
-    
-        // Return data in DataTables format
-        return [
-            "draw" => isset($request['draw']) ? intval($request['draw']) : 0,
-            "recordsTotal" => $totalRecords,
-            "recordsFiltered" => $totalFiltered,
-            "data" => $data
-        ];
     }
+    
+    // Count total filtered records for SQL Server
+    $queryFiltered = "SELECT COUNT(*) as count
+                      FROM {$this->table} a
+                      LEFT JOIN tb_kelas k ON a.id_kelas = k.id_kelas
+                      WHERE a.nama_admin LIKE ? OR a.email_admin LIKE ? OR k.nama_kelas LIKE ?";
+    
+    $stmtFiltered = sqlsrv_query($this->db, $queryFiltered, [$searchTerm, $searchTerm, $searchTerm]);
+    $totalFiltered = 0;
+    if ($stmtFiltered) {
+        $rowFiltered = sqlsrv_fetch_array($stmtFiltered, SQLSRV_FETCH_ASSOC);
+        $totalFiltered = $rowFiltered['count'];
+    }
+    
+    // Count total records for SQL Server
+    $queryTotal = "SELECT COUNT(*) as count FROM {$this->table}";
+    $stmtTotal = sqlsrv_query($this->db, $queryTotal);
+    $totalRecords = 0;
+    if ($stmtTotal) {
+        $rowTotal = sqlsrv_fetch_array($stmtTotal, SQLSRV_FETCH_ASSOC);
+        $totalRecords = $rowTotal['count'];
+    }
+    
+    // Return data in DataTables format
+    return [
+        "draw" => isset($request['draw']) ? intval($request['draw']) : 0,
+        "recordsTotal" => $totalRecords,
+        "recordsFiltered" => $totalFiltered,
+        "data" => $data
+    ];
+}
+
+
     
     
 
