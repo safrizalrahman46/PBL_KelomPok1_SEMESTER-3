@@ -184,10 +184,10 @@ $dataKelas = $classData->getData();
                 type: 'POST',
             },
             columns: [
-                { data: 'id_admin' },
+                { data: 'no' },
                 { data: 'nama_admin' },
                 { data: 'email_admin' },
-                { data: 'nama_kelas' }, // Add nama_kelas
+                { data: 'aksi' }, // Add nama_kelas
             ],
         });
 

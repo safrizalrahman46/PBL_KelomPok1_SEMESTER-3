@@ -15,24 +15,29 @@ $act = isset($_GET['act']) ? strtolower($_GET['act']) : '';
 if ($act == 'load') {
     $admin = new AdminModel();
     $data = $admin->getDataForDataTables($_POST);
-    $result = [];
-    $i = 1;
 
+    // Prepare the response for DataTables
+    $result = [
+        "draw" => intval($_POST['draw']),
+        "recordsTotal" => $data['recordsTotal'], // Total number of records
+        "recordsFiltered" => $data['recordsFiltered'], // Total filtered records
+        "data" => []
+    ];
 
     foreach ($data['data'] as $row) {
         $result['data'][] = [
-            $i,
-            $row['nama_admin'],
-            $row['email_admin'],
-            $row['nama_kelas'],
-            '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_admin'] . ')"><i class="fa fa-edit"></i></button>  
-             <button class="btn btn-sm btn-danger" 
-onclick="deleteData(' . $row['id_admin'] . ')"><i class="fa fa-trash"></i></button>'
+            'no' => ($row+1),
+            'nama_admin' => htmlspecialchars($row['nama_admin']),
+            'email_admin' => htmlspecialchars($row['email_admin']),
+            'nama_kelas' => htmlspecialchars($row['nama_kelas']),
+            'aksi' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_admin'] . ')"><i class="fa fa-edit"></i></button>
+                       <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id_admin'] . ')"><i class="fa fa-trash"></i></button>'
         ];
-        $i++;
     }
-    echo json_encode($data);
+
+    echo json_encode($result);
 }
+
 
 if ($act == 'get') {
     $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : 0;
