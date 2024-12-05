@@ -5,11 +5,12 @@ class UsersModel extends Model
     protected $db;
     protected $table = 'users';
     protected $driver;
-    public function __construct()
+   public function __construct()
     {
-        include('../lib/Connection.php');
-        $this->db = $db;
-        $this->driver = $use_driver;
+        // Get the database instance
+        $database = Database::getInstance();
+        $this->db = $database->getConnection(); // Set the connection resource
+        $this->driver = $database->getDriver(); // Set the driver being used
     }
     public function insertData($data)
     {

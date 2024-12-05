@@ -1,11 +1,9 @@
 <?php 
-require_once('model/KelasModel.php');
+include_once(__DIR__.'/../model/KelasModel.php');
 
 
 $classData = new KelasModel();
 $dataKelas = $classData->getData();
-
-// print_r($data);
 
 ?>
 
@@ -89,7 +87,7 @@ $dataKelas = $classData->getData();
 
                         <select name="id_kelas" id="id_kelas" class="form-control">
                             <?php 
-                                foreach ($variable as $key => $value) {
+                                foreach ($dataKelas as $key => $value) {
                             ?>  
                                 <option value="<?= $value['id_kelas']; ?>"><?= $value['nama_kelas'] ?></option>
                             <?php 
@@ -184,7 +182,7 @@ $dataKelas = $classData->getData();
                 type: 'POST',
             },
             columns: [
-                { data: 'no' },
+                { data: 'id_admin' },
                 { data: 'nama_admin' },
                 { data: 'email_admin' },
                 { data: 'nama_kelas' },

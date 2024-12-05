@@ -1,5 +1,6 @@
 <?php
 include('Model.php');
+include('Database.php');
 
 class ProdiModel extends Model
 {
@@ -7,11 +8,12 @@ class ProdiModel extends Model
     protected $table = 'prodi';
     protected $driver;
 
-    public function __construct()
+  public function __construct()
     {
-       include_once('lib/Connection.php');
-        $this->db = $db;
-        $this->driver = $use_driver;
+        // Get the database instance
+        $database = Database::getInstance();
+        $this->db = $database->getConnection(); // Set the connection resource
+        $this->driver = $database->getDriver(); // Set the driver being used
     }
 
     public function insertData($data)

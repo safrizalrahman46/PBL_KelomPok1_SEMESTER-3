@@ -1,11 +1,10 @@
 <?php
 include('Model.php');
 include('Database.php');
-
-class AdminModel extends Model
+class LogModel extends Model
 {
     protected $db;
-    protected $table = 'tb_admin';
+    protected $table = 'tb_log';
     protected $driver;
    public function __construct()
     {
@@ -18,7 +17,7 @@ class AdminModel extends Model
     public function getDataForDataTables($request)
 {
     // Columns available for ordering and searching
-    $columns = ['id_admin', 'nama_admin', 'email_admin', 'id_kelas', 'nama_kelas']; 
+    $columns = ['id_log', 'admin_id', 'deskripsi_tugas', 'tanggal_tugas']; 
 
     // Extract search and pagination parameters
     $searchValue = isset($request['search']['value']) ? $request['search']['value'] : '';
@@ -33,13 +32,13 @@ class AdminModel extends Model
     $length = isset($request['length']) ? (int)$request['length'] : 10;
     
     // Ensure column index is valid
-    $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'id_admin';
+    $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'id_log';
     
     // SQL Server query preparation for fetching data
-    $query = "SELECT a.id_admin, a.nama_admin, a.email_admin, k.nama_kelas
+    $query = "SELECT a.id_log, a.admin_id, a.deskripsi_tugas, k.nama_kelas
               FROM {$this->table} a
-              LEFT JOIN tb_kelas k ON a.id_kelas = k.id_kelas
-              WHERE a.nama_admin LIKE ? OR a.email_admin LIKE ? OR k.nama_kelas LIKE ?
+              LEFT JOIN tb_kelas k ON a.tanggal_tugas = k.tanggal_tugas
+              WHERE a.admin_id LIKE ? OR a.deskripsi_tugas LIKE ? OR k.nama_kelas LIKE ?
               ORDER BY {$orderColumn} {$orderDir}
               OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
@@ -59,8 +58,8 @@ class AdminModel extends Model
     // Count total filtered records for SQL Server
     $queryFiltered = "SELECT COUNT(*) as count
                       FROM {$this->table} a
-                      LEFT JOIN tb_kelas k ON a.id_kelas = k.id_kelas
-                      WHERE a.nama_admin LIKE ? OR a.email_admin LIKE ? OR k.nama_kelas LIKE ?";
+                      LEFT JOIN tb_kelas k ON a.tanggal_tugas = k.tanggal_tugas
+                      WHERE a.admin_id LIKE ? OR a.deskripsi_tugas LIKE ? OR k.nama_kelas LIKE ?";
     
     $stmtFiltered = sqlsrv_query($this->db, $queryFiltered, [$searchTerm, $searchTerm, $searchTerm]);
     $totalFiltered = 0;
@@ -88,18 +87,24 @@ class AdminModel extends Model
 }
 
 
+    
+    
+
+
+
+
     public function insertData($data)
     {
         if ($this->driver == 'sqlsrv') {
             // prepare statement untuk query insert
-            $query = $this->db->prepare("insert into {$this->table} (nama_admin, email_admin, password_admin, id_kelas) values(?,?,?,?)");
+            $query = $this->db->prepare("insert into {$this->table} (admin_id, deskripsi_tugas, password_admin, tanggal_tugas) values(?,?,?,?)");
             // binding parameter ke query, "s" berarti string, "ss" berarti dua string
-            $query->bind_param('sssi', $data['nama_admin'], $data['email_admin'], $data['password_admin'], $data['id_kelas']);
+            $query->bind_param('sssi', $data['admin_id'], $data['deskripsi_tugas'], $data['password_admin'], $data['tanggal_tugas']);
             // eksekusi query untuk menyimpan ke database
             $query->execute();
         } else {
             // eksekusi query untuk menyimpan ke database
-            sqlsrv_query($this->db, "insert into {$this->table} (nama_admin, email_admin, password_admin, id_kelas) values(?,?,?,?)", array($data['nama_admin'], $data['email_admin'], $data['password_admin'], $data['id_kelas']));
+            sqlsrv_query($this->db, "insert into {$this->table} (admin_id, deskripsi_tugas, password_admin, tanggal_tugas) values(?,?,?,?)", array($data['admin_id'], $data['deskripsi_tugas'], $data['password_admin'], $data['tanggal_tugas']));
         }
     }
     public function getData()
@@ -121,7 +126,7 @@ class AdminModel extends Model
     {
         if ($this->driver == 'sqlsrv') {
             // query untuk mengambil data berdasarkan id
-            $query = $this->db->prepare("select * from {$this->table} where id_admin =
+            $query = $this->db->prepare("select * from {$this->table} where id_log =
 ?");
             // binding parameter ke query "i" berarti integer. Biar tidak kena SQL Injection
             $query->bind_param('i', $id);
@@ -131,7 +136,7 @@ class AdminModel extends Model
             return $query->get_result()->fetch_assoc();
         } else {
             // query untuk mengambil data berdasarkan id
-            $query = sqlsrv_query($this->db, "select * from {$this->table} where id_admin
+            $query = sqlsrv_query($this->db, "select * from {$this->table} where id_log
 = ?", [$id]);
             // ambil hasil query
             return sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
@@ -141,18 +146,18 @@ class AdminModel extends Model
     {
         if ($this->driver == 'mysql') {
             // query untuk update data
-            $query = $this->db->prepare("update {$this->table} set nama_admin = ?, email_admin = ?, password_admin = ?, id_kelas = ? where id_admin = ?");
+            $query = $this->db->prepare("update {$this->table} set admin_id = ?, deskripsi_tugas = ?, password_admin = ?, tanggal_tugas = ? where id_log = ?");
             // binding parameter ke query
-            $query->bind_param('sssii',  $data['nama_admin'], $data['email_admin'], $data['password_admin'], $data['id_kelas'], $id);
+            $query->bind_param('sssii',  $data['admin_id'], $data['deskripsi_tugas'], $data['password_admin'], $data['tanggal_tugas'], $id);
             // eksekusi query
             $query->execute();
         } else {
             // query untuk update data
-            sqlsrv_query($this->db, "update {$this->table} set nama_admin = ?, email_admin = ?, password_admin = ?, id_kelas = ? where id_admin = ?", [
-                $data['nama_admin'],
-                $data['email_admin'],
+            sqlsrv_query($this->db, "update {$this->table} set admin_id = ?, deskripsi_tugas = ?, password_admin = ?, tanggal_tugas = ? where id_log = ?", [
+                $data['admin_id'],
+                $data['deskripsi_tugas'],
                 $data['password_admin'],
-                $data['id_kelas'],
+                $data['tanggal_tugas'],
                 $id
             ]);
         }
@@ -161,7 +166,7 @@ class AdminModel extends Model
     {
         if ($this->driver == 'mysql') {
             // query untuk delete data
-            $query = $this->db->prepare("delete from {$this->table} where id_admin = ?");
+            $query = $this->db->prepare("delete from {$this->table} where id_log = ?");
             // binding parameter ke query
             $query->bind_param('i', $id);
             // eksekusi query
@@ -170,7 +175,7 @@ class AdminModel extends Model
             // query untuk delete data
             sqlsrv_query(
                 $this->db,
-                "delete from {$this->table} where id_admin = ?",
+                "delete from {$this->table} where id_log = ?",
                 [$id]
             );
         }

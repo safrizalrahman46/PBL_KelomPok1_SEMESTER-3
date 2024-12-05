@@ -30,7 +30,7 @@ if ($use_driver == 'mysql') {
             $msg = sqlsrv_errors();
             die($msg[0]['message']);
         } else {
-            // echo"<br>Koneksi Berhasil<br>";
+            echo"<br>Koneksi Berhasil<br>";
         }
 
     } catch (Exception $e) {

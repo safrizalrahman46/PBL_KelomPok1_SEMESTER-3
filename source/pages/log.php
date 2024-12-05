@@ -17,12 +17,12 @@ $dataKelas = $classData->getData();
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Kelas</h1>
+                <h1>Admin</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Kelas</li>
+                    <li class="breadcrumb-item active">Admin</li>
                 </ol>
             </div>
         </div>
@@ -33,7 +33,7 @@ $dataKelas = $classData->getData();
 <section class="content">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Daftar Kelas</h3>
+            <h3 class="card-title">Daftar Admin</h3>
             <div class="card-tools">
                 <button type="button" class="btn btn-md btn-primary" onclick="tambahData()">
                     Tambah
@@ -45,8 +45,9 @@ $dataKelas = $classData->getData();
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Nama Kelas</th>
-                        <th>Nama Dpa</th>
+                        <th>Nama Admin</th>
+                        <th>Deskripsi Tugas</th>
+                        <th>Tanggal Tugas</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -57,7 +58,7 @@ $dataKelas = $classData->getData();
     </div>
 </section>
 <div class="modal fade" id="form-data" style="display: none;" aria-hidden="true">
-    <form action="action/kelasAction.php?act=save" method="post" id="form-tambah">
+    <form action="action/logAction.php?act=save" method="post" id="form-tambah">
         <!--    Ukuran Modal  
                 modal-sm : Modal ukuran kecil 
                 modal-md : Modal ukuran sedang 
@@ -73,15 +74,15 @@ $dataKelas = $classData->getData();
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Nama Admin</label>
-                        <input type="text" class="form-control" name="nama_kelas" id="nama_kelas">
+                        <input type="text" class="form-control" name="admin_id" id="admin_id">
                     </div>
                     <div class="form-group">
                         <label>Email Admin</label>
-                        <input type="email" class="form-control" name="nama_dpa" id="nama_dpa">
+                        <input type="email" class="form-control" name="deskripsi_tugas" id="deskripsi_tugas">
                     </div>
                     <div class="form-group">
                         <label>Password Admin</label>
-                        <input type="password" class="form-control" name="password_admin" id="password_admin">
+                        <input type="password" class="form-control" name="tanggal_tugas" id="tanggal_tugas">
                     </div>
                     <div class="form-group">
                         <label>ID Kelas</label>
@@ -111,24 +112,26 @@ $dataKelas = $classData->getData();
 <script>
     function tambahData() {
         $('#form-data').modal('show');
-        $('#form-tambah').attr('action', 'action/kelasAction.php?act=save');
-        $('#nama_kelas').val('');
-        $('#nama_dpa').val('');
-
+        $('#form-tambah').attr('action', 'action/logAction.php?act=save');
+        $('#admin_id').val('');
+        $('#deskripsi_tugas').val('');
+        $('#tanggal_tugas').val('');
+     
     }
 
     function editData(id) {
         $.ajax({
-            url: 'action/kelasAction.php?act=get&id=' + id,
+            url: 'action/logAction.php?act=get&id=' + id,
             method: 'post',
             success: function(response) {
                 var data = JSON.parse(response);
                 $('#form-data').modal('show');
                 $('#form-tambah').attr('action',
-                    'action/kelasAction.php?act=update&id=' + id);
-                $('#nama_kelas').val(data.nama_kelas);
-                $('#nama_dpa').val(data.nama_dpa);
-     
+                    'action/logAction.php?act=update&id=' + id);
+                $('#admin_id').val(data.admin_id);
+                $('#deskripsi_tugas').val(data.deskripsi_tugas);
+                $('#tanggal_tugas').val(data.tanggal_tugas);
+   
             }
         });
     }
@@ -136,7 +139,7 @@ $dataKelas = $classData->getData();
     function deleteData(id) {
         if (confirm('Apakah anda yakin?')) {
             $.ajax({
-                url: 'action/kelasAction.php?act=delete&id=' + id,
+                url: 'action/logAction.php?act=delete&id=' + id,
                 method: 'post',
                 success: function(response) {
                     var result = JSON.parse(response);
@@ -153,7 +156,7 @@ $dataKelas = $classData->getData();
     var tabelData;
     $(document).ready(function() {
         // tabelData = $('#table-data').DataTable({
-        //     ajax: 'action/kelasAction.php?act=load',
+        //     ajax: 'action/logAction.php?act=load',
         //     columns: [{
         //             title: "No"
         //         },
@@ -177,37 +180,34 @@ $dataKelas = $classData->getData();
             processing: true,
             serverSide: true,
             ajax: {
-                url: 'action/kelasAction.php?act=load',
+                url: 'action/logAction.php?act=load',
                 type: 'POST',
             },
             columns: [
                 { data: 'no' },
+                { data: 'admin_id' },
+                { data: 'deskripsi_tugas' },
                 { data: 'nama_kelas' },
-                { data: 'nama_dpa' },
-                { data: 'aksi' },
-                 // Add nama_kelas
+                { data: 'aksi' }, // Add nama_kelas
             ],
         });
 
 
         $('#form-tambah').validate({
             rules: {
-                nama_kelas: {
+                admin_id: {
                     required: true,
                     minlength: 3
                 },
-                nama_dpa: {
+                deskripsi_tugas: {
                     required: true,
                     email: true
                 },
-                password_admin: {
+                tanggal_tugas: {
                     required: true,
                     minlength: 4
                 },
-                id_kelas: {
-                    required: true,
-                    digits: true
-                }
+           
             },
             errorElement: 'span',
             errorPlacement: function(error, element) {
