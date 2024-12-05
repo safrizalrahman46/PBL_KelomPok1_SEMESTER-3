@@ -22,7 +22,7 @@ if ($act == 'load') {
             $i,
             $row['nama_admin'],
             $row['email_admin'],
-            '******', 
+            '******',
             '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_admin'] . ')"><i class="fa fa-edit"></i></button>  
              <button class="btn btn-sm btn-danger" 
 onclick="deleteData(' . $row['id_admin'] . ')"><i class="fa fa-trash"></i></button>'
@@ -59,7 +59,7 @@ if ($act == 'save') {
 if ($act == 'update') {
     $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : 0;
     $data = [
-     'nama_admin' => antiSqlInjection($_POST['nama_admin']),
+        'nama_admin' => antiSqlInjection($_POST['nama_admin']),
         'email_admin' => antiSqlInjection($_POST['email_admin']),
         'password_admin' => antiSqlInjection($_POST['password_admin']),
         'id_kelas' => antiSqlInjection($_POST['id_kelas'])

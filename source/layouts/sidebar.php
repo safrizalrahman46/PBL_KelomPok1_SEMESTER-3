@@ -36,6 +36,13 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a href="index.php?page=log" class="nav-link">
+                    <i class="nav-icon fas fa-user-shield"></i>
+                    <p>log</p>
+                </a>
+            </li>
+
             <!-- Dosen -->
             <li class="nav-item">
                 <a href="index.php?page=dosen" class="nav-link">
@@ -44,19 +51,26 @@
                 </a>
             </li>
 
-            <!-- DPA -->
+            <!-- DPA
             <li class="nav-item">
                 <a href="index.php?page=dpa" class="nav-link">
                     <i class="nav-icon fas fa-users"></i>
                     <p>DPA</p>
                 </a>
-            </li>
+            </li> -->
 
             <!-- Jenis Pelanggaran -->
             <li class="nav-item">
                 <a href="index.php?page=jenis_pelanggaran" class="nav-link">
                     <i class="nav-icon fas fa-exclamation-circle"></i>
                     <p>Jenis Pelanggaran</p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="index.php?page=tingkat_pelanggaran" class="nav-link">
+                    <i class="nav-icon fas fa-exclamation-circle"></i>
+                    <p>Tingkat Pelanggaran</p>
                 </a>
             </li>
 
@@ -69,27 +83,27 @@
             </li>
 
             <!-- Level Pelanggaran -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a href="index.php?page=level_pelanggaran" class="nav-link">
                     <i class="nav-icon fas fa-level-up-alt"></i>
                     <p>Level Pelanggaran</p>
                 </a>
-            </li>
+            </li> -->
 
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a href="index.php?page=level_pelanggaran" class="nav-link">
-                    <i class="nav-icon fas fa-level-up-alt"></i>
+                    <i class="nav-icon fas fa-'level'-up-alt"></i>
                     <p>Tipe Pelanggaran</p>
                 </a>
-            </li>
+            </li> -->
 
             <!-- Log -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a href="index.php?page=log" class="nav-link">
                     <i class="nav-icon fas fa-book"></i>
                     <p>Log Admin</p>
                 </a>
-            </li>
+            </li> -->
 
             <!-- Mahasiswa -->
             <li class="nav-item">
@@ -100,12 +114,12 @@
             </li>
 
             <!-- Notifications -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a href="index.php?page=notifications" class="nav-link">
                     <i class="nav-icon fas fa-bell"></i>
                     <p>Notifications</p>
                 </a>
-            </li>
+            </li> -->
 
             <!-- Notifikasi -->
             <li class="nav-item">

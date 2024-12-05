@@ -48,7 +48,7 @@ if ($session->get('is_login') !== true) {
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="../adminlte/index3.html" class="brand-link">
+            <a href="../source/index.php" class="brand-link">
                 <img src="../source/img/JTI.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">JTI MELAPOR</span>
             </a>
@@ -75,9 +75,6 @@ if ($session->get('is_login') !== true) {
                 case 'dosen':
                     include('pages/dosen.php'); // Halaman untuk tabel dbo.tb_dosen
                     break;
-                case 'dpa':
-                    include('pages/dpa.php'); // Halaman untuk tabel dbo.tb_dpa
-                    break;
                 case 'jenis_pelanggaran':
                     include('pages/jenis_pelanggaran.php'); // Halaman untuk tabel dbo.tb_jenis_pelanggaran
                     break;
@@ -92,9 +89,6 @@ if ($session->get('is_login') !== true) {
                     break;
                 case 'mahasiswa':
                     include('pages/mahasiswa.php'); // Halaman untuk tabel dbo.tb_mahasiswa
-                    break;
-                case 'notifications':
-                    include('pages/notifications.php'); // Halaman untuk tabel dbo.tb_notifications
                     break;
                 case 'notifikasi':
                     include('pages/notifikasi.php'); // Halaman untuk tabel dbo.tb_notifikasi
@@ -112,36 +106,7 @@ if ($session->get('is_login') !== true) {
             ?>
 
             <!-- Main content -->
-            <section class="content">
 
-                <!-- Default box -->
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Title</h3>
-
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        Selamat Datang Administrator. Anda login sebagai admin.
-                        <br>
-                        Start creating your amazing application!
-                    </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer">
-                        Footer
-                    </div>
-                    <!-- /.card-footer-->
-                </div>
-                <!-- /.card -->
-
-            </section>
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
