@@ -57,7 +57,7 @@ class UserModel extends Model
     {
         if ($this->driver == 'mysql') {
             // query untuk mengambil data berdasarkan id
-            $query = $this->db->prepare("select * from {$this->table} where user_id = ?");
+            $query = $this->db->prepare("select * from {$this->table} where id_users = ?");
             // binding parameter ke query "i" berarti integer. Biar tidak kena SQL Injection
             $query->bind_param('i', $id);
             // eksekusi query
@@ -66,7 +66,7 @@ class UserModel extends Model
             return $query->get_result()->fetch_assoc();
         } else {
             // query untuk mengambil data berdasarkan id
-            $query = sqlsrv_query($this->db, "select * from {$this->table} where user_id =
+            $query = sqlsrv_query($this->db, "select * from {$this->table} where id_users =
     ?", [$id]);
             // ambil hasil query
             return sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
@@ -77,7 +77,7 @@ class UserModel extends Model
         if ($this->driver == 'mysql') {
             // query untuk update data
             $query = $this->db->prepare("update {$this->table} set nama = ?, username = ?,
-            password = ?, level = ? where user_id = ?");
+            password = ?, level = ? where id_users = ?");
             // binding parameter ke query
             $query->bind_param(
                 'ssssi',
@@ -92,7 +92,7 @@ class UserModel extends Model
         } else {
             // query untuk update data
             sqlsrv_query($this->db, "update {$this->table} set nama = ?, username = ?, password
-            = ?, level = ? where user_id = ?", [
+            = ?, level = ? where id_users = ?", [
                 $data['nama'],
                 $data['username'],
                 $data['level'],
@@ -105,14 +105,14 @@ class UserModel extends Model
     {
         if ($this->driver == 'mysql') {
             // query untuk delete data
-            $query = $this->db->prepare("delete from {$this->table} where user_id = ?");
+            $query = $this->db->prepare("delete from {$this->table} where id_users = ?");
             // binding parameter ke query
             $query->bind_param('i', $id);
             // eksekusi query
             $query->execute();
         } else {
             // query untuk delete data
-            sqlsrv_query($this->db, "delete from {$this->table} where user_id = ?", [$id]);
+            sqlsrv_query($this->db, "delete from {$this->table} where id_users = ?", [$id]);
         }
     }
 //     public function getSingleDataByKeyword($column, $keyword)
