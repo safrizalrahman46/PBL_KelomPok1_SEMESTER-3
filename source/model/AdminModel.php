@@ -7,7 +7,7 @@ class AdminModel extends Model
     protected $driver;
     public function __construct()
     {
-        include_once('../lib/Connection.php');
+       include_once('lib/Connection.php');
         $this->db = $db;
         $this->driver = $use_driver;
     }

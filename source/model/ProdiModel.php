@@ -9,7 +9,7 @@ class ProdiModel extends Model
 
     public function __construct()
     {
-        include_once('../lib/Connection.php');
+       include_once('lib/Connection.php');
         $this->db = $db;
         $this->driver = $use_driver;
     }

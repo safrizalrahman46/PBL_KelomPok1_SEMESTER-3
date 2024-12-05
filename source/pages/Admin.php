@@ -1,3 +1,18 @@
+<?php 
+require_once('model/KelasModel.php');
+
+
+$classData = new KelasModel();
+$data = $classData->getData();
+
+print_r($data);
+
+?>
+
+
+
+
+
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -29,7 +44,7 @@
             <table class="table table-sm table-bordered table-striped" id="table-data">
                 <thead>
                     <tr>
-                    <th>No</th>
+                        <th>No</th>
                         <th>Nama Admin</th>
                         <th>Email Admin</th>
                         <th>Password Admin</th>
@@ -71,11 +86,15 @@
                     </div>
                     <div class="form-group">
                         <label>ID Kelas</label>
-                        <input type="number" class="form-control" name="id_kelas" id="id_kelas">
+
+                        <select name="id_kelas" id="id_kelas" class="form-control">
+
+                        </select>
+                        <!-- <input type="number" class="form-control" name="id_kelas" id="id_kelas"> -->
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
 
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
@@ -132,13 +151,22 @@
     $(document).ready(function() {
         tabelData = $('#table-data').DataTable({
             ajax: 'action/adminAction.php?act=load',
-            columns: [
-        { title: "No" },
-        { title: "Nama Admin" },
-        { title: "Email Admin" },
-        { title: "Password Admin" }, // Tambahkan kolom untuk Password Admin
-        { title: "Aksi" }
-    ]
+            columns: [{
+                    title: "No"
+                },
+                {
+                    title: "Nama Admin"
+                },
+                {
+                    title: "Email Admin"
+                },
+                {
+                    title: "Password Admin"
+                }, // Tambahkan kolom untuk Password Admin
+                {
+                    title: "Aksi"
+                }
+            ]
         });
 
         $('#form-tambah').validate({
@@ -189,6 +217,4 @@
             }
         });
     });
-
-    
 </script>

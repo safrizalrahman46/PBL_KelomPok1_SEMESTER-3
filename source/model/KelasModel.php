@@ -3,11 +3,12 @@ include('Model.php');
 class KelasModel extends Model
 {
     protected $db;
-    protected $table = 'kelas';
+    protected $table = 'tb_kelas';
     protected $driver;
     public function __construct()
     {
-        include_once('../lib/Connection.php');
+
+        include_once('lib/Connection.php');
         $this->db = $db;
         $this->driver = $use_driver;
     }

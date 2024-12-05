@@ -13,7 +13,7 @@ if ($session->get('is_login') !== true) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <title>JTI MELAPOR</title>
 
 
@@ -81,8 +81,8 @@ if ($session->get('is_login') !== true) {
                 case 'lapor_pelanggaran_mahasiswa':
                     include('pages/lapor_pelanggaran_mahasiswa.php'); // Halaman untuk tabel dbo.tb_laporpelanggaranmahasiswa
                     break;
-                case 'level_pelanggaran':
-                    include('pages/level_pelanggaran.php'); // Halaman untuk tabel dbo.tb_level_pelanggaran
+                case 'tingkat_pelanggaran':
+                    include('pages/tingkat_pelanggaran.php'); // Halaman untuk tabel dbo.tb_tingkat_pelanggaran
                     break;
                 case 'log':
                     include('pages/log.php'); // Halaman untuk tabel dbo.tb_log
@@ -98,6 +98,9 @@ if ($session->get('is_login') !== true) {
                     break;
                 case 'users':
                     include('pages/users.php'); // Halaman untuk tabel dbo.tb_users
+                    break;
+                case 'kelas':
+                    include('pages/kelas.php'); // Halaman untuk tabel dbo.tb_kelas
                     break;
                 default:
                     include('pages/404.php'); // Halaman untuk error 404
@@ -148,7 +151,7 @@ responsive/js/responsive.bootstrap4.min.js"></script>
 
     <script src="../adminlte/dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
-    <script src="../adminlte/dist/js/demo.js"></script>
+    <!-- <script src="../adminlte/dist/js/demo.js"></script> -->
 </body>
 
 </html>
