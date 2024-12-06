@@ -76,13 +76,13 @@ if ($session->get('is_login') !== true) {
                     include('pages/dosen.php'); // Halaman untuk tabel dbo.tb_dosen
                     break;
                 case 'jenis_pelanggaran':
-                    include('pages/jenis_pelanggaran.php'); // Halaman untuk tabel dbo.tb_jenis_pelanggaran
+                    include('pages/jenispelanggaran.php'); // Halaman untuk tabel dbo.tb_jenis_pelanggaran
                     break;
                 case 'lapor_pelanggaran_mahasiswa':
-                    include('pages/lapor_pelanggaran_mahasiswa.php'); // Halaman untuk tabel dbo.tb_laporpelanggaranmahasiswa
+                    include('pages/lapor.php'); // Halaman untuk tabel dbo.tb_laporpelanggaranmahasiswa
                     break;
                 case 'tingkat_pelanggaran':
-                    include('pages/tingkat_pelanggaran.php'); // Halaman untuk tabel dbo.tb_tingkat_pelanggaran
+                    include('pages/tingkatpelanggaran.php'); // Halaman untuk tabel dbo.tb_tingkat_pelanggaran
                     break;
                 case 'log':
                     include('pages/log.php'); // Halaman untuk tabel dbo.tb_log

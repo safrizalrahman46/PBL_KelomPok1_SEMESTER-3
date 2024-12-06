@@ -7,18 +7,18 @@ if ($session->get('is_login') !== true) {
     header('Location: login.php');
 }
 
-include_once('../model/DosenModel.php');
+include_once('../model/JenisPelanggaranModel.php');
 include_once('../lib/Secure.php');
 
 $act = isset($_GET['act']) ? strtolower($_GET['act']) : '';
 
 if ($act == 'load') {
-    $admin = new DosenModel();
+    $admin = new JenisPelanggaranModel();
     $data = $admin->getDataForDataTables($_POST);
 
     // Prepare the response for DataTables
     $result = [
-        "draw" => isset($_POST['draw']) ? intval($_POST['draw']) : 0, // Check if 'draw' is set
+        "draw" => intval($_POST['draw']),
         "recordsTotal" => $data['recordsTotal'], // Total number of records
         "recordsFiltered" => $data['recordsFiltered'], // Total filtered records
         "data" => []
@@ -27,13 +27,21 @@ if ($act == 'load') {
     foreach ($data['data'] as $index => $row) {
         $result['data'][] = [
             'no' => ($index + 1), // Use $index instead of $row
-            'nama' => htmlspecialchars($row['nama']),
-            'email' => htmlspecialchars($row['email']),
-            'id_users' => htmlspecialchars($row['id_users']),
-            'aksi' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['nip'] . ')"><i class="fa fa-edit"></i></button>
-                       <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['nip'] . ')"><i class="fa fa-trash"></i></button>'
+            'deskripsi' => htmlspecialchars($row['deskripsi']),
+            'id_tingkat' => htmlspecialchars($row['id_tingkat']),
+            'aksi' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_tingkat_pelanggaran'] . ')"><i class="fa fa-edit"></i></button>
+                       <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id_tingkat_pelanggaran'] . ')"><i class="fa fa-trash"></i></button>'
         ];
     }
+    // foreach ($data['data'] as $row) {
+    //     $result['data'][] = [
+    //         'no' => ($row+1),
+    //         'deskripsi' => htmlspecialchars($row['deskripsi']),
+    //         'id_tingkat' => htmlspecialchars($row['id_tingkat']),
+    //         'aksi' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_kelas'] . ')"><i class="fa fa-edit"></i></button>
+    //                    <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id_kelas'] . ')"><i class="fa fa-trash"></i></button>'
+    //     ];
+    // }
 
     echo json_encode($result);
 }
@@ -42,19 +50,19 @@ if ($act == 'load') {
 if ($act == 'get') {
     $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : 0;
 
-    $admin = new DosenModel();
+    $admin = new JenisPelanggaranModel();
     $data = $admin->getDataById($id);
     echo json_encode($data);
 }
 
 if ($act == 'save') {
     $data = [
-        'nama' => antiSqlInjection($_POST['nama']),
-        'email' => antiSqlInjection($_POST['email']),
+        'deskripsi' => antiSqlInjection($_POST['deskripsi']),
+        'id_tingkat' => antiSqlInjection($_POST['id_tingkat']),
         'password_admin' => antiSqlInjection($_POST['password_admin']),
         // 'id_kelas' => antiSqlInjection($_POST['id_kelas'])
     ];
-    $admin = new DosenModel();
+    $admin = new JenisPelanggaranModel();
     $admin->insertData($data);
 
     echo json_encode([
@@ -66,13 +74,13 @@ if ($act == 'save') {
 if ($act == 'update') {
     $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : 0;
     $data = [
-        'nama' => antiSqlInjection($_POST['nama']),
-        'email' => antiSqlInjection($_POST['email']),
+        'deskripsi' => antiSqlInjection($_POST['deskripsi']),
+        'id_tingkat' => antiSqlInjection($_POST['id_tingkat']),
         'password_admin' => antiSqlInjection($_POST['password_admin']),
         // 'id_kelas' => antiSqlInjection($_POST['id_kelas'])
     ];
 
-    $admin = new DosenModel();
+    $admin = new JenisPelanggaranModel();
     $admin->updateData($id, $data);
 
     echo json_encode([
@@ -84,7 +92,7 @@ if ($act == 'update') {
 if ($act == 'delete') {
     $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : 0;
 
-    $admin = new DosenModel();
+    $admin = new JenisPelanggaranModel();
     $admin->deleteData($id);
 
     echo json_encode([

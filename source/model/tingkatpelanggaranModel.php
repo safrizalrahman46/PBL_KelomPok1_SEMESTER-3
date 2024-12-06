@@ -2,10 +2,10 @@
 include('Model.php');
 include('Database.php');
 
-class KelasModel extends Model
+class TingkatpelanggaranModel extends Model
 {
     protected $db;
-    protected $table = 'tb_kelas';
+    protected $table = 'tb_tingkat_pelanggaran';
     protected $driver;
     public function __construct()
     {
@@ -17,41 +17,41 @@ class KelasModel extends Model
     public function getDataForDataTables($request)
     {
         // Columns available for ordering and searching
-        $columns = ['id_kelas', 'nama_kelas', 'nama_dpa'];
-
+        $columns = ['id_tingkat_pelanggaran', 'nama_tingkat', 'deskripsi'];
+    
         // Extract search and pagination parameters
         $searchValue = isset($request['search']['value']) ? $request['search']['value'] : '';
         $searchTerm = "%{$searchValue}%";
-
-        $orderColumnIndex = isset($request['order'][0]['column']) ? (int) $request['order'][0]['column'] : 0;
+    
+        $orderColumnIndex = isset($request['order'][0]['column']) ? (int)$request['order'][0]['column'] : 0;
         $orderDir = isset($request['order'][0]['dir']) && in_array(strtolower($request['order'][0]['dir']), ['asc', 'desc'])
             ? $request['order'][0]['dir']
             : 'asc';
-
-        $start = isset($request['start']) ? (int) $request['start'] : 0;
-        $length = isset($request['length']) ? (int) $request['length'] : 10;
-
+    
+        $start = isset($request['start']) ? (int)$request['start'] : 0;
+        $length = isset($request['length']) ? (int)$request['length'] : 10;
+    
         // Ensure column index is valid
-        $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'id_kelas';
-
+        $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'id_tingkat_pelanggaran';
+    
         // SQL Server query preparation for fetching data
-        $query = "SELECT * from {$this->table} WHERE nama_kelas LIKE ? OR nama_dpa LIKE ? ORDER BY {$orderColumn} {$orderDir} OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
-
+        $query = "SELECT * from {$this->table} WHERE nama_tingkat LIKE ? OR deskripsi LIKE ? ORDER BY {$orderColumn} {$orderDir} OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+    
         // Prepare parameters for SQL Server
         $params = [$searchTerm, $searchTerm, $start, $length];
-
+    
         // Execute the query
         $stmt = sqlsrv_query($this->db, $query, $params);
-
+    
         $data = [];
         if ($stmt) {
             while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
                 $data[] = $row;
             }
         }
-
-        // Count total filtered records for SQL Server
-        $queryFiltered = "SELECT COUNT(*) as count FROM {$this->table} WHERE nama_kelas LIKE ? OR nama_dpa LIKE ?";
+    
+     // Count total filtered records for SQL Server
+        $queryFiltered = "SELECT COUNT(*) as count FROM {$this->table} WHERE nama_tingkat LIKE ? OR deskripsi LIKE ?";
         $stmtFiltered = sqlsrv_query($this->db, $queryFiltered, [$searchTerm, $searchTerm]);
         $totalFiltered = 0;
         if ($stmtFiltered) {
@@ -60,7 +60,7 @@ class KelasModel extends Model
                 $totalFiltered = $rowFiltered['count'];
             }
         }
-
+    
         // Count total records for SQL Server
         $queryTotal = "SELECT COUNT(*) as count FROM {$this->table}";
         $stmtTotal = sqlsrv_query($this->db, $queryTotal);
@@ -71,7 +71,7 @@ class KelasModel extends Model
                 $totalRecords = $rowTotal['count'];
             }
         }
-
+    
         // Return data in DataTables format
         return [
             "draw" => isset($request['draw']) ? intval($request['draw']) : 0,
@@ -80,21 +80,22 @@ class KelasModel extends Model
             "data" => $data
         ];
     }
-
+    
+ 
 
 
     public function insertData($data)
     {
-        if ($this->driver == 'mysql') {
+        if ($this->driver == 'sqlsrv') {
             // prepare statement untuk query insert
-            $query = $this->db->prepare("insert into {$this->table} (nama_kelas, nama_dpa, password_admin, tanggal_tugas) values(?,?,?,?)");
+            $query = $this->db->prepare("insert into {$this->table} (nama_tingkat, deskripsi, password_admin, tanggal_tugas) values(?,?,?,?)");
             // binding parameter ke query, "s" berarti string, "ss" berarti dua string
-            $query->bind_param('sssi', $data['nama_kelas'], $data['nama_dpa'], $data['password_admin'], $data['tanggal_tugas']);
+            $query->bind_param('sssi', $data['nama_tingkat'], $data['deskripsi'], $data['password_admin'], $data['tanggal_tugas']);
             // eksekusi query untuk menyimpan ke database
             $query->execute();
         } else {
             // eksekusi query untuk menyimpan ke database
-            sqlsrv_query($this->db, "insert into {$this->table} (nama_kelas, nama_dpa) values(?,?)", array($data['nama_kelas'], $data['nama_dpa']));
+            sqlsrv_query($this->db, "insert into {$this->table} (nama_tingkat, deskripsi, password_admin, tanggal_tugas) values(?,?,?,?)", array($data['nama_tingkat'], $data['deskripsi'], $data['password_admin'], $data['tanggal_tugas']));
         }
     }
     public function getData()
@@ -115,36 +116,49 @@ class KelasModel extends Model
     }
     public function getDataById($id)
     {
-        // query untuk mengambil data berdasarkan id
-        $query = sqlsrv_query($this->db, "select * from {$this->table} where id_kelas = ?", [$id]);
-        // ambil hasil query
-        return sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
+        if ($this->driver == 'sqlsrv') {
+            // query untuk mengambil data berdasarkan id
+            $query = $this->db->prepare("select * from {$this->table} where id_tingkat_pelanggaran =
+?");
+            // binding parameter ke query "i" berarti integer. Biar tidak kena SQL Injection
+            $query->bind_param('i', $id);
+            // eksekusi query
+            $query->execute();
+            // ambil hasil query
+            return $query->get_result()->fetch_assoc();
+        } else {
+            // query untuk mengambil data berdasarkan id
+            $query = sqlsrv_query($this->db, "select * from {$this->table} where id_tingkat_pelanggaran
+= ?", [$id]);
+            // ambil hasil query
+            return sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
+        }
     }
     public function updateData($id, $data)
     {
         if ($this->driver == 'mysql') {
             // query untuk update data
-            $query = $this->db->prepare("update {$this->table} set nama_kelas = ?, nama_dpa = ?, password_admin = ?, tanggal_tugas = ? where id_kelas = ?");
+            $query = $this->db->prepare("update {$this->table} set nama_tingkat = ?, deskripsi = ?, password_admin = ?, tanggal_tugas = ? where id_tingkat_pelanggaran = ?");
             // binding parameter ke query
-            $query->bind_param('sssii', $data['nama_kelas'], $data['nama_dpa'], $data['password_admin'], $data['tanggal_tugas'], $id);
+            $query->bind_param('sssii',  $data['nama_tingkat'], $data['deskripsi'], $data['password_admin'], $data['tanggal_tugas'], $id);
             // eksekusi query
             $query->execute();
         } else {
-           
             // query untuk update data
-            $update = sqlsrv_query($this->db, "update {$this->table} set nama_kelas = ?, nama_dpa = ? where id_kelas = ?", [
-                $data['nama_kelas'],
-                $data['nama_dpa'],
+            sqlsrv_query($this->db, "update {$this->table} set nama_tingkat = ?, deskripsi = ?, password_admin = ?, tanggal_tugas = ? where id_tingkat_pelanggaran = ?", [
+                $data['nama_tingkat'],
+                $data['deskripsi'],
+                $data['password_admin'],
+                $data['tanggal_tugas'],
                 $id
             ]);
-
         }
     }
     public function deleteData($id)
     {
         if ($this->driver == 'mysql') {
             // query untuk delete data
-            $query = $this->db->prepare("delete from {$this->table} where id_kelas = ?");
+            $query = $this->db->prepare("delete from {$this->table} where id_tingkat_pelanggaran = ?");
             // binding parameter ke query
             $query->bind_param('i', $id);
             // eksekusi query
@@ -153,7 +167,7 @@ class KelasModel extends Model
             // query untuk delete data
             sqlsrv_query(
                 $this->db,
-                "delete from {$this->table} where id_kelas = ?",
+                "delete from {$this->table} where id_tingkat_pelanggaran = ?",
                 [$id]
             );
         }

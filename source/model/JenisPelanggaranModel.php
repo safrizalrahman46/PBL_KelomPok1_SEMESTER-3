@@ -2,10 +2,10 @@
 include('Model.php');
 include('Database.php');
 
-class DosenModel extends Model
+class JenisPelanggaranModel extends Model
 {
     protected $db;
-    protected $table = 'tb_dosen';
+    protected $table = 'tb_jenis_pelanggaran';
     protected $driver;
    public function __construct()
     {
@@ -15,19 +15,15 @@ class DosenModel extends Model
         $this->driver = $database->getDriver(); // Set the driver being used
     }
 
-
-public function getDataForDataTables($request)
+    public function getDataForDataTables($request)
 {
     // Columns available for ordering and searching
-    $columns = ['nip', 'nama', 'email', 'id_users']; 
+    $columns = ['id_jenis_pelanggaran', 'deskripsi', 'id_tingkat']; 
 
     // Extract search and pagination parameters
     $searchValue = isset($request['search']['value']) ? $request['search']['value'] : '';
     $searchTerm = "%{$searchValue}%";
     
-    // Check if 'draw' is set, if not, default to 0
-    $draw = isset($request['draw']) ? intval($request['draw']) : 0;
-
     $orderColumnIndex = isset($request['order'][0]['column']) ? (int)$request['order'][0]['column'] : 0;
     $orderDir = isset($request['order'][0]['dir']) && in_array(strtolower($request['order'][0]['dir']), ['asc', 'desc'])
         ? $request['order'][0]['dir']
@@ -37,18 +33,18 @@ public function getDataForDataTables($request)
     $length = isset($request['length']) ? (int)$request['length'] : 10;
     
     // Ensure column index is valid
-    $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'nip';
+    $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'id_jenis_pelanggaran';
     
     // SQL Server query preparation for fetching data
-    $query = "SELECT a.nip, a.nama, a.email, k.nama_kelas
+    $query = "SELECT a.id_jenis_pelanggaran, a.deskripsi
               FROM {$this->table} a
-              LEFT JOIN tb_kelas k ON a.id_users = k.id_users
-              WHERE a.nama LIKE ? OR a.email LIKE ? 
+              LEFT JOIN tb_kelas k ON a.id_tingkat = k.id_tingkat
+              WHERE a.deskripsi LIKE ? OR a.id_tingkat LIKE 
               ORDER BY {$orderColumn} {$orderDir}
               OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
     // Prepare parameters for SQL Server
-    $params = [$searchTerm, $searchTerm, $start, $length];
+    $params = [$searchTerm, $searchTerm, $searchTerm, $start, $length];
     
     // Execute the query
     $stmt = sqlsrv_query($this->db, $query, $params);
@@ -63,10 +59,10 @@ public function getDataForDataTables($request)
     // Count total filtered records for SQL Server
     $queryFiltered = "SELECT COUNT(*) as count
                       FROM {$this->table} a
-                      LEFT JOIN tb_kelas k ON a.id_users = k.id_users
-                      WHERE a.nama LIKE ? OR a.email LIKE ?";
+                      LEFT JOIN tb_kelas k ON a.id_tingkat = k.id_tingkat
+                      WHERE a.deskripsi LIKE ? OR a.id_tingkat LIKE ";
     
-    $stmtFiltered = sqlsrv_query($this->db, $queryFiltered, [$searchTerm, $searchTerm]);
+    $stmtFiltered = sqlsrv_query($this->db, $queryFiltered, [$searchTerm, $searchTerm, $searchTerm]);
     $totalFiltered = 0;
     if ($stmtFiltered) {
         $rowFiltered = sqlsrv_fetch_array($stmtFiltered, SQLSRV_FETCH_ASSOC);
@@ -84,25 +80,26 @@ public function getDataForDataTables($request)
     
     // Return data in DataTables format
     return [
-        "draw" => $draw, // Use the draw variable here
+        "draw" => isset($request['draw']) ? intval($request['draw']) : 0,
         "recordsTotal" => $totalRecords,
         "recordsFiltered" => $totalFiltered,
         "data" => $data
     ];
 }
 
+
     public function insertData($data)
     {
         if ($this->driver == 'sqlsrv') {
             // prepare statement untuk query insert
-            $query = $this->db->prepare("insert into {$this->table} (nama, email, password_admin, id_users) values(?,?,?,?)");
+            $query = $this->db->prepare("insert into {$this->table} (deskripsi, id_tingkat, password_admin, id_kelas) values(?,?,?,?)");
             // binding parameter ke query, "s" berarti string, "ss" berarti dua string
-            $query->bind_param('sssi', $data['nama'], $data['email'], $data['password_admin'], $data['id_users']);
+            $query->bind_param('sssi', $data['deskripsi'], $data['id_tingkat'], $data['password_admin'], $data['id_kelas']);
             // eksekusi query untuk menyimpan ke database
             $query->execute();
         } else {
             // eksekusi query untuk menyimpan ke database
-            sqlsrv_query($this->db, "insert into {$this->table} (nama, email, password_admin, id_users) values(?,?,?,?)", array($data['nama'], $data['email'], $data['password_admin'], $data['id_users']));
+            sqlsrv_query($this->db, "insert into {$this->table} (deskripsi, id_tingkat, password_admin, id_kelas) values(?,?,?,?)", array($data['deskripsi'], $data['id_tingkat'], $data['password_admin'], $data['id_kelas']));
         }
     }
     public function getData()
@@ -124,7 +121,7 @@ public function getDataForDataTables($request)
     {
         if ($this->driver == 'sqlsrv') {
             // query untuk mengambil data berdasarkan id
-            $query = $this->db->prepare("select * from {$this->table} where nip =
+            $query = $this->db->prepare("select * from {$this->table} where id_jenis_pelanggaran =
 ?");
             // binding parameter ke query "i" berarti integer. Biar tidak kena SQL Injection
             $query->bind_param('i', $id);
@@ -134,7 +131,7 @@ public function getDataForDataTables($request)
             return $query->get_result()->fetch_assoc();
         } else {
             // query untuk mengambil data berdasarkan id
-            $query = sqlsrv_query($this->db, "select * from {$this->table} where nip
+            $query = sqlsrv_query($this->db, "select * from {$this->table} where id_jenis_pelanggaran
 = ?", [$id]);
             // ambil hasil query
             return sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
@@ -144,18 +141,18 @@ public function getDataForDataTables($request)
     {
         if ($this->driver == 'mysql') {
             // query untuk update data
-            $query = $this->db->prepare("update {$this->table} set nama = ?, email = ?, password_admin = ?, id_users = ? where nip = ?");
+            $query = $this->db->prepare("update {$this->table} set deskripsi = ?, id_tingkat = ?, password_admin = ?, id_kelas = ? where id_jenis_pelanggaran = ?");
             // binding parameter ke query
-            $query->bind_param('sssii',  $data['nama'], $data['email'], $data['password_admin'], $data['id_users'], $id);
+            $query->bind_param('sssii',  $data['deskripsi'], $data['id_tingkat'], $data['password_admin'], $data['id_kelas'], $id);
             // eksekusi query
             $query->execute();
         } else {
             // query untuk update data
-            sqlsrv_query($this->db, "update {$this->table} set nama = ?, email = ?, password_admin = ?, id_users = ? where nip = ?", [
-                $data['nama'],
-                $data['email'],
+            sqlsrv_query($this->db, "update {$this->table} set deskripsi = ?, id_tingkat = ?, password_admin = ?, id_kelas = ? where id_jenis_pelanggaran = ?", [
+                $data['deskripsi'],
+                $data['id_tingkat'],
                 $data['password_admin'],
-                $data['id_users'],
+                $data['id_kelas'],
                 $id
             ]);
         }
@@ -164,7 +161,7 @@ public function getDataForDataTables($request)
     {
         if ($this->driver == 'mysql') {
             // query untuk delete data
-            $query = $this->db->prepare("delete from {$this->table} where nip = ?");
+            $query = $this->db->prepare("delete from {$this->table} where id_jenis_pelanggaran = ?");
             // binding parameter ke query
             $query->bind_param('i', $id);
             // eksekusi query
@@ -173,7 +170,7 @@ public function getDataForDataTables($request)
             // query untuk delete data
             sqlsrv_query(
                 $this->db,
-                "delete from {$this->table} where nip = ?",
+                "delete from {$this->table} where id_jenis_pelanggaran = ?",
                 [$id]
             );
         }

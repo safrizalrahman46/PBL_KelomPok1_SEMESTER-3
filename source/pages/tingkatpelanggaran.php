@@ -1,9 +1,9 @@
-<?php
-require_once('model/KelasModel.php');
+<?php 
+// require_once('model/KelasModel.php');
 
 
-$classData = new KelasModel();
-$dataKelas = $classData->getData();
+// $classData = new KelasModel();
+// $dataKelas = $classData->getData();
 
 // print_r($data);
 
@@ -45,8 +45,8 @@ $dataKelas = $classData->getData();
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Nama Kelas</th>
-                        <th>Nama Dpa</th>
+                        <th>Nama Tingkat</th>
+                        <th>Deskripsi</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -57,7 +57,7 @@ $dataKelas = $classData->getData();
     </div>
 </section>
 <div class="modal fade" id="form-data" style="display: none;" aria-hidden="true">
-    <form action="action/kelasAction.php?act=save" method="post" id="form-tambah">
+    <form action="action/tingkatpelanggaranAction.php?act=save" method="post" id="form-tambah">
         <!--    Ukuran Modal  
                 modal-sm : Modal ukuran kecil 
                 modal-md : Modal ukuran sedang 
@@ -68,16 +68,34 @@ $dataKelas = $classData->getData();
         <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="ModalTitle">Tambah Data Kelas</h4>
+                    <h4 class="modal-title">Tambah Admin</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Nama Kelas</label>
+                        <label>Nama Admin</label>
                         <input type="text" class="form-control" name="nama_kelas" id="nama_kelas">
                     </div>
                     <div class="form-group">
-                        <label>Nama DPA</label>
-                        <input type="text" class="form-control" name="nama_dpa" id="nama_dpa">
+                        <label>Email Admin</label>
+                        <input type="email" class="form-control" name="nama_dpa" id="nama_dpa">
+                    </div>
+                    <div class="form-group">
+                        <label>Password Admin</label>
+                        <input type="password" class="form-control" name="password_admin" id="password_admin">
+                    </div>
+                    <div class="form-group">
+                        <label>ID Kelas</label>
+
+                        <select name="id_kelas" id="id_kelas" class="form-control">
+                            <?php 
+                                foreach ($variable as $key => $value) {
+                            ?>  
+                                <option value="<?= $value['id_kelas']; ?>"><?= $value['nama_kelas'] ?></option>
+                            <?php 
+                                }
+                            ?>
+                        </select>
+                        <!-- <input type="number" class="form-control" name="id_kelas" id="id_kelas"> -->
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -91,32 +109,86 @@ $dataKelas = $classData->getData();
 </div>
 
 <script>
-    $(document).ready(function() {
+    function tambahData() {
+        $('#form-data').modal('show');
+        $('#form-tambah').attr('action', 'action/tingkatpelanggaranAction.php?act=save');
+        $('#nama_kelas').val('');
+        $('#nama_dpa').val('');
 
+    }
+
+    function editData(id) {
+        $.ajax({
+            url: 'action/tingkatpelanggaranAction.php?act=get&id=' + id,
+            method: 'post',
+            success: function(response) {
+                var data = JSON.parse(response);
+                $('#form-data').modal('show');
+                $('#form-tambah').attr('action',
+                    'action/tingkatpelanggaranAction.php?act=update&id=' + id);
+                $('#nama_kelas').val(data.nama_kelas);
+                $('#nama_dpa').val(data.nama_dpa);
+     
+            }
+        });
+    }
+
+    function deleteData(id) {
+        if (confirm('Apakah anda yakin?')) {
+            $.ajax({
+                url: 'action/tingkatpelanggaranAction.php?act=delete&id=' + id,
+                method: 'post',
+                success: function(response) {
+                    var result = JSON.parse(response);
+                    if (result.status) {
+                        tabelData.ajax.reload();
+                    } else {
+                        alert(result.message);
+                    }
+                }
+            });
+        }
+    }
+
+    var tabelData;
+    $(document).ready(function() {
+        // tabelData = $('#table-data').DataTable({
+        //     ajax: 'action/tingkatpelanggaranAction.php?act=load',
+        //     columns: [{
+        //             title: "No"
+        //         },
+        //         {
+        //             title: "Nama Admin"
+        //         },
+        //         {
+        //             title: "Email Admin"
+        //         },
+        //         {
+        //             title: "Password Admin"
+        //         }, // Tambahkan kolom untuk Password Admin
+        //         {
+        //             title: "Aksi"
+        //         }
+        //     ]
+        // });
 
 
         tabelData = $('#table-data').DataTable({
             processing: true,
             serverSide: true,
             ajax: {
-                url: 'action/kelasAction.php?act=load',
+                url: 'action/tingkatpelanggaranAction.php?act=load',
                 type: 'POST',
             },
-            columns: [{
-                    data: 'no'
-                },
-                {
-                    data: 'nama_kelas'
-                },
-                {
-                    data: 'nama_dpa'
-                },
-                {
-                    data: 'aksi'
-                },
-                // Add nama_kelas
+            columns: [
+                { data: 'no' },
+                { data: 'nama_tingkat' },
+                { data: 'deskripsi' },
+                { data: 'aksi' },
+                 // Add nama_kelas
             ],
         });
+
 
         $('#form-tambah').validate({
             rules: {
@@ -126,8 +198,16 @@ $dataKelas = $classData->getData();
                 },
                 nama_dpa: {
                     required: true,
+                    email: true
                 },
-         
+                password_admin: {
+                    required: true,
+                    minlength: 4
+                },
+                id_kelas: {
+                    required: true,
+                    digits: true
+                }
             },
             errorElement: 'span',
             errorPlacement: function(error, element) {
@@ -158,52 +238,4 @@ $dataKelas = $classData->getData();
             }
         });
     });
-
-    function tambahData() {
-        $("#ModalTitle").html('Tambah Data Kelas');
-
-        $('#form-data').modal('show');
-        $('#form-tambah').attr('action', 'action/kelasAction.php?act=save');
-        $('#nama_kelas').val('');
-        $('#nama_dpa').val('');
-
-    }
-
-    function editData(id) {
-
-        console.log(id);
-        $("#ModalTitle").html('Edit Data Kelas');
-        $.ajax({
-            url: 'action/kelasAction.php?act=get&id=' + id,
-            method: 'post',
-            success: function(response) {
-                var data = JSON.parse(response);
-                $('#form-data').modal('show');
-                $('#form-tambah').attr('action',
-                    'action/kelasAction.php?act=update&id=' + id);
-                $('#nama_kelas').val(data.nama_kelas);
-                $('#nama_dpa').val(data.nama_dpa);
-
-            }
-        });
-    }
-
-    function deleteData(id) {
-        if (confirm('Apakah anda yakin?')) {
-            $.ajax({
-                url: 'action/kelasAction.php?act=delete&id=' + id,
-                method: 'post',
-                success: function(response) {
-                    var result = JSON.parse(response);
-                    if (result.status) {
-                        tabelData.ajax.reload();
-                    } else {
-                        alert(result.message);
-                    }
-                }
-            });
-        }
-    }
-
-    var tabelData;
 </script>
