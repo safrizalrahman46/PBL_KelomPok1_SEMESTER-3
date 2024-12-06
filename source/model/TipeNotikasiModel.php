@@ -2,10 +2,10 @@
 include('Model.php');
 include('Database.php');
 
-class UsersModel extends Model
+class TipeNotikasiModel extends Model
 {
     protected $db;
-    protected $table = 'tb_users';
+    protected $table = 'tb_tipe_notifikasi';
     protected $driver;
     public function __construct()
     {
@@ -17,7 +17,7 @@ class UsersModel extends Model
     public function getDataForDataTables($request)
     {
         // Columns available for ordering and searching
-        $columns = ['username','password','level'];
+        $columns = ['notif_template'];
 
 
         // Extract search and pagination parameters
@@ -33,7 +33,7 @@ class UsersModel extends Model
         $length = isset($request['length']) ? (int) $request['length'] : 10;
 
         // Ensure column index is valid
-        $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'id_users';
+        $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'id_tipe_notifikasi';
 
         // SQL Server query preparation for fetching data
         $query = "SELECT * FROM {$this->table} ";
@@ -52,7 +52,7 @@ class UsersModel extends Model
         }
 
         // Count total filtered records for SQL Server
-        $queryFiltered = "SELECT COUNT(*) as count FROM {$this->table} WHERE username LIKE ? password LIKE ? level LIKE ?";
+        $queryFiltered = "SELECT COUNT(*) as count FROM {$this->table} WHERE notifTemplate LIKE ?";
         $stmtFiltered = sqlsrv_query($this->db, $queryFiltered, [$searchTerm, $searchTerm]);
         $totalFiltered = 0;
         if ($stmtFiltered) {
@@ -88,7 +88,7 @@ class UsersModel extends Model
     {
 
         // eksekusi query untuk menyimpan ke database
-        sqlsrv_query($this->db, "insert into {$this->table} (username, password, level) values(?,?,?)", array($data['username'], $data['password'], $data['level']));
+        sqlsrv_query($this->db, "insert into {$this->table} (notif_template) values(?)", array($data['notif_template']));
     }
     public function getData()
     {
@@ -105,7 +105,7 @@ class UsersModel extends Model
     public function getDataById($id)
     {
         // query untuk mengambil data berdasarkan id
-        $query = sqlsrv_query($this->db, "select * from {$this->table} where id_users = ?", [$id]);
+        $query = sqlsrv_query($this->db, "select * from {$this->table} where id_tipe_notifikasi = ?", [$id]);
         // ambil hasil query
         return sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
     }
@@ -113,11 +113,8 @@ class UsersModel extends Model
     {
 
         // query untuk update data
-        $update = sqlsrv_query($this->db, "update {$this->table} set username = ?, password = ?, level = ? where id_users = ?", [
-            $data['username'],
-            $data['password'],
-            $data['level'],
-
+        $update = sqlsrv_query($this->db, "update {$this->table} set notif_template = ? where id_tipe_notifikasi = ?", [
+            $data['notif_template'],
             $id
         ]);
     }
@@ -127,7 +124,7 @@ class UsersModel extends Model
         // query untuk delete data
         sqlsrv_query(
             $this->db,
-            "delete from {$this->table} where id_users = ?",
+            "delete from {$this->table} where id_tipe_notifikasi = ?",
             [$id]
         );
     }

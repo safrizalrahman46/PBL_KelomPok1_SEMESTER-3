@@ -18,7 +18,7 @@ class LaporModel extends Model
     public function getDataForDataTables($request)
     {
         // Columns available for ordering and searching
-        $columns = ['id_pelanggaran', 'mahasiswa_id', 'id_jenis_pelanggaran', 'tanggal_laporan', 'status', 'id_admin', 'id_dosen', 'status_verifikasi_admin', 'nim', 'foto'];
+        $columns = [ 'mahasiswa_id', 'id_jenis_pelanggaran', 'status', 'komentar', 'id_admin', 'id_dosen', 'status_verifikasi_admin', 'nim', 'foto', 'tanggal_laporan', 'nama'];
 
         // Extract search and pagination parameters
         $searchValue = isset($request['search']['value']) ? $request['search']['value'] : '';
@@ -33,26 +33,10 @@ class LaporModel extends Model
         $length = isset($request['length']) ? (int)$request['length'] : 10;
 
         // Ensure column index is valid
-        $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'id_admin';
+        $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'id_pelanggaran';
 
         // SQL Server query preparation for fetching data
-        $query = "SELECT 
-    id_pelanggaran, 
-    mahasiswa_id, 
-    id_jenis_pelanggaran, 
-    tanggal_laporan, 
-    status, 
-    id_admin, 
-    id_dosen, 
-    status_verifikasi_admin, 
-    nim, 
-    foto
-  FROM tb_laporpelanggaranmahasiswa
-  WHERE mahasiswa_id LIKE ? 
-     OR status LIKE ? 
-     OR nim LIKE ? 
-  ORDER BY {$orderColumn} {$orderDir}
-  OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        $query = "SELECT * FROM {$this->table} WHERE 1=1 ";
 
 
         // Prepare parameters for SQL Server
@@ -69,12 +53,12 @@ class LaporModel extends Model
         }
 
         // Count total filtered records for SQL Server
-        $queryFiltered = "SELECT COUNT(*) as count
-    FROM tb_laporpelanggaranmahasiswa a
-    LEFT JOIN tb_mahasiswa m ON a.mahasiswa_id = m.id_mahasiswa
-    WHERE a.status LIKE ? 
-       OR a.nim LIKE ? 
-       OR m.nama_mahasiswa LIKE ?";
+        $queryFiltered = "SELECT *, COUNT(*) OVER() AS total_count FROM {$this->table} 
+WHERE mahasiswa_id LIKE ? OR id_jenis_pelanggaran LIKE ? OR status LIKE ? OR komentar LIKE ? 
+OR id_admin LIKE ? OR id_dosen LIKE ? OR status_verifikasi_admin LIKE ? OR nim LIKE ? 
+OR foto LIKE ? OR tanggal_laporan LIKE ? OR nama LIKE ? 
+ORDER BY {$orderColumn} {$orderDir} 
+OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
 
         $stmtFiltered = sqlsrv_query($this->db, $queryFiltered, [$searchTerm, $searchTerm, $searchTerm]);
@@ -105,24 +89,16 @@ class LaporModel extends Model
 
     public function insertData($data)
     {
-        if ($this->driver == 'sqlsrv') {
-            // prepare statement untuk query insert
-            $query = $this->db->prepare("insert into {$this->table} (nama_admin, email_admin, password_admin, id_kelas) values(?,?,?,?)");
-            // binding parameter ke query, "s" berarti string, "ss" berarti dua string
-            $query->bind_param('sssi', $data['nama_admin'], $data['email_admin'], $data['password_admin'], $data['id_kelas']);
+ 
             // eksekusi query untuk menyimpan ke database
-            $query->execute();
-        } else {
-            // eksekusi query untuk menyimpan ke database
-            sqlsrv_query($this->db, "insert into {$this->table} (nama_admin, email_admin, password_admin, id_kelas) values(?,?,?,?)", array($data['nama_admin'], $data['email_admin'], $data['password_admin'], $data['id_kelas']));
-        }
+            sqlsrv_query($this->db, "INSERT INTO {$this->table} (mahasiswa_id, id_jenis_pelanggaran, status, komentar, id_admin, id_dosen, status_verifikasi_admin, nim, foto, tanggal_laporan, nama) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 
+            array($data['mahasiswa_id'], $data['id_jenis_pelanggaran'], $data['status'], $data['komentar'], $data['id_admin'], $data['id_dosen'], $data['status_verifikasi_admin'], $data['nim'], $data['foto'], $data['tanggal_laporan'], $data['nama']));
+                    
     }
     public function getData()
     {
-        if ($this->driver == 'sqlsrv') {
-            // query untuk mengambil data dari tabel
-            return $this->db->query("select * from {$this->table} ")->fetch_all(MYSQLI_ASSOC);
-        } else {
+       
             // query untuk mengambil data dari tabel
             $query = sqlsrv_query($this->db, "select * from {$this->table}");
             $data = [];
@@ -130,64 +106,48 @@ class LaporModel extends Model
                 $data[] = $row;
             }
             return $data;
-        }
+        
     }
     public function getDataById($id)
     {
-        if ($this->driver == 'sqlsrv') {
-            // query untuk mengambil data berdasarkan id
-            $query = $this->db->prepare("select * from {$this->table} where id_admin =
-?");
-            // binding parameter ke query "i" berarti integer. Biar tidak kena SQL Injection
-            $query->bind_param('i', $id);
-            // eksekusi query
-            $query->execute();
-            // ambil hasil query
-            return $query->get_result()->fetch_assoc();
-        } else {
+    
             // query untuk mengambil data berdasarkan id
             $query = sqlsrv_query($this->db, "select * from {$this->table} where id_admin
 = ?", [$id]);
             // ambil hasil query
             return sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
-        }
+        
     }
     public function updateData($id, $data)
     {
-        if ($this->driver == 'mysql') {
+     
             // query untuk update data
-            $query = $this->db->prepare("update {$this->table} set nama_admin = ?, email_admin = ?, password_admin = ?, id_kelas = ? where id_admin = ?");
-            // binding parameter ke query
-            $query->bind_param('sssii',  $data['nama_admin'], $data['email_admin'], $data['password_admin'], $data['id_kelas'], $id);
-            // eksekusi query
-            $query->execute();
-        } else {
-            // query untuk update data
-            sqlsrv_query($this->db, "update {$this->table} set nama_admin = ?, email_admin = ?, password_admin = ?, id_kelas = ? where id_admin = ?", [
-                $data['nama_admin'],
-                $data['email_admin'],
-                $data['password_admin'],
-                $data['id_kelas'],
+            sqlsrv_query($this->db, "UPDATE {$this->table} SET mahasiswa_id = ?, id_jenis_pelanggaran = ?, status = ?, komentar = ?, id_admin = ?, id_dosen = ?, status_verifikasi_admin = ?, nim = ?, foto = ?, tanggal_laporan = ?, nama = ? WHERE id_admin = ?", [
+                $data['mahasiswa_id'],
+                $data['id_jenis_pelanggaran'],
+                $data['status'],
+                $data['komentar'],
+                $data['id_admin'],
+                $data['id_dosen'],
+                $data['status_verifikasi_admin'],
+                $data['nim'],
+                $data['foto'],
+                $data['tanggal_laporan'],
+                $data['nama'],
                 $id
             ]);
-        }
+            
+        
     }
     public function deleteData($id)
     {
-        if ($this->driver == 'mysql') {
-            // query untuk delete data
-            $query = $this->db->prepare("delete from {$this->table} where id_admin = ?");
-            // binding parameter ke query
-            $query->bind_param('i', $id);
-            // eksekusi query
-            $query->execute();
-        } else {
+    
             // query untuk delete data
             sqlsrv_query(
                 $this->db,
                 "delete from {$this->table} where id_admin = ?",
                 [$id]
             );
-        }
+        
     }
 }

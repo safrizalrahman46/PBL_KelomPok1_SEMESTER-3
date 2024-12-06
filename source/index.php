@@ -93,6 +93,9 @@ if ($session->get('is_login') !== true) {
                 case 'notifikasi':
                     include('pages/notifikasi.php'); // Halaman untuk tabel dbo.tb_notifikasi
                     break;
+                case 'tipe_notifikasi':
+                    include('pages/tipenotifikasi.php'); // Halaman untuk tabel dbo.tb_notifikasi
+                    break;
                 case 'prodi':
                     include('pages/prodi.php'); // Halaman untuk tabel dbo.tb_prodi
                     break;

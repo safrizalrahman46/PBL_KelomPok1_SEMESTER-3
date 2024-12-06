@@ -19,7 +19,7 @@ class DosenModel extends Model
 public function getDataForDataTables($request)
 {
     // Columns available for ordering and searching
-    $columns = ['nip', 'email', 'id_users']; 
+    $columns = [ 'email', 'id_users', 'nama','alamat','no_telepon']; 
 
     // Extract search and pagination parameters
     $searchValue = isset($request['search']['value']) ? $request['search']['value'] : '';
@@ -40,7 +40,7 @@ public function getDataForDataTables($request)
     $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'nip';
     
     // SQL Server query preparation for fetching data
-    $query = "SELECT * from {$this->table} WHERE email LIKE ? OR id_users LIKE ? ORDER BY {$orderColumn} {$orderDir} OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+    $query = "SELECT * from {$this->table}";
 
     // Prepare parameters for SQL Server
     $params = [$searchTerm, $searchTerm, $start, $length];
@@ -56,7 +56,8 @@ public function getDataForDataTables($request)
     }
     
     // Count total filtered records for SQL Server
-    $queryFiltered = "SELECT COUNT(*) as count FROM {$this->table} WHERE email LIKE ? OR id_users LIKE ?";
+    $queryFiltered = "SELECT * FROM {$this->table} WHERE email LIKE ? OR id_users LIKE ? OR nama LIKE ? OR alamat LIKE ? OR no_telepon LIKE ?  ORDER BY {$orderColumn} {$orderDir} 
+          OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
     
     $stmtFiltered = sqlsrv_query($this->db, $queryFiltered, [$searchTerm, $searchTerm]);
     $totalFiltered = 0;
@@ -87,7 +88,7 @@ public function getDataForDataTables($request)
     {
     
             // eksekusi query untuk menyimpan ke database
-            sqlsrv_query($this->db, "insert into {$this->table} ( email, id_users) values(?,?)", array( $data['email'], $data['id_users']));
+            sqlsrv_query($this->db, "insert into {$this->table} ( email, id_users, nama, alamat, no_telepon) values(?,?,?,?,?)", array( $data['email'], $data['id_users'], $data['nama'], $data['alamat'], $data['no_telepon']));
         
     }
     public function getData()
@@ -115,11 +116,15 @@ public function getDataForDataTables($request)
     {
     
             // query untuk update data
-            sqlsrv_query($this->db, "update {$this->table}  email = ?,  id_users = ? where nip = ?", [
+            sqlsrv_query($this->db, "UPDATE {$this->table} SET email = ?, id_users = ?, nama = ?, alamat = ?, no_telepon = ? WHERE nip = ?", [
                 $data['email'],
                 $data['id_users'],
+                $data['nama'],
+                $data['alamat'],
+                $data['no_telepon'],
                 $id
             ]);
+            
         
     }
     public function deleteData($id)

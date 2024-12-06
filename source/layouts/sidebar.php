@@ -81,6 +81,12 @@
             </a>
         </li>
         <li class="nav-item">
+            <a href="index.php?page=tipe_notifikasi" class="nav-link">
+                <i class="nav-icon fas fa-bell"></i>
+                <p>Tipe Notifikasi</p>
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="index.php?page=prodi" class="nav-link">
                 <i class="nav-icon fas fa-graduation-cap"></i>
                 <p>Prodi</p>

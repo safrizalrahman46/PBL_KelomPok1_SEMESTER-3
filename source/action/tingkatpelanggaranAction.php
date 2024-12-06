@@ -18,7 +18,7 @@ if ($act == 'load') {
 
     // Prepare the response for DataTables
     $result = [
-        "draw" => intval($_POST['draw']),
+        "draw" => isset($_POST['draw']) ? intval($_POST['draw']) : 0, // Check if 'draw' is set
         "recordsTotal" => $data['recordsTotal'], // Total number of records
         "recordsFiltered" => $data['recordsFiltered'], // Total filtered records
         "data" => []
@@ -33,7 +33,6 @@ if ($act == 'load') {
                        <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id_tingkat_pelanggaran'] . ')"><i class="fa fa-trash"></i></button>'
         ];
     }
-    
 
     echo json_encode($result);
 }
@@ -49,10 +48,10 @@ if ($act == 'get') {
 
 if ($act == 'save') {
     $data = [
+
         'nama_tingkat' => antiSqlInjection($_POST['nama_tingkat']),
-        'deskripsi' => antiSqlInjection($_POST['deskripsi']),
-        'password_admin' => antiSqlInjection($_POST['password_admin']),
-        // 'id_kelas' => antiSqlInjection($_POST['id_kelas'])
+        'deskripsi' => isset($_POST['deskripsi']) ? antiSqlInjection($_POST['deskripsi']) : null, // Check if 'deskripsi' exists
+
     ];
     $admin = new tingkatpelanggaranModel();
     $admin->insertData($data);
@@ -66,10 +65,9 @@ if ($act == 'save') {
 if ($act == 'update') {
     $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : 0;
     $data = [
+
         'nama_tingkat' => antiSqlInjection($_POST['nama_tingkat']),
-        'deskripsi' => antiSqlInjection($_POST['deskripsi']),
-        'password_admin' => antiSqlInjection($_POST['password_admin']),
-        // 'id_kelas' => antiSqlInjection($_POST['id_kelas'])
+        'deskripsi' => isset($_POST['deskripsi']) ? antiSqlInjection($_POST['deskripsi']) : null, // Check if 'deskripsi' exists
     ];
 
     $admin = new tingkatpelanggaranModel();

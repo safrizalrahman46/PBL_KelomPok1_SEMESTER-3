@@ -1,3 +1,35 @@
+<?php
+
+
+// EROR
+// include_once(__DIR__.'/../model/MahasiswaModel.php');
+
+// $classData = new MahasiswaModel();
+// $dataMahasiswa = $classData->getData();
+
+// include_once(__DIR__.'/../model/JenisPelanggaranModel.php');
+
+// $classData = new JenisPelanggaranModel();
+// $dataPelanggaran = $classData->getData();
+
+// include_once(__DIR__.'/../model/ProdiModel.php');
+
+// $classData = new ProdiModel();
+// $dataProdi = $classData->getData();
+
+// include_once(__DIR__ . '/../model/KelasModel.php');
+
+// $classData = new KelasModel();
+// $dataKelas = $classData->getData();
+
+// include_once(__DIR__ . '/../model/UserModel.php');
+
+// $classData = new UserModel();
+// $dataUser = $classData->getData();
+
+?>
+
+
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -29,18 +61,17 @@
             <table class="table table-sm table-bordered table-striped" id="table-data">
                 <thead>
                     <tr>
-                    <th>No</th>
-                        <th>Nama</th>
-                        <th>NIM</th>
+                        <th>No</th>
                         <th>Email</th>
-                        <th>Jurusan</th>
-                        <th>Prodi</th>
-                        <th>Username</th>
-                        <th>Total Pelanggaran</th>
-                        <th>Total Reward</th>
                         <th>Semester</th>
                         <th>Tingkat</th>
+                        <th>Foto</th>
                         <th>Status</th>
+                        <th>Prodi</th>
+                        <th>Total Pelanggaran</th>
+                        <th>Kelas</th>
+                        <th>Users</th>
+                        <th>Nama</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -65,53 +96,87 @@
                     <h4 class="modal-title">Tambah Kelas</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label>Nama</label>
-                        <input type="text" class="form-control" name="name" id="name">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Nama</label>
+                            <input type="text" class="form-control" name="nama" id="nama" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" class="form-control" name="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Semester</label>
+                            <input type="number" class="form-control" name="semester" id="semester" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tingkat</label>
+                            <input type="number" class="form-control" name="tingkat" id="tingkat" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Foto</label>
+                            <input type="file" class="form-control" name="foto" id="foto">
+                        </div>
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select class="form-control" name="status" id="status" required>
+                                <option value="Aktif">Aktif</option>
+                                <option value="Lulus">Lulus</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Prodi</label>
+                            <select name="id_prodi" id="id_prodi" class="form-control">
+                                <?php
+                                foreach ($dataProdi as $key => $value) {
+                                ?>
+                                    <option value="<?= $value['id_prodi']; ?>"><?= $value['nama_prodi'] ?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Total Pelanggaran</label>
+                            <select name="id_pelanggaran" id="id_pelanggaran" class="form-control">
+                                <?php
+                                foreach ($dataMahasiswa as $key => $value) {
+                                ?>
+                                    <option value="<?= $value['id_jenis_pelanggaran']; ?>"><?= $value['deskripsi'] ?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Kelas</label>
+                            <select name="id_kelas" id="id_kelas" class="form-control">
+                                <?php
+                                foreach ($dataMahasiswa as $key => $value) {
+                                ?>
+                                    <option value="<?= $value['id_kelas']; ?>"><?= $value['nama_kelas'] ?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Users</label>
+                            <select name="=id_users" id="=id_users" class="form-control">
+                                <?php
+                                foreach ($dataMahasiswa as $key => $value) {
+                                ?>
+                                    <option value="<?= $value['id_users']; ?>"><?= $value['username'] ?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>NIM</label>
-                        <input type="text" class="form-control" name="NIM" id="NIM">
-                    </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" class="form-control" name="email" id="email">
-                    </div>
-                    <div class="form-group">
-                        <label>Jurusan</label>
-                        <input type="text" class="form-control" name="jurusan" id="jurusan">
-                    </div>
-                    <div class="form-group">
-                        <label>Prodi</label>
-                        <input type="text" class="form-control" name="prodi" id="prodi">
-                    </div>
-                    <div class="form-group">
-                        <label>Username</label>
-                        <input type="text" class="form-control" name="username" id="username">
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" class="form-control" name="password " id="password">
-                    </div>
-                    <div class="form-group">
-                        <label>Status</label>
-                        <input type="text" class="form-control" name="status" id="status">
-                    </div>
-                    <div class="form-group">
-                        <label>Semester</label>
-                        <input type="number" class="form-control" name="semester" id="semester">
-                    </div>
-                    <div class="form-group">
-                        <label>Tingkat</label>
-                        <input type="number" class="form-control" name="tingkat" id="tingkat">
-                    </div>
-                    <div class="form-group">
-                        <label>Foto</label>
-                        <input type="text" class="form-control" name="foto" id="foto">
-                    </div>
+
                 </div>
                 <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
 
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
@@ -125,16 +190,15 @@
         $('#form-data').modal('show');
         $('#form-tambah').attr('action', 'action/mahasiswaAction.php?act=save');
         $('#name').val('');
-        $('#NIM').val('');
         $('#email').val('');
         $('#jurusan').val('');
-        $('#prodi').val('');
         $('#username').val('');
         $('#password').val('');
         $('#status').val('');
         $('#semester').val('');
         $('#tingkat').val('');
         $('#foto').val('');
+        $('#nama').val('');
     }
 
     function editData(id) {
@@ -147,16 +211,15 @@
                 $('#form-tambah').attr('action',
                     'action/mahasiswaAction.php?act=update&id=' + id);
                 $('#name').val(data.name);
-                $('#NIM').val(data.NIM);
                 $('#email').val(data.email);
                 $('#jurusan').val(data.jurusan);
-                $('#prodi').val(data.prodi);
                 $('#username').val(data.username);
                 $('#password').val(data.password);
                 $('#status').val(data.status);
                 $('#semester').val(data.semester);
                 $('#tingkat').val(data.tingkat);
                 $('#foto').val(data.foto);
+                $('#nama').val(data.nama);
             }
         });
     }
@@ -178,17 +241,53 @@
         }
     }
 
+
     var tabelData;
     $(document).ready(function() {
         tabelData = $('#table-data').DataTable({
-            ajax: 'action/mahasiswaAction.php?act=load',
-    //         columns: [
-    //     { title: "No" },
-    //     { title: "Nama Admin" },
-    //     { title: "Email Admin" },
-    //     { title: "Password Admin" }, // Tambahkan kolom untuk Password Admin
-    //     { title: "Aksi" }
-    // ]
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: 'action/mahasiswaAction.php?act=load',
+                type: 'POST',
+            },
+            columns: [{
+                    data: "no"
+                },
+                {
+                    data: "email"
+                },
+                {
+                    data: "semester"
+                },
+                {
+                    data: "tingkat"
+                },
+                {
+                    data: "foto"
+                },
+                {
+                    data: "status"
+                },
+                {
+                    data: "id_pelanggaran"
+                },
+                {
+                    data: "id_prodi"
+                },
+                {
+                    data: "id_kelas"
+                },
+                {
+                    data: "id_users"
+                },
+                {
+                    data: "nama"
+                },
+                {
+                    data: "aksi"
+                }
+            ]
         });
 
         $('#form-tambah').validate({
@@ -197,40 +296,24 @@
                     required: true,
                     minlength: 3
                 },
-                NIM: {
-                    required: true,
-                    minlength: 5
-                },
+
                 email: {
                     required: true,
-                    email: true
                 },
-                jurusan: {
-                    required: true,
-                    minlength: 3
-                },
+
                 prodi: {
                     required: true,
-                    minlength: 3
                 },
-                username: {
-                    required: true,
-                    minlength: 3
-                },
-                password: {
-                    required: true,
-                    minlength: 6
-                },
+
+
                 status: {
                     required: true
                 },
                 semester: {
                     required: true,
-                    digits: true
                 },
                 tingkat: {
                     required: true,
-                    digits: true
                 }
             },
             errorElement: 'span',
@@ -262,6 +345,4 @@
             }
         });
     });
-
-    
 </script>

@@ -12,51 +12,45 @@ include_once('../lib/Secure.php');
 $act = isset($_GET['act']) ? strtolower($_GET['act']) : '';
 
 
-// if ($act == 'load') {
-//     $prodi = new ProdiModel();
-//     $data = $prodi->getData();
-//     $result = ['data' => []]; // Initialize result with a data array
-//     foreach ($data as $row) {
-//         $result['data'][] = [
-//             'id_prodi' => $row['id_prodi'], // Ensure this matches your DataTable column definitions
-//             'nama_prodi' => $row['nama_prodi'],
-//             'actions' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_prodi'] . ')"><i class="fa fa-edit"></i></button> 
-//                           <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id_prodi'] . ')"><i class="fa fa-trash"></i></button>'
-//         ];
-//     }
-//     echo json_encode($result);
-// }
-// if ($act == 'load') {
-//     $prodi = new ProdiModel();
-//     $data = $prodi->getData();
-//     $result = ['data' => []]; // Initialize result with a data array
-//     $i = 1;
-//     foreach ($data as $row) {
-//         $result['data'][] = [
-//             'id_prodi' => $row['id_prodi'], // Include id_prodi for reference
-//             'nama_prodi' => $row['nama_prodi'],
-//             'actions' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_prodi'] . ')"><i class="fa fa-edit"></i></button> 
-//                           <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id_prodi'] . ')"><i class="fa fa-trash"></i></button>'
-//         ];
-//         $i++;
-//     }
-//     echo json_encode($result);
-// }
 if ($act == 'load') {
     $prodi = new ProdiModel();
-    $data = $prodi->getData();
+    $data = $prodi->getDataForDataTables($_POST);
     $result = [];
     $i = 1;
-    foreach ($data as $row) {
+
+
+
+    $result = [
+        "draw" => intval($_POST['draw']),
+        "recordsTotal" => $data['recordsTotal'], // Total number of records
+        "recordsFiltered" => $data['recordsFiltered'], // Total filtered records
+        "data" => []
+    ];
+
+
+
+    foreach ($data['data'] as $index => $row) {
         $result['data'][] = [
-            $i,
-            $row['nama_prodi'],
-            // $row['jurusan_id'],
-            '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_prodi'] . ')"><i class="fa fa-edit"></i></button> 
-             <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id_prodi'] . ')"><i class="fa fa-trash"></i></button>'
+            'no' => ($index + 1), // Use $index instead of $row
+            'nama_prodi' => htmlspecialchars($row['nama_prodi']),
+            'aksi' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_prodi'] . ')"><i class="fa fa-edit"></i></button>
+                       <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id_prodi'] . ')"><i class="fa fa-trash"></i></button>'
         ];
-        $i++;
     }
+
+
+
+
+
+    // foreach ($data['data'] as $row) {
+    //     $result['data'][] = [
+    //         $i,
+    //         $row['nama_prodi'],
+    //         '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_prodi'] . ')"><i class="fa fa-edit"></i></button> 
+    //          <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id_prodi'] . ')"><i class="fa fa-trash"></i></button>'
+    //     ];
+    //     $i++;
+    // }
     echo json_encode($result);
 }
 
@@ -73,6 +67,7 @@ if ($act == 'save') {
         'nama_prodi' => antiSqlInjection($_POST['nama_prodi']),
         // 'jurusan_id' => antiSqlInjection($_POST['jurusan_id'])
     ];
+
     $prodi = new ProdiModel();
     $prodi->insertData($data);
 

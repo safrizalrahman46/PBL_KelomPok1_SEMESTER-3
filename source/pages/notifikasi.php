@@ -1,28 +1,50 @@
-<?php 
-require_once('model/AdminModel.php');
+<?php
 
 
-$classData = new AdminModel();
-$dataAdmin = $classData->getData();
+// EROR
+// include_once(__DIR__.'/../model/MahasiswaModel.php');
 
-// print_r($data);
+// $classData = new MahasiswaModel();
+// $dataMahasiswa = $classData->getData();
+
+// include_once(__DIR__.'/../model/JenisPelanggaranModel.php');
+
+// $classData = new JenisPelanggaranModel();
+// $dataPelanggaran = $classData->getData();
+
+// include_once(__DIR__.'/../model/ProdiModel.php');
+
+// $classData = new ProdiModel();
+// $dataProdi = $classData->getData();
+
+// include_once(__DIR__ . '/../model/KelasModel.php');
+
+// $classData = new KelasModel();
+// $dataKelas = $classData->getData();
+
+include_once(__DIR__ . '/../model/JenisPelanggaranModel.php');
+
+$classData = new JenisPelanggaranModel();
+$dataLanggar = $classData->getData();
+
+// include_once(__DIR__ . '/../model/.php');
+
+// $classData = new ();
+// $dataLanggar = $classData->getData();
 
 ?>
-
-
-
 
 
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Admin</h1>
+                <h1>Data notifikasi </h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Admin</li>
+                    <li class="breadcrumb-item active">Data notifikasi </li>
                 </ol>
             </div>
         </div>
@@ -33,7 +55,7 @@ $dataAdmin = $classData->getData();
 <section class="content">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Daftar Admin</h3>
+            <h3 class="card-title">Daftar notifikasi </h3>
             <div class="card-tools">
                 <button type="button" class="btn btn-md btn-primary" onclick="tambahData()">
                     Tambah
@@ -45,9 +67,11 @@ $dataAdmin = $classData->getData();
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Nama Admin</th>
-                        <th>Deskripsi Tugas</th>
-                        <th>Tanggal Tugas</th>
+                        <th>Penerima</th>
+                        <th>Pesan</th>
+                        <th>Tanggal Kirim</th>
+                        <th>Pelanggaran</th>
+                        <th>Notifikasi</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -58,7 +82,7 @@ $dataAdmin = $classData->getData();
     </div>
 </section>
 <div class="modal fade" id="form-data" style="display: none;" aria-hidden="true">
-    <form action="action/logAction.php?act=save" method="post" id="form-tambah">
+    <form action="action/notifikasiAction.php?act=save" method="post" id="form-tambah">
         <!--    Ukuran Modal  
                 modal-sm : Modal ukuran kecil 
                 modal-md : Modal ukuran sedang 
@@ -69,32 +93,42 @@ $dataAdmin = $classData->getData();
         <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Tambah Admin</h4>
+                    <h4 class="modal-title">Tambah notifikasi</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label>Nama Admin</label>
-                        <select name="admin_id" id="admin_id" class="form-control">
-                            <?php 
-                                foreach ($dataAdmin as $key => $value) {
-                            ?>  
-                                <option value="<?= $value['id_admin']; ?>"><?= $value['nama'] ?></option>
-                            <?php 
-                                }
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Penerima</label>
+                            <input type="text" class="form-control" name="id_penerima" id="id_penerima" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Pesan</label>
+                            <input type="text" class="form-control" name="pesan" id="pesan" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tanggal kirim</label>
+                            <input type="date" class="form-control" name="tanggal_kirim" id="tanggal_kirim" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Pelanggaran</label>
+                            <select name="id_pelanggaran" id="id_pelanggaran" class="form-control">
+                            <label>Tipe Notif</label>
+                            <?php
+                            foreach ($dataLanggar as $key => $value) {
                             ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Deskripsi Tugas</label>
-                        <input type="text" class="form-control" name="deskripsi_tugas" id="deskripsi_tugas">
+                                <option value="<?= $value['id_jenis_pelanggaran']; ?>"><?= $value['deskripsi'] ?></option>
+                            <?php
+                            }
+                            ?>
+                            </select>
+                        </div>
+                    
+                        
+                      
+                     
+                   
                     </div>
 
-                    <div class="form-group">
-                        <label>Tanggal Tugas</label>
-                        <input type="date" class="form-control" name="tanggal_tugas" id="tanggal_tugas">
-                    </div>
-               
-                 
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
@@ -109,26 +143,29 @@ $dataAdmin = $classData->getData();
 <script>
     function tambahData() {
         $('#form-data').modal('show');
-        $('#form-tambah').attr('action', 'action/logAction.php?act=save');
-        $('#admin_id').val('');
-        $('#deskripsi_tugas').val('');
-        $('#tanggal_tugas').val('');
-     
+        $('#form-tambah').attr('action', 'action/notifikasiAction.php?act=save');
+        $('#id_penerima').val('');
+        $('#pesan').val('');
+        $('#tanggal_kirim').val('');
+        $('#id_pelanggaran').val('');
+        $('#id_tipe_notifikasi').val('');
     }
 
     function editData(id) {
         $.ajax({
-            url: 'action/logAction.php?act=get&id=' + id,
+            url: 'action/notifikasiAction.php?act=get&id=' + id,
             method: 'post',
             success: function(response) {
                 var data = JSON.parse(response);
                 $('#form-data').modal('show');
                 $('#form-tambah').attr('action',
-                    'action/logAction.php?act=update&id=' + id);
-                $('#admin_id').val(data.admin_id);
-                $('#deskripsi_tugas').val(data.deskripsi_tugas);
-                $('#tanggal_tugas').val(data.tanggal_tugas);
-   
+                    'action/notifikasiAction.php?act=update&id=' + id);
+                $('#id_penerima').val(data.id_penerima);
+                $('#pesan').val(data.pesan);
+                $('#tanggal_kirim').val(data.tanggal_kirim);
+                $('#id_pelanggaran').val(data.id_pelanggaran);
+                $('#username').val(data.username);
+                $('#id_tipe_notifikasi').val(data.id_tipe_notifikasi);
             }
         });
     }
@@ -136,7 +173,7 @@ $dataAdmin = $classData->getData();
     function deleteData(id) {
         if (confirm('Apakah anda yakin?')) {
             $.ajax({
-                url: 'action/logAction.php?act=delete&id=' + id,
+                url: 'action/notifikasiAction.php?act=delete&id=' + id,
                 method: 'post',
                 success: function(response) {
                     var result = JSON.parse(response);
@@ -152,41 +189,39 @@ $dataAdmin = $classData->getData();
 
     var tabelData;
     $(document).ready(function() {
-  
-
-
+        
         tabelData = $('#table-data').DataTable({
             processing: true,
             serverSide: true,
             ajax: {
-                url: 'action/logAction.php?act=load',
+                url: 'action/notifikasiAction.php?act=load',
                 type: 'POST',
             },
-            columns: [
-                { data: 'no' },
-                { data: 'admin_id' },
-                { data: 'deskripsi_tugas' },
-                { data: 'tanggal_tugas' },
-                { data: 'aksi' }, // Add nama_kelas
-            ],
+                    columns: [
+                { data: "no" },
+                { data: "penerima" },
+                { data: "pesan" },
+                { data: "tanggal_kirim" },
+                { data: "id_pelanggaran" },
+                { data: "id_tipe_notifikasi" }, // Tambahkan kolom untuk Password Admin
+                { data: "aksi" }
+            ]
         });
-
 
         $('#form-tambah').validate({
             rules: {
-                admin_id: {
+              
+                pesan: {
                     required: true,
-                    // minlength: 3
+                    minlength: 5
                 },
-                deskripsi_tugas: {
+              
+               
+                tanggal_kirim: {
                     required: true,
-                    // email: true
+                  
                 },
-                tanggal_tugas: {
-                    required: true,
-                    // minlength: 4
-                },
-           
+               
             },
             errorElement: 'span',
             errorPlacement: function(error, element) {

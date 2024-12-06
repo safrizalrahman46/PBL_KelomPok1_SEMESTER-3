@@ -24,17 +24,17 @@ if ($act == 'load') {
         "data" => []
     ];
 
-    foreach ($data['data'] as $row) {
+    foreach ($data['data'] as $key => $row) { // Gunakan $key sebagai nomor urut
         $result['data'][] = [
-            'no' => ($row+1),
-            'id_log' => htmlspecialchars($row['id_log']),
+            'no' => ($key + 1), // Gunakan $key + 1 untuk nomor urut
             'admin_id' => htmlspecialchars($row['admin_id']),
             'deskripsi_tugas' => htmlspecialchars($row['deskripsi_tugas']),
-            'tanggal_tugas' => htmlspecialchars($row['tanggal_tugas']),
-            'aksi' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_admin'] . ')"><i class="fa fa-edit"></i></button>
-                       <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id_admin'] . ')"><i class="fa fa-trash"></i></button>'
+            'tanggal_tugas' => ($row['tanggal_tugas']->format('Y-m-d')),
+            'aksi' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_log'] . ')"><i class="fa fa-edit"></i></button>
+                       <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id_log'] . ')"><i class="fa fa-trash"></i></button>'
         ];
     }
+
 
     echo json_encode($result);
 }
@@ -50,11 +50,11 @@ if ($act == 'get') {
 
 if ($act == 'save') {
     $data = [
-        'id_log' => antiSqlInjection($_POST['id_log']),
+
         'admin_id' => antiSqlInjection($_POST['admin_id']),
-        'password_admin' => antiSqlInjection($_POST['password_admin']),
-        'id_kelas' => antiSqlInjection($_POST['id_kelas'])
-        
+        'deskripsi_tugas' => antiSqlInjection($_POST['deskripsi_tugas']),
+        'tanggal_tugas' => antiSqlInjection($_POST['tanggal_tugas'])
+
     ];
     $admin = new LogModel();
     $admin->insertData($data);
@@ -68,10 +68,10 @@ if ($act == 'save') {
 if ($act == 'update') {
     $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : 0;
     $data = [
-        'id_log' => antiSqlInjection($_POST['id_log']),
+
         'admin_id' => antiSqlInjection($_POST['admin_id']),
-        'password_admin' => antiSqlInjection($_POST['password_admin']),
-        'id_kelas' => antiSqlInjection($_POST['id_kelas'])
+        'deskripsi_tugas' => antiSqlInjection($_POST['deskripsi_tugas']),
+        'tanggal_tugas' => antiSqlInjection($_POST['tanggal_tugas'])
     ];
 
     $admin = new LogModel();

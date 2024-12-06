@@ -24,19 +24,20 @@ if ($act == 'load') {
         "data" => []
     ];
 
-    foreach ($data['data'] as $row) {
+    foreach ($data['data'] as $index => $row) {
         $result['data'][] = [
-            'no' => ($row+1),
-            'id_pelanggaran' => htmlspecialchars($row['id_pelanggaran']),
+            'no' => $index + 1, // Correctly calculate the index
             'mahasiswa_id' => htmlspecialchars($row['mahasiswa_id']),
             'id_jenis_pelanggaran' => htmlspecialchars($row['id_jenis_pelanggaran']),
-            'tanggal_laporan' => htmlspecialchars($row['tanggal_laporan']),
             'status' => htmlspecialchars($row['status']),
+            'komentar' => htmlspecialchars($row['komentar']),
             'id_admin' => htmlspecialchars($row['id_admin']),
             'id_dosen' => htmlspecialchars($row['id_dosen']),
             'status_verifikasi_admin' => htmlspecialchars($row['status_verifikasi_admin']),
             'nim' => htmlspecialchars($row['nim']),
             'foto' => htmlspecialchars($row['foto']),
+            'tanggal_laporan' => htmlspecialchars($row['tanggal_laporan']),
+            'nama' => htmlspecialchars($row['nama']),
             'aksi' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_pelanggaran'] . ')"><i class="fa fa-edit"></i></button>
                        <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id_pelanggaran'] . ')"><i class="fa fa-trash"></i></button>'
         ];

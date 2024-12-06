@@ -1,111 +1,144 @@
 <?php
 include('Model.php');
 include('Database.php');
+
 class MahasiswaModel extends Model
 {
     protected $db;
-    protected $table = 'mahasiswa';
+    protected $table = 'tb_mahasiswa';
     protected $driver;
-  public function __construct()
+    public function __construct()
     {
         // Get the database instance
         $database = Database::getInstance();
         $this->db = $database->getConnection(); // Set the connection resource
         $this->driver = $database->getDriver(); // Set the driver being used
     }
-    public function insertData($data)
+    public function getDataForDataTables($request)
     {
-        if ($this->driver == 'mysql') {
-            // prepare statement untuk query insert
-            $query = $this->db->prepare("insert into {$this->table} (name, department_id, email, NIM, username, password, total_violation_points, total_reward_points, semester, tingkat, foto, status, jurusan, prodi) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            // binding parameter ke query, "s" berarti string, "ss" berarti dua string
-            $query->bind_param('sissssiiisssss', $data['name'], $data['department_id'], $data['email'], $data['NIM'], $data['username'], $data['password'], $data['total_violation_points'], $data['total_reward_points'], $data['semester'], $data['tingkat'], $data['foto'], $data['status'], $data['jurusan'], $data['prodi']);
-            // eksekusi query untuk menyimpan ke database
-            $query->execute();
-        } else {
-            // eksekusi query untuk menyimpan ke database
-            sqlsrv_query($this->db, "insert into {$this->table} (name, department_id, email, NIM, username, password, total_violation_points, total_reward_points, semester, tingkat, foto, status, jurusan, prodi) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array($data['name'], $data['department_id'], $data['email'], $data['NIM'], $data['username'], $data['password'], $data['total_violation_points'], $data['total_reward_points'], $data['semester'], $data['tingkat'], $data['foto'], $data['status'], $data['jurusan'], $data['prodi']));
-        }
-    }
-    public function getData()
-    {
-        if ($this->driver == 'mysql') {
-            // query untuk mengambil data dari tabel
-            return $this->db->query("select * from {$this->table} ")->fetch_all(MYSQLI_ASSOC);
-        } else {
-            // query untuk mengambil data dari tabel
-            $query = sqlsrv_query($this->db, "select * from {$this->table}");
-            $data = [];
-            while ($row = sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC)) {
+        // Columns available for ordering and searching
+        $columns = [ 'email', 'semester', 'tingkat', 'foto', 'status', 'prodi', 'id_pelanggaran', 'id_prodi', 'NIM', 'id_users', 'nama'];
+
+
+        // Extract search and pagination parameters
+        $searchValue = isset($request['search']['value']) ? $request['search']['value'] : '';
+        $searchTerm = "%{$searchValue}%";
+
+        $orderColumnIndex = isset($request['order'][0]['column']) ? (int) $request['order'][0]['column'] : 0;
+        $orderDir = isset($request['order'][0]['dir']) && in_array(strtolower($request['order'][0]['dir']), ['asc', 'desc'])
+            ? $request['order'][0]['dir']
+            : 'asc';
+
+        $start = isset($request['start']) ? (int) $request['start'] : 0;
+        $length = isset($request['length']) ? (int) $request['length'] : 10;
+
+        // Ensure column index is valid
+        $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'NIM';
+
+        // SQL Server query preparation for fetching data
+        $query = "SELECT * FROM {$this->table} ";
+
+        // Prepare parameters for SQL Server
+        $params = [$searchTerm, $searchTerm, $start, $length];
+
+        // Execute the query
+        $stmt = sqlsrv_query($this->db, $query, $params);
+
+        $data = [];
+        if ($stmt) {
+            while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
                 $data[] = $row;
             }
-            return $data;
         }
+
+        // Count total filtered records for SQL Server
+        $queryFiltered = "SELECT COUNT(*) as count FROM {$this->table} 
+        WHERE email LIKE ? OR semester LIKE ? OR tingkat LIKE ? OR foto LIKE ? OR status LIKE ? 
+        OR prodi LIKE ? OR id_pelanggaran LIKE ? OR id_prodi LIKE ? OR id_kelas LIKE ? 
+        OR id_users LIKE ? OR nama LIKE ?";
+        $stmtFiltered = sqlsrv_query($this->db, $queryFiltered, [$searchTerm, $searchTerm]);
+        $totalFiltered = 0;
+        if ($stmtFiltered) {
+            $rowFiltered = sqlsrv_fetch_array($stmtFiltered, SQLSRV_FETCH_ASSOC);
+            if ($rowFiltered) {
+                $totalFiltered = $rowFiltered['count'];
+            }
+        }
+
+        // Count total records for SQL Server
+        $queryTotal = "SELECT COUNT(*) as count FROM {$this->table}";
+        $stmtTotal = sqlsrv_query($this->db, $queryTotal);
+        $totalRecords = 0;
+        if ($stmtTotal) {
+            $rowTotal = sqlsrv_fetch_array($stmtTotal, SQLSRV_FETCH_ASSOC);
+            if ($rowTotal) {
+                $totalRecords = $rowTotal['count'];
+            }
+        }
+
+        // Return data in DataTables format
+        return [
+            "draw" => isset($request['draw']) ? intval($request['draw']) : 0,
+            "recordsTotal" => $totalRecords,
+            "recordsFiltered" => $totalFiltered,
+            "data" => $data
+        ];
+    }
+
+
+
+    public function insertData($data)
+    {
+
+        // eksekusi query untuk menyimpan ke database
+        sqlsrv_query($this->db, "INSERT INTO {$this->table} (email, semester, tingkat, foto, status, prodi, id_pelanggaran, id_prodi, id_kelas, id_users, nama) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 
+        array($data['email'], $data['semester'], $data['tingkat'], $data['foto'], $data['status'], $data['prodi'], $data['id_pelanggaran'], $data['id_prodi'], $data['id_kelas'], $data['id_users'], $data['nama']));    }
+    public function getData()
+    {
+
+
+        // query untuk mengambil data dari tabel
+        $query = sqlsrv_query($this->db, "select * from {$this->table}");
+        $data = [];
+        while ($row = sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC)) {
+            $data[] = $row;
+        }
+        return $data;
     }
     public function getDataById($id)
     {
-        if ($this->driver == 'mysql') {
-            // query untuk mengambil data berdasarkan id
-            $query = $this->db->prepare("select * from {$this->table} where id = ?");
-            // binding parameter ke query "i" berarti integer. Biar tidak kena SQL Injection
-            $query->bind_param('i', $id);
-            // eksekusi query
-            $query->execute();
-            // ambil hasil query
-            return $query->get_result()->fetch_assoc();
-        } else {
-            // query untuk mengambil data berdasarkan id
-            $query = sqlsrv_query($this->db, "select * from {$this->table} where id = ?", [$id]);
-            // ambil hasil query
-            return sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
-        }
+        // query untuk mengambil data berdasarkan id
+        $query = sqlsrv_query($this->db, "select * from {$this->table} where NIM = ?", [$id]);
+        // ambil hasil query
+        return sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
     }
     public function updateData($id, $data)
     {
-        if ($this->driver == 'mysql') {
-            // query untuk update data
-            $query = $this->db->prepare("update {$this->table} set  name = ?, department_id = ?, email = ?, NIM = ?, username = ?, password = ?, total_violation_points = ?, total_reward_points = ?, semester = ?, tingkat = ?, foto = ?, status = ?, jurusan = ?, prodi = ?  where id = ?");
-            // binding parameter ke query
-            $query->bind_param('sissssiiisssssi', $data['name'], $data['department_id'], $data['email'], $data['NIM'], $data['username'], $data['password'], $data['total_violation_points'], $data['total_reward_points'], $data['semester'], $data['tingkat'], $data['foto'], $data['status'], $data['jurusan'], $data['prodi'], $id);
-            // eksekusi query
-            $query->execute();
-        } else {
-            // query untuk update data
-            sqlsrv_query($this->db, "update {$this->table} set  name = ?, department_id = ?, email = ?, NIM = ?, username = ?, password = ?, total_violation_points = ?, total_reward_points = ?, semester = ?, tingkat = ?, foto = ?, status = ?, jurusan = ?, prodi = ?  where id = ?", [
-                $data['name'],
-                $data['department_id'],
-                $data['email'],
-                $data['NIM'],
-                $data['username'],
-                $data['password'],
-                $data['total_violation_points'],
-                $data['total_reward_points'],
-                $data['semester'],
-                $data['tingkat'],
-                $data['foto'],
-                $data['status'],
-                $data['jurusan'],
-                $data['prodi'],
-                $id
-            ]);
-        }
+
+        $update = sqlsrv_query($this->db, "UPDATE {$this->table} SET email = ?, semester = ?, tingkat = ?, foto = ?, status = ?, prodi = ?, id_pelanggaran = ?, id_prodi = ?, id_kelas = ?, id_users = ?, nama = ? WHERE id_users = ?", [
+            $data['email'],
+            $data['semester'],
+            $data['tingkat'],
+            $data['foto'],
+            $data['status'],
+            $data['prodi'],
+            $data['id_pelanggaran'],
+            $data['id_prodi'],
+            $data['id_kelas'],
+            $data['id_users'],
+            $data['nama'],
+            $id
+        ]);
     }
     public function deleteData($id)
     {
-        if ($this->driver == 'mysql') {
-            // query untuk delete data
-            $query = $this->db->prepare("delete from {$this->table} where id = ?");
-            // binding parameter ke query
-            $query->bind_param('i', $id);
-            // eksekusi query
-            $query->execute();
-        } else {
-            // query untuk delete data
-            sqlsrv_query(
-                $this->db,
-                "delete from {$this->table} where id = ?",
-                [$id]
-            );
-        }
+
+        // query untuk delete data
+        sqlsrv_query(
+            $this->db,
+            "delete from {$this->table} where NIM = ?",
+            [$id]
+        );
     }
 }

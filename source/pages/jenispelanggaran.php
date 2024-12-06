@@ -1,11 +1,11 @@
-<?php 
+<?php
 // require_once('model/JenisPelanggaranModel.php');
 
 
 // $classData = new JenisPelanggaranModel();
 // $dataKelas = $classData->getData();
 
-include_once(__DIR__.'/../model/tingkatpelanggaranModel.php');
+include_once(__DIR__ . '/../model/tingkatpelanggaranModel.php');
 
 
 $classData = new tingkatpelanggaranModel();
@@ -78,18 +78,18 @@ $dataTingkat = $classData->getData();
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Deskripsi</label>
-                        <input type="text" class="form-control" name="deskkripsi" id="deskkripsi">
+                        <input type="text" class="form-control" name="deskripsi" id="deskripsi">
                     </div>
                     <div class="form-group">
                         <label>ID Tingkat</label>
 
                         <select name="id_tingkat" id="id_tingkat" class="form-control">
-                            <?php 
-                                foreach ($dataTingkat as $key => $value) {
-                            ?>  
+                            <?php
+                            foreach ($dataTingkat as $key => $value) {
+                            ?>
                                 <option value="<?= $value['id_tingkat_pelanggaran']; ?>"><?= $value['deskripsi'] ?></option>
-                            <?php 
-                                }
+                            <?php
+                            }
                             ?>
                         </select>
                         <!-- <input type="number" class="form-control" name="id_kelas" id="id_kelas"> -->
@@ -109,7 +109,7 @@ $dataTingkat = $classData->getData();
     function tambahData() {
         $('#form-data').modal('show');
         $('#form-tambah').attr('action', 'action/jenispelanggaranAction.php?act=save');
-        $('#deskkripsi').val('');
+        $('#deskripsi').val('');
         $('#id_tingkat').val('');
 
     }
@@ -123,9 +123,9 @@ $dataTingkat = $classData->getData();
                 $('#form-data').modal('show');
                 $('#form-tambah').attr('action',
                     'action/jenispelanggaranAction.php?act=update&id=' + id);
-                $('#deskkripsi').val(data.deskkripsi);
+                $('#deskripsi').val(data.deskripsi);
                 $('#id_tingkat').val(data.id_tingkat);
-     
+
             }
         });
     }
@@ -149,7 +149,7 @@ $dataTingkat = $classData->getData();
 
     var tabelData;
     $(document).ready(function() {
-     
+
 
 
         tabelData = $('#table-data').DataTable({
@@ -159,19 +159,25 @@ $dataTingkat = $classData->getData();
                 url: 'action/jenispelanggaranAction.php?act=load',
                 type: 'POST',
             },
-            columns: [
-                { data: 'no' },
-                { data: 'deskripsi' },
-                { data: 'id_tingkat' },
-                { data: 'aksi' },
-                 // Add deskkripsi
+            columns: [{
+                    data: 'no'
+                },
+                {
+                    data: 'deskripsi'
+                },
+                {
+                    data: 'id_tingkat'
+                },
+                {
+                    data: 'aksi'
+                }
             ],
         });
 
 
         $('#form-tambah').validate({
             rules: {
-                deskkripsi: {
+                deskripsi: {
                     required: true,
                     minlength: 3
                 },

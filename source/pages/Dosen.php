@@ -1,5 +1,5 @@
-<?php 
-include_once(__DIR__.'/../model/UserModel.php');
+<?php
+include_once(__DIR__ . '/../model/UserModel.php');
 
 
 $classData = new UserModel();
@@ -38,11 +38,14 @@ $dataKelas = $classData->getData();
             <table class="table table-sm table-bordered table-striped" id="table-data">
                 <thead>
                     <tr>
-                        <th>No</th>                 
+                        <th>No</th>
                         <th>Email</th>
                         <th>Users</th>
+                        <th>Nama</th>
+                        <th>Alamat</th>
+                        <th>No_telepon</th>
                         <th>Aksi</th>
-                     
+
                     </tr>
                 </thead>
                 <tbody>
@@ -68,16 +71,28 @@ $dataKelas = $classData->getData();
                         <!-- <input type="text" class="form-control" name="NIP" id="NIP"> -->
 
                         <select name="id_users" id="id_users" class="form-control">
-                            <?php 
-                                foreach ($dataKelas as $key => $value) {
-                            ?>  
+                            <?php
+                            foreach ($dataKelas as $key => $value) {
+                            ?>
                                 <option value="<?= $value['id_users']; ?>"><?= $value['username'] ?></option>
-                            <?php 
-                                }
+                            <?php
+                            }
                             ?>
                         </select>
                     </div>
-               
+                    <div class="form-group">
+                        <label>Nama</label>
+                        <input type="text" class="form-control" name="nama" id="nama">
+                    </div>
+                    <div class="form-group">
+                        <label>Alamat</label>
+                        <input type="text" class="form-control" name="alamat" id="alamat">
+                    </div>
+                    <div class="form-group">
+                        <label>No telepon</label>
+                        <input type="text" class="form-control" name="no_telepon" id="no_telepon">
+                    </div>
+
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
@@ -94,6 +109,10 @@ $dataKelas = $classData->getData();
         $('#form-tambah').attr('action', 'action/dosenAction.php?act=save');
         $('#email').val('');
         $('#id_users').val('');
+        $('#nama').val('');
+        $('#alamat').val('');
+        $('#no_telepon').val('');
+ 
     }
 
     function editData(id) {
@@ -101,11 +120,15 @@ $dataKelas = $classData->getData();
             url: 'action/dosenAction.php?act=get&id=' + id,
             method: 'post',
             success: function(response) {
+                console.log(response); // Add this line for debugging
                 var data = JSON.parse(response);
                 $('#form-data').modal('show');
                 $('#form-tambah').attr('action', 'action/dosenAction.php?act=update&id=' + id);
                 $('#email').val(data.email);
                 $('#id_users').val(data.id_users);
+                $('#nama').val(data.nama);
+                $('#alamat').val(data.alamat);
+                $('#no_telepon').val(data.no_telepon);
             }
         });
     }
@@ -129,60 +152,86 @@ $dataKelas = $classData->getData();
 
     var tabelData;
     $(document).ready(function() {
-    tabelData = $('#table-data').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: {
-            url: 'action/dosenAction.php?act=load',
-            type: 'POST',
-        },
-        columns: [
-            { data: 'no' },
-            { data: 'email' },
-            { data: 'id_users' },
-            { data: 'aksi' }
-        ],
-    });
-});
-$('#form-tambah').validate({
-    rules: {
-        email: {
-            required: true,
-            email: true
-        },
-        id_users: {
-            required: true
-        }
-    },
-    errorElement: 'span',
-    errorPlacement: function(error, element) {
-        error.addClass('invalid-feedback');
-        element.closest('.form-group').append(error);
-    },
-    highlight: function(element, errorClass, validClass) {
-        $(element).addClass('is-invalid');
-    },
-    unhighlight: function(element, errorClass, validClass) {
-        $(element).removeClass('is-invalid');
-    },
-    submitHandler: function(form) {
-        $.ajax({
-            url: $(form).attr('action'),
-            method: 'post',
-            data: $(form).serialize(),
-            success: function(response) {
-                var result = JSON.parse(response);
-                if (result.status) {
-                    $('#form-data').modal('hide');
-                    tabelData.ajax.reload(); // reload data tabel 
-                } else {
-                    alert(result.message);
+        tabelData = $('#table-data').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: 'action/dosenAction.php?act=load',
+                type: 'POST',
+            },
+            columns: [{
+                    data: 'no'
+                },
+                {
+                    data: 'email'
+                },
+                {
+                    data: 'id_users'
+                },
+                {
+                    data: 'nama'
+                },
+                {
+                    data: 'alamat'
+                },
+                {
+                    data: 'no_telepon'
+                },
+                {
+                    data: 'aksi'
                 }
+            ],
+        });
+        $('#form-tambah').validate({
+            rules: {
+                email: {
+                    required: true,
+                    email: true
+                },
+                nama: {
+                    required: true
+                },
+                alamat: {
+                    required: true
+                }, 
+                no_telepon: {
+                    required: true
+                }, 
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            },
+            submitHandler: function(form) {
+    
+                try {
+                    console.log('a');
+                } catch (error) {
+                    console.log(error);
+                    return;
+                }
+                $.ajax({
+                    url: $(form).attr('action'),
+                    method: 'post',
+                    data: $(form).serialize(),
+                    success: function(response) {
+                        var result = JSON.parse(response);
+                        if (result.status) {
+                            $('#form-data').modal('hide');
+                            tabelData.ajax.reload(); // reload data tabel 
+                        } else {
+                            alert(result.message);
+                        }
+                    }
+                });
             }
         });
-    }
-});
-    
-
-    
+    });
 </script>

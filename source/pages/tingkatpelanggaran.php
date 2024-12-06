@@ -73,11 +73,11 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Nama Tingkat</label>
-                        <input type="text" class="form-control" name="nama_kelas" id="nama_kelas">
+                        <input type="text" class="form-control" name="nama_tingkat" id="nama_tingkat">
                     </div>
                     <div class="form-group">
                         <label>Deskripsi</label>
-                        <input type="text" class="form-control" name="nama_dpa" id="nama_dpa">
+                        <input type="text" class="form-control" name="deskripsi" id="deskripsi">
                     </div>
                     
                 </div>
@@ -163,7 +163,6 @@
                 },
                 deskripsi: {
                     required: true,
-                    email: true
                 }
             },
             errorElement: 'span',

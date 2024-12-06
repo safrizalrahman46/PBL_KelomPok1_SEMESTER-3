@@ -30,8 +30,8 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Nama</th>
                         <th>Username</th>
+                        <th>Password</th>
                         <th>Level</th>
                         <th>Aksi</th>
                     </tr>
@@ -51,10 +51,6 @@
                     <h4 class="modal-title">Tambah User</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label>Nama</label>
-                        <input type="text" class="form-control" name="nama" id="nama" required>
-                    </div>
                     <div class="form-group">
                         <label>Username</label>
                         <input type="text" class="form-control" name="username" id="username" required>
@@ -81,7 +77,6 @@
     function tambahData() {
         $('#form-data').modal('show');
         $('#form-tambah').attr('action', 'action/usersAction.php?act=save');
-        $('#nama').val('');
         $('#username').val('');
         $('#password').val('');
         $('#level').val('');
@@ -95,7 +90,6 @@
                 var data = JSON.parse(response);
                 $('#form-data').modal('show');
                 $('#form-tambah').attr('action', 'action/usersAction.php?act=update&id=' + id);
-                $('#nama').val(data.nama);
                 $('#username').val(data.username);
                 $('#password').val(data.password);
                 $('#level').val(data.level);
@@ -123,32 +117,30 @@
     var tabelData;
     $(document).ready(function() {
         tabelData = $('#table-data').DataTable({
-            ajax: 'action/usersAction.php?act=load',
-            pageLength: 100, //
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: 'action/usersAction.php?act=load',
+                type: 'POST',
+            },
             columns: [
-                { title: "No", data: null, render: function(data, type, row, meta) {
-                    return meta.row + meta.settings._iDisplayStart + 1; // Display row number
-                }},
-                { data: 'nama' },
+                { data: 'no' },
                 { data: 'username' },
+                { data: 'password' },
                 { data: 'level' },
-                { data: 'action' }
+                { data: 'aksi' }
             ]
         });
 
         $('#form-tambah').validate({
             rules: {
-                nama: {
-                    required: true,
-                    minlength: 3
-                },
                 username: {
                     required: true,
                     minlength: 3
                 },
                 password: {
                     required: true,
-                    minlength: 6
+                    minlength: 3
                 },
                 level: {
                     required: true

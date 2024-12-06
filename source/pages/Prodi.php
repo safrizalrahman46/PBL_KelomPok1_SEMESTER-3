@@ -110,9 +110,23 @@
 
     var tabelData;
     $(document).ready(function() {
+
+
         tabelData = $('#table-data').DataTable({
-            ajax: 'action/prodiAction.php?act=load',
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: 'action/prodiAction.php?act=load',
+                type: 'POST',
+            },
+            columns: [
+                { data: 'no' },
+                { data: 'nama_prodi' },
+                { data: 'aksi' }, // Add nama_kelas
+            ],
         });
+
+
 
         $('#form-tambah').validate({
             rules: {

@@ -24,9 +24,9 @@ if ($act == 'load') {
         "data" => []
     ];
 
-    foreach ($data['data'] as $key => $row) {
+    foreach ($data['data'] as $index => $row) {
         $result['data'][] = [
-            'no' => ($key + 1), // Use $index instead of $row
+            'no' => ($index + 1), // Use $index instead of $row
             'deskripsi' => htmlspecialchars($row['deskripsi']),
             'id_tingkat' => htmlspecialchars($row['id_tingkat']),
             'aksi' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_jenis_pelanggaran'] . ')"><i class="fa fa-edit"></i></button>
@@ -66,7 +66,7 @@ if ($act == 'save') {
 if ($act == 'update') {
     $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : 0;
     $data = [
-        'nama_kelas' => antiSqlInjection($_POST['nama_kelas']),
+        'deskripsi' => antiSqlInjection($_POST['deskripsi']),
         'id_tingkat' => antiSqlInjection($_POST['id_tingkat']),
     ];
 

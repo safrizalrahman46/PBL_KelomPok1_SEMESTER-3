@@ -29,6 +29,9 @@ if ($act == 'load') {
             'no' => ($index + 1), // Use $index instead of $row
             'email' => htmlspecialchars($row['email']),
             'id_users' => htmlspecialchars($row['id_users']),
+            'nama' => htmlspecialchars($row['nama']),
+            'alamat' => htmlspecialchars($row['alamat']),
+            'no_telepon' => htmlspecialchars($row['no_telepon']),
             'aksi' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['nip'] . ')"><i class="fa fa-edit"></i></button>
                        <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['nip'] . ')"><i class="fa fa-trash"></i></button>'
         ];
@@ -48,10 +51,13 @@ if ($act == 'get') {
 
 if ($act == 'save') {
     $data = [
-   
+
         'email' => antiSqlInjection($_POST['email']),
-  'id_users' => isset($_POST['id_users']) ? antiSqlInjection($_POST['id_users']) : null, // Check if 'id_users' exists
-  
+        'id_users' => isset($_POST['id_users']) ? antiSqlInjection($_POST['id_users']) : null, // Check if 'id_users' exists
+        'nama' => antiSqlInjection($_POST['nama']),
+        'alamat' => antiSqlInjection($_POST['alamat']),
+        'no_telepon' => antiSqlInjection($_POST['no_telepon']),
+
     ];
     $admin = new DosenModel();
     $admin->insertData($data);
@@ -67,7 +73,10 @@ if ($act == 'update') {
     $data = [
 
         'email' => antiSqlInjection($_POST['email']),
-  'id_users' => isset($_POST['id_users']) ? antiSqlInjection($_POST['id_users']) : null, // Check if 'id_users' exists
+        'id_users' => isset($_POST['id_users']) ? antiSqlInjection($_POST['id_users']) : null, // Check if 'id_users' exists
+        'nama' => antiSqlInjection($_POST['nama']),
+        'alamat' => antiSqlInjection($_POST['alamat']),
+        'no_telepon' => antiSqlInjection($_POST['no_telepon']),
     ];
 
     $admin = new DosenModel();
