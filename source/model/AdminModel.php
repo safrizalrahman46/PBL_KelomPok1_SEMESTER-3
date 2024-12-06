@@ -18,7 +18,7 @@ class AdminModel extends Model
     public function getDataForDataTables($request)
 {
     // Columns available for ordering and searching
-    $columns = ['id_admin', 'nama_admin', 'email_admin', 'id_kelas', 'nama_kelas']; 
+    $columns = ['id_admin', 'email_admin', 'nama', 'username']; 
 
     // Extract search and pagination parameters
     $searchValue = isset($request['search']['value']) ? $request['search']['value'] : '';
@@ -36,12 +36,8 @@ class AdminModel extends Model
     $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'id_admin';
     
     // SQL Server query preparation for fetching data
-    $query = "SELECT a.id_admin, a.nama_admin, a.email_admin, k.nama_kelas
-              FROM {$this->table} a
-              LEFT JOIN tb_kelas k ON a.id_kelas = k.id_kelas
-              WHERE a.nama_admin LIKE ? OR a.email_admin LIKE ? OR k.nama_kelas LIKE ?
-              ORDER BY {$orderColumn} {$orderDir}
-              OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+    $query = "SELECT id_admin,email_admin, nama, username FROM {$this->table} INNER JOIN tb_users 
+                ON {$this->table}.id_users = tb_users.id_users";
 
     // Prepare parameters for SQL Server
     $params = [$searchTerm, $searchTerm, $searchTerm, $start, $length];
@@ -57,10 +53,8 @@ class AdminModel extends Model
     }
     
     // Count total filtered records for SQL Server
-    $queryFiltered = "SELECT COUNT(*) as count
-                      FROM {$this->table} a
-                      LEFT JOIN tb_kelas k ON a.id_kelas = k.id_kelas
-                      WHERE a.nama_admin LIKE ? OR a.email_admin LIKE ? OR k.nama_kelas LIKE ?";
+    $queryFiltered = "SELECT COUNT(*) as count FROM {$this->table} INNER JOIN tb_users 
+                ON {$this->table}.id_users = tb_users.id_users";
     
     $stmtFiltered = sqlsrv_query($this->db, $queryFiltered, [$searchTerm, $searchTerm, $searchTerm]);
     $totalFiltered = 0;
@@ -90,24 +84,14 @@ class AdminModel extends Model
 
     public function insertData($data)
     {
-        if ($this->driver == 'sqlsrv') {
-            // prepare statement untuk query insert
-            $query = $this->db->prepare("insert into {$this->table} (nama_admin, email_admin, password_admin, id_kelas) values(?,?,?,?)");
-            // binding parameter ke query, "s" berarti string, "ss" berarti dua string
-            $query->bind_param('sssi', $data['nama_admin'], $data['email_admin'], $data['password_admin'], $data['id_kelas']);
+       
             // eksekusi query untuk menyimpan ke database
-            $query->execute();
-        } else {
-            // eksekusi query untuk menyimpan ke database
-            sqlsrv_query($this->db, "insert into {$this->table} (nama_admin, email_admin, password_admin, id_kelas) values(?,?,?,?)", array($data['nama_admin'], $data['email_admin'], $data['password_admin'], $data['id_kelas']));
-        }
+            sqlsrv_query($this->db, "insert into {$this->table} ( email_admin, nama , id_users) values(?,?,?)", array( $data['email_admin'], $data['nama'], $data['id_users']));
+        
     }
     public function getData()
     {
-        if ($this->driver == 'sqlsrv') {
-            // query untuk mengambil data dari tabel
-            return $this->db->query("select * from {$this->table} ")->fetch_all(MYSQLI_ASSOC);
-        } else {
+      
             // query untuk mengambil data dari tabel
             $query = sqlsrv_query($this->db, "select * from {$this->table}");
             $data = [];
@@ -115,64 +99,38 @@ class AdminModel extends Model
                 $data[] = $row;
             }
             return $data;
-        }
+        
     }
     public function getDataById($id)
     {
-        if ($this->driver == 'sqlsrv') {
+    
             // query untuk mengambil data berdasarkan id
-            $query = $this->db->prepare("select * from {$this->table} where id_admin =
-?");
-            // binding parameter ke query "i" berarti integer. Biar tidak kena SQL Injection
-            $query->bind_param('i', $id);
-            // eksekusi query
-            $query->execute();
-            // ambil hasil query
-            return $query->get_result()->fetch_assoc();
-        } else {
-            // query untuk mengambil data berdasarkan id
-            $query = sqlsrv_query($this->db, "select * from {$this->table} where id_admin
-= ?", [$id]);
+            $query = sqlsrv_query($this->db, "select * from {$this->table} where id_admin = ?", [$id]);
             // ambil hasil query
             return sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
-        }
+        
     }
     public function updateData($id, $data)
     {
-        if ($this->driver == 'mysql') {
+       
             // query untuk update data
-            $query = $this->db->prepare("update {$this->table} set nama_admin = ?, email_admin = ?, password_admin = ?, id_kelas = ? where id_admin = ?");
-            // binding parameter ke query
-            $query->bind_param('sssii',  $data['nama_admin'], $data['email_admin'], $data['password_admin'], $data['id_kelas'], $id);
-            // eksekusi query
-            $query->execute();
-        } else {
-            // query untuk update data
-            sqlsrv_query($this->db, "update {$this->table} set nama_admin = ?, email_admin = ?, password_admin = ?, id_kelas = ? where id_admin = ?", [
-                $data['nama_admin'],
+            sqlsrv_query($this->db, "update {$this->table} set  email_admin = ?, nama = ?, id_users = ? where id_admin = ?", [
                 $data['email_admin'],
-                $data['password_admin'],
-                $data['id_kelas'],
+                $data['nama'],
+                $data['id_users'],
                 $id
             ]);
-        }
+        
     }
     public function deleteData($id)
     {
-        if ($this->driver == 'mysql') {
-            // query untuk delete data
-            $query = $this->db->prepare("delete from {$this->table} where id_admin = ?");
-            // binding parameter ke query
-            $query->bind_param('i', $id);
-            // eksekusi query
-            $query->execute();
-        } else {
+   
             // query untuk delete data
             sqlsrv_query(
                 $this->db,
                 "delete from {$this->table} where id_admin = ?",
                 [$id]
             );
-        }
+        
     }
 }

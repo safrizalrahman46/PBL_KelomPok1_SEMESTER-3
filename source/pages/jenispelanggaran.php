@@ -5,6 +5,11 @@
 // $classData = new JenisPelanggaranModel();
 // $dataKelas = $classData->getData();
 
+include_once(__DIR__.'/../model/tingkatpelanggaranModel.php');
+
+
+$classData = new tingkatpelanggaranModel();
+$dataTingkat = $classData->getData();
 // print_r($data);
 
 ?>
@@ -72,25 +77,17 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Nama Admin</label>
-                        <input type="text" class="form-control" name="nama_kelas" id="nama_kelas">
+                        <label>Deskripsi</label>
+                        <input type="text" class="form-control" name="deskkripsi" id="deskkripsi">
                     </div>
                     <div class="form-group">
-                        <label>Email Admin</label>
-                        <input type="email" class="form-control" name="nama_dpa" id="nama_dpa">
-                    </div>
-                    <div class="form-group">
-                        <label>Password Admin</label>
-                        <input type="password" class="form-control" name="password_admin" id="password_admin">
-                    </div>
-                    <div class="form-group">
-                        <label>ID Kelas</label>
+                        <label>ID Tingkat</label>
 
-                        <select name="id_kelas" id="id_kelas" class="form-control">
+                        <select name="id_tingkat" id="id_tingkat" class="form-control">
                             <?php 
-                                foreach ($variable as $key => $value) {
+                                foreach ($dataTingkat as $key => $value) {
                             ?>  
-                                <option value="<?= $value['id_kelas']; ?>"><?= $value['nama_kelas'] ?></option>
+                                <option value="<?= $value['id_tingkat_pelanggaran']; ?>"><?= $value['deskripsi'] ?></option>
                             <?php 
                                 }
                             ?>
@@ -112,8 +109,8 @@
     function tambahData() {
         $('#form-data').modal('show');
         $('#form-tambah').attr('action', 'action/jenispelanggaranAction.php?act=save');
-        $('#nama_kelas').val('');
-        $('#nama_dpa').val('');
+        $('#deskkripsi').val('');
+        $('#id_tingkat').val('');
 
     }
 
@@ -126,8 +123,8 @@
                 $('#form-data').modal('show');
                 $('#form-tambah').attr('action',
                     'action/jenispelanggaranAction.php?act=update&id=' + id);
-                $('#nama_kelas').val(data.nama_kelas);
-                $('#nama_dpa').val(data.nama_dpa);
+                $('#deskkripsi').val(data.deskkripsi);
+                $('#id_tingkat').val(data.id_tingkat);
      
             }
         });
@@ -152,25 +149,7 @@
 
     var tabelData;
     $(document).ready(function() {
-        // tabelData = $('#table-data').DataTable({
-        //     ajax: 'action/jenispelanggaranAction.php?act=load',
-        //     columns: [{
-        //             title: "No"
-        //         },
-        //         {
-        //             title: "Nama Admin"
-        //         },
-        //         {
-        //             title: "Email Admin"
-        //         },
-        //         {
-        //             title: "Password Admin"
-        //         }, // Tambahkan kolom untuk Password Admin
-        //         {
-        //             title: "Aksi"
-        //         }
-        //     ]
-        // });
+     
 
 
         tabelData = $('#table-data').DataTable({
@@ -185,28 +164,19 @@
                 { data: 'deskripsi' },
                 { data: 'id_tingkat' },
                 { data: 'aksi' },
-                 // Add nama_kelas
+                 // Add deskkripsi
             ],
         });
 
 
         $('#form-tambah').validate({
             rules: {
-                nama_kelas: {
+                deskkripsi: {
                     required: true,
                     minlength: 3
                 },
-                nama_dpa: {
+                id_tingkat: {
                     required: true,
-                    email: true
-                },
-                password_admin: {
-                    required: true,
-                    minlength: 4
-                },
-                id_kelas: {
-                    required: true,
-                    digits: true
                 }
             },
             errorElement: 'span',

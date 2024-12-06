@@ -19,7 +19,7 @@ class DosenModel extends Model
 public function getDataForDataTables($request)
 {
     // Columns available for ordering and searching
-    $columns = ['nip', 'nama', 'email', 'id_users']; 
+    $columns = ['nip', 'email', 'id_users']; 
 
     // Extract search and pagination parameters
     $searchValue = isset($request['search']['value']) ? $request['search']['value'] : '';
@@ -40,12 +40,7 @@ public function getDataForDataTables($request)
     $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'nip';
     
     // SQL Server query preparation for fetching data
-    $query = "SELECT a.nip, a.nama, a.email, k.nama_kelas
-              FROM {$this->table} a
-              LEFT JOIN tb_kelas k ON a.id_users = k.id_users
-              WHERE a.nama LIKE ? OR a.email LIKE ? 
-              ORDER BY {$orderColumn} {$orderDir}
-              OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+    $query = "SELECT * from {$this->table} WHERE email LIKE ? OR id_users LIKE ? ORDER BY {$orderColumn} {$orderDir} OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
     // Prepare parameters for SQL Server
     $params = [$searchTerm, $searchTerm, $start, $length];
@@ -61,10 +56,7 @@ public function getDataForDataTables($request)
     }
     
     // Count total filtered records for SQL Server
-    $queryFiltered = "SELECT COUNT(*) as count
-                      FROM {$this->table} a
-                      LEFT JOIN tb_kelas k ON a.id_users = k.id_users
-                      WHERE a.nama LIKE ? OR a.email LIKE ?";
+    $queryFiltered = "SELECT COUNT(*) as count FROM {$this->table} WHERE email LIKE ? OR id_users LIKE ?";
     
     $stmtFiltered = sqlsrv_query($this->db, $queryFiltered, [$searchTerm, $searchTerm]);
     $totalFiltered = 0;
@@ -93,24 +85,14 @@ public function getDataForDataTables($request)
 
     public function insertData($data)
     {
-        if ($this->driver == 'sqlsrv') {
-            // prepare statement untuk query insert
-            $query = $this->db->prepare("insert into {$this->table} (nama, email, password_admin, id_users) values(?,?,?,?)");
-            // binding parameter ke query, "s" berarti string, "ss" berarti dua string
-            $query->bind_param('sssi', $data['nama'], $data['email'], $data['password_admin'], $data['id_users']);
+    
             // eksekusi query untuk menyimpan ke database
-            $query->execute();
-        } else {
-            // eksekusi query untuk menyimpan ke database
-            sqlsrv_query($this->db, "insert into {$this->table} (nama, email, password_admin, id_users) values(?,?,?,?)", array($data['nama'], $data['email'], $data['password_admin'], $data['id_users']));
-        }
+            sqlsrv_query($this->db, "insert into {$this->table} ( email, id_users) values(?,?)", array( $data['email'], $data['id_users']));
+        
     }
     public function getData()
     {
-        if ($this->driver == 'sqlsrv') {
-            // query untuk mengambil data dari tabel
-            return $this->db->query("select * from {$this->table} ")->fetch_all(MYSQLI_ASSOC);
-        } else {
+      
             // query untuk mengambil data dari tabel
             $query = sqlsrv_query($this->db, "select * from {$this->table}");
             $data = [];
@@ -118,64 +100,37 @@ public function getDataForDataTables($request)
                 $data[] = $row;
             }
             return $data;
-        }
+        
     }
     public function getDataById($id)
     {
-        if ($this->driver == 'sqlsrv') {
+       
             // query untuk mengambil data berdasarkan id
-            $query = $this->db->prepare("select * from {$this->table} where nip =
-?");
-            // binding parameter ke query "i" berarti integer. Biar tidak kena SQL Injection
-            $query->bind_param('i', $id);
-            // eksekusi query
-            $query->execute();
-            // ambil hasil query
-            return $query->get_result()->fetch_assoc();
-        } else {
-            // query untuk mengambil data berdasarkan id
-            $query = sqlsrv_query($this->db, "select * from {$this->table} where nip
-= ?", [$id]);
+            $query = sqlsrv_query($this->db, "select * from {$this->table} where nip = ?", [$id]);
             // ambil hasil query
             return sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
-        }
+    
     }
     public function updateData($id, $data)
     {
-        if ($this->driver == 'mysql') {
+    
             // query untuk update data
-            $query = $this->db->prepare("update {$this->table} set nama = ?, email = ?, password_admin = ?, id_users = ? where nip = ?");
-            // binding parameter ke query
-            $query->bind_param('sssii',  $data['nama'], $data['email'], $data['password_admin'], $data['id_users'], $id);
-            // eksekusi query
-            $query->execute();
-        } else {
-            // query untuk update data
-            sqlsrv_query($this->db, "update {$this->table} set nama = ?, email = ?, password_admin = ?, id_users = ? where nip = ?", [
-                $data['nama'],
+            sqlsrv_query($this->db, "update {$this->table}  email = ?,  id_users = ? where nip = ?", [
                 $data['email'],
-                $data['password_admin'],
                 $data['id_users'],
                 $id
             ]);
-        }
+        
     }
     public function deleteData($id)
     {
-        if ($this->driver == 'mysql') {
-            // query untuk delete data
-            $query = $this->db->prepare("delete from {$this->table} where nip = ?");
-            // binding parameter ke query
-            $query->bind_param('i', $id);
-            // eksekusi query
-            $query->execute();
-        } else {
+
             // query untuk delete data
             sqlsrv_query(
                 $this->db,
                 "delete from {$this->table} where nip = ?",
                 [$id]
             );
-        }
+        
     }
 }

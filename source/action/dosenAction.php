@@ -27,7 +27,6 @@ if ($act == 'load') {
     foreach ($data['data'] as $index => $row) {
         $result['data'][] = [
             'no' => ($index + 1), // Use $index instead of $row
-            'nama' => htmlspecialchars($row['nama']),
             'email' => htmlspecialchars($row['email']),
             'id_users' => htmlspecialchars($row['id_users']),
             'aksi' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['nip'] . ')"><i class="fa fa-edit"></i></button>
@@ -49,10 +48,10 @@ if ($act == 'get') {
 
 if ($act == 'save') {
     $data = [
-        'nama' => antiSqlInjection($_POST['nama']),
+   
         'email' => antiSqlInjection($_POST['email']),
-        'password_admin' => antiSqlInjection($_POST['password_admin']),
-        // 'id_kelas' => antiSqlInjection($_POST['id_kelas'])
+  'id_users' => isset($_POST['id_users']) ? antiSqlInjection($_POST['id_users']) : null, // Check if 'id_users' exists
+  
     ];
     $admin = new DosenModel();
     $admin->insertData($data);
@@ -66,10 +65,9 @@ if ($act == 'save') {
 if ($act == 'update') {
     $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : 0;
     $data = [
-        'nama' => antiSqlInjection($_POST['nama']),
+
         'email' => antiSqlInjection($_POST['email']),
-        'password_admin' => antiSqlInjection($_POST['password_admin']),
-        // 'id_kelas' => antiSqlInjection($_POST['id_kelas'])
+  'id_users' => isset($_POST['id_users']) ? antiSqlInjection($_POST['id_users']) : null, // Check if 'id_users' exists
     ];
 
     $admin = new DosenModel();

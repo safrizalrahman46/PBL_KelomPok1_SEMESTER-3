@@ -29,19 +29,11 @@ if ($act == 'load') {
             'no' => ($index + 1), // Use $index instead of $row
             'nama_tingkat' => htmlspecialchars($row['nama_tingkat']),
             'deskripsi' => htmlspecialchars($row['deskripsi']),
-            'aksi' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_kelas'] . ')"><i class="fa fa-edit"></i></button>
-                       <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id_kelas'] . ')"><i class="fa fa-trash"></i></button>'
+            'aksi' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_tingkat_pelanggaran'] . ')"><i class="fa fa-edit"></i></button>
+                       <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id_tingkat_pelanggaran'] . ')"><i class="fa fa-trash"></i></button>'
         ];
     }
-    // foreach ($data['data'] as $row) {
-    //     $result['data'][] = [
-    //         'no' => ($row+1),
-    //         'nama_tingkat' => htmlspecialchars($row['nama_tingkat']),
-    //         'deskripsi' => htmlspecialchars($row['deskripsi']),
-    //         'aksi' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_kelas'] . ')"><i class="fa fa-edit"></i></button>
-    //                    <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id_kelas'] . ')"><i class="fa fa-trash"></i></button>'
-    //     ];
-    // }
+    
 
     echo json_encode($result);
 }

@@ -72,31 +72,14 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Nama Admin</label>
+                        <label>Nama Tingkat</label>
                         <input type="text" class="form-control" name="nama_kelas" id="nama_kelas">
                     </div>
                     <div class="form-group">
-                        <label>Email Admin</label>
-                        <input type="email" class="form-control" name="nama_dpa" id="nama_dpa">
+                        <label>Deskripsi</label>
+                        <input type="text" class="form-control" name="nama_dpa" id="nama_dpa">
                     </div>
-                    <div class="form-group">
-                        <label>Password Admin</label>
-                        <input type="password" class="form-control" name="password_admin" id="password_admin">
-                    </div>
-                    <div class="form-group">
-                        <label>ID Kelas</label>
-
-                        <select name="id_kelas" id="id_kelas" class="form-control">
-                            <?php 
-                                foreach ($variable as $key => $value) {
-                            ?>  
-                                <option value="<?= $value['id_kelas']; ?>"><?= $value['nama_kelas'] ?></option>
-                            <?php 
-                                }
-                            ?>
-                        </select>
-                        <!-- <input type="number" class="form-control" name="id_kelas" id="id_kelas"> -->
-                    </div>
+                    
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
@@ -112,8 +95,8 @@
     function tambahData() {
         $('#form-data').modal('show');
         $('#form-tambah').attr('action', 'action/tingkatpelanggaranAction.php?act=save');
-        $('#nama_kelas').val('');
-        $('#nama_dpa').val('');
+        $('#nama_tingkat').val('');
+        $('#deskripsi').val('');
 
     }
 
@@ -126,8 +109,8 @@
                 $('#form-data').modal('show');
                 $('#form-tambah').attr('action',
                     'action/tingkatpelanggaranAction.php?act=update&id=' + id);
-                $('#nama_kelas').val(data.nama_kelas);
-                $('#nama_dpa').val(data.nama_dpa);
+                $('#nama_tingkat').val(data.nama_tingkat);
+                $('#deskripsi').val(data.deskripsi);
      
             }
         });
@@ -152,25 +135,7 @@
 
     var tabelData;
     $(document).ready(function() {
-        // tabelData = $('#table-data').DataTable({
-        //     ajax: 'action/tingkatpelanggaranAction.php?act=load',
-        //     columns: [{
-        //             title: "No"
-        //         },
-        //         {
-        //             title: "Nama Admin"
-        //         },
-        //         {
-        //             title: "Email Admin"
-        //         },
-        //         {
-        //             title: "Password Admin"
-        //         }, // Tambahkan kolom untuk Password Admin
-        //         {
-        //             title: "Aksi"
-        //         }
-        //     ]
-        // });
+    
 
 
         tabelData = $('#table-data').DataTable({
@@ -185,28 +150,20 @@
                 { data: 'nama_tingkat' },
                 { data: 'deskripsi' },
                 { data: 'aksi' },
-                 // Add nama_kelas
+                 // Add nama_tingkat
             ],
         });
 
 
         $('#form-tambah').validate({
             rules: {
-                nama_kelas: {
+                nama_tingkat: {
                     required: true,
                     minlength: 3
                 },
-                nama_dpa: {
+                deskripsi: {
                     required: true,
                     email: true
-                },
-                password_admin: {
-                    required: true,
-                    minlength: 4
-                },
-                id_kelas: {
-                    required: true,
-                    digits: true
                 }
             },
             errorElement: 'span',

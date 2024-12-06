@@ -100,10 +100,7 @@ class TingkatpelanggaranModel extends Model
     }
     public function getData()
     {
-        if ($this->driver == 'mysql') {
-            // query untuk mengambil data dari tabel
-            // return $this->db->query("select * from {$this->table} ")->fetch_all(MYSQLI_ASSOC);
-        } else {
+    
 
             // query untuk mengambil data dari tabel
             $query = sqlsrv_query($this->db, "select * from {$this->table}");
@@ -112,38 +109,21 @@ class TingkatpelanggaranModel extends Model
                 $data[] = $row;
             }
             return $data;
-        }
+        
     }
     public function getDataById($id)
     {
-        if ($this->driver == 'sqlsrv') {
-            // query untuk mengambil data berdasarkan id
-            $query = $this->db->prepare("select * from {$this->table} where id_tingkat_pelanggaran =
-?");
-            // binding parameter ke query "i" berarti integer. Biar tidak kena SQL Injection
-            $query->bind_param('i', $id);
-            // eksekusi query
-            $query->execute();
-            // ambil hasil query
-            return $query->get_result()->fetch_assoc();
-        } else {
+      
             // query untuk mengambil data berdasarkan id
             $query = sqlsrv_query($this->db, "select * from {$this->table} where id_tingkat_pelanggaran
 = ?", [$id]);
             // ambil hasil query
             return sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
-        }
+        
     }
     public function updateData($id, $data)
     {
-        if ($this->driver == 'mysql') {
-            // query untuk update data
-            $query = $this->db->prepare("update {$this->table} set nama_tingkat = ?, deskripsi = ?, password_admin = ?, tanggal_tugas = ? where id_tingkat_pelanggaran = ?");
-            // binding parameter ke query
-            $query->bind_param('sssii',  $data['nama_tingkat'], $data['deskripsi'], $data['password_admin'], $data['tanggal_tugas'], $id);
-            // eksekusi query
-            $query->execute();
-        } else {
+      
             // query untuk update data
             sqlsrv_query($this->db, "update {$this->table} set nama_tingkat = ?, deskripsi = ?, password_admin = ?, tanggal_tugas = ? where id_tingkat_pelanggaran = ?", [
                 $data['nama_tingkat'],
@@ -152,18 +132,11 @@ class TingkatpelanggaranModel extends Model
                 $data['tanggal_tugas'],
                 $id
             ]);
-        }
+        
     }
     public function deleteData($id)
     {
-        if ($this->driver == 'mysql') {
-            // query untuk delete data
-            $query = $this->db->prepare("delete from {$this->table} where id_tingkat_pelanggaran = ?");
-            // binding parameter ke query
-            $query->bind_param('i', $id);
-            // eksekusi query
-            $query->execute();
-        } else {
+       
             // query untuk delete data
             sqlsrv_query(
                 $this->db,
@@ -172,4 +145,4 @@ class TingkatpelanggaranModel extends Model
             );
         }
     }
-}
+

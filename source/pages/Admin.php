@@ -1,9 +1,9 @@
 <?php 
-include_once(__DIR__.'/../model/KelasModel.php');
+include_once(__DIR__.'/../model/UserModel.php');
 
 
-$classData = new KelasModel();
-$dataKelas = $classData->getData();
+$classData = new UserModel();
+$dataUser = $classData->getData();
 
 ?>
 
@@ -43,9 +43,9 @@ $dataKelas = $classData->getData();
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Nama Admin</th>
                         <th>Email Admin</th>
-                        <th>Nama Kelas</th>
+                        <th>Nama</th>
+                        <th>Username</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -71,30 +71,26 @@ $dataKelas = $classData->getData();
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Nama Admin</label>
-                        <input type="text" class="form-control" name="nama_admin" id="nama_admin">
-                    </div>
-                    <div class="form-group">
                         <label>Email Admin</label>
                         <input type="email" class="form-control" name="email_admin" id="email_admin">
                     </div>
                     <div class="form-group">
-                        <label>Password Admin</label>
-                        <input type="password" class="form-control" name="password_admin" id="password_admin">
+                        <label>Nama</label>
+                        <input type="text" class="form-control" name="nama" id="nama">
                     </div>
                     <div class="form-group">
-                        <label>ID Kelas</label>
+                        <label>Users</label>
 
-                        <select name="id_kelas" id="id_kelas" class="form-control">
+                        <select name="id_users" id="id_users" class="form-control">
                             <?php 
-                                foreach ($dataKelas as $key => $value) {
+                                foreach ($dataUser as $key => $value) {
                             ?>  
-                                <option value="<?= $value['id_kelas']; ?>"><?= $value['nama_kelas'] ?></option>
+                                <option value="<?= $value['id_users']; ?>"><?= $value['username'] ?></option>
                             <?php 
                                 }
                             ?>
                         </select>
-                        <!-- <input type="number" class="form-control" name="id_kelas" id="id_kelas"> -->
+                        <!-- <input type="number" class="form-control" name="nama" id="nama"> -->
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -113,8 +109,8 @@ $dataKelas = $classData->getData();
         $('#form-tambah').attr('action', 'action/adminAction.php?act=save');
         $('#nama_admin').val('');
         $('#email_admin').val('');
-        $('#password_admin').val('');
-        $('#id_kelas').val('');
+        $('#id_users').val('');
+        $('#nama').val('');
     }
 
     function editData(id) {
@@ -129,7 +125,7 @@ $dataKelas = $classData->getData();
                 $('#nama_admin').val(data.nama_admin);
                 $('#email_admin').val(data.email_admin);
                 $('#password_admin').val(data.password_admin);
-                $('#id_kelas').val(data.id_kelas);
+                $('#nama').val(data.nama);
             }
         });
     }
@@ -153,25 +149,7 @@ $dataKelas = $classData->getData();
 
     var tabelData;
     $(document).ready(function() {
-        // tabelData = $('#table-data').DataTable({
-        //     ajax: 'action/adminAction.php?act=load',
-        //     columns: [{
-        //             title: "No"
-        //         },
-        //         {
-        //             title: "Nama Admin"
-        //         },
-        //         {
-        //             title: "Email Admin"
-        //         },
-        //         {
-        //             title: "Password Admin"
-        //         }, // Tambahkan kolom untuk Password Admin
-        //         {
-        //             title: "Aksi"
-        //         }
-        //     ]
-        // });
+    
 
 
         tabelData = $('#table-data').DataTable({
@@ -182,10 +160,10 @@ $dataKelas = $classData->getData();
                 type: 'POST',
             },
             columns: [
-                { data: 'id_admin' },
-                { data: 'nama_admin' },
+                { data: 'no' },
                 { data: 'email_admin' },
-                { data: 'nama_kelas' },
+                { data: 'nama' },
+                { data: 'username' },
                 { data: 'aksi' }, // Add nama_kelas
             ],
         });
@@ -193,21 +171,14 @@ $dataKelas = $classData->getData();
 
         $('#form-tambah').validate({
             rules: {
-                nama_admin: {
-                    required: true,
-                    minlength: 3
-                },
+               
                 email_admin: {
                     required: true,
                     email: true
                 },
-                password_admin: {
+        
+                nama: {
                     required: true,
-                    minlength: 4
-                },
-                id_kelas: {
-                    required: true,
-                    digits: true
                 }
             },
             errorElement: 'span',

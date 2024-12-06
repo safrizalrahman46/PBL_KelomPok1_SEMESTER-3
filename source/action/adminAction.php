@@ -24,16 +24,21 @@ if ($act == 'load') {
         "data" => []
     ];
 
-    foreach ($data['data'] as $row) {
+    foreach ($data['data'] as $key => $row) {
+        // Check if keys exist before using them
         $result['data'][] = [
-            'no' => ($row+1),
-            'nama_admin' => htmlspecialchars($row['nama_admin']),
-            'email_admin' => htmlspecialchars($row['email_admin']),
-            'nama_kelas' => htmlspecialchars($row['nama_kelas']),
-            'aksi' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_admin'] . ')"><i class="fa fa-edit"></i></button>
-                       <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id_admin'] . ')"><i class="fa fa-trash"></i></button>'
+            'no' => ($key + 1),
+            'email_admin' => isset($row['email_admin']) ? htmlspecialchars($row['email_admin']) : '',
+            'id_users' => isset($row['id_users']) ? htmlspecialchars($row['id_users']) : '',
+            'nama' => isset($row['nama']) ? htmlspecialchars($row['nama']) : '',
+            'username' => isset($row['username']) ? htmlspecialchars($row['username']) : '',
+            'aksi' => isset($row['id_admin']) ? 
+                '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_admin'] . ')"><i class="fa fa-edit"></i></button>
+                <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id_admin'] . ')"><i class="fa fa-trash"></i></button>' 
+                : ''
         ];
     }
+    
 
     echo json_encode($result);
 }
@@ -49,10 +54,10 @@ if ($act == 'get') {
 
 if ($act == 'save') {
     $data = [
-        'nama_admin' => antiSqlInjection($_POST['nama_admin']),
+
         'email_admin' => antiSqlInjection($_POST['email_admin']),
-        'password_admin' => antiSqlInjection($_POST['password_admin']),
-        'id_kelas' => antiSqlInjection($_POST['id_kelas'])
+        'id_users' => antiSqlInjection($_POST['id_users']),
+        'nama' => antiSqlInjection($_POST['nama']),
     ];
     $admin = new AdminModel();
     $admin->insertData($data);
@@ -66,10 +71,11 @@ if ($act == 'save') {
 if ($act == 'update') {
     $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : 0;
     $data = [
-        'nama_admin' => antiSqlInjection($_POST['nama_admin']),
+
         'email_admin' => antiSqlInjection($_POST['email_admin']),
-        'password_admin' => antiSqlInjection($_POST['password_admin']),
-        'id_kelas' => antiSqlInjection($_POST['id_kelas'])
+        'id_users' => antiSqlInjection($_POST['id_users']),
+        'nama' => antiSqlInjection($_POST['nama']),
+     
     ];
 
     $admin = new AdminModel();

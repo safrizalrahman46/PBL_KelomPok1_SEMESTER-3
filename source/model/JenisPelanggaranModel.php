@@ -36,12 +36,7 @@ class JenisPelanggaranModel extends Model
     $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'id_jenis_pelanggaran';
     
     // SQL Server query preparation for fetching data
-    $query = "SELECT a.id_jenis_pelanggaran, a.deskripsi
-              FROM {$this->table} a
-              LEFT JOIN tb_kelas k ON a.id_tingkat = k.id_tingkat
-              WHERE a.deskripsi LIKE ? OR a.id_tingkat LIKE 
-              ORDER BY {$orderColumn} {$orderDir}
-              OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+    $query = "SELECT * from {$this->table} WHERE deskripsi LIKE ? OR id_tingkat LIKE ? ORDER BY {$orderColumn} {$orderDir} OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
     // Prepare parameters for SQL Server
     $params = [$searchTerm, $searchTerm, $searchTerm, $start, $length];
@@ -57,10 +52,7 @@ class JenisPelanggaranModel extends Model
     }
     
     // Count total filtered records for SQL Server
-    $queryFiltered = "SELECT COUNT(*) as count
-                      FROM {$this->table} a
-                      LEFT JOIN tb_kelas k ON a.id_tingkat = k.id_tingkat
-                      WHERE a.deskripsi LIKE ? OR a.id_tingkat LIKE ";
+    $queryFiltered = "SELECT * from {$this->table} WHERE deskripsi LIKE ? OR id_tingkat LIKE ? ORDER BY {$orderColumn} {$orderDir} OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
     
     $stmtFiltered = sqlsrv_query($this->db, $queryFiltered, [$searchTerm, $searchTerm, $searchTerm]);
     $totalFiltered = 0;
@@ -90,24 +82,14 @@ class JenisPelanggaranModel extends Model
 
     public function insertData($data)
     {
-        if ($this->driver == 'sqlsrv') {
-            // prepare statement untuk query insert
-            $query = $this->db->prepare("insert into {$this->table} (deskripsi, id_tingkat, password_admin, id_kelas) values(?,?,?,?)");
-            // binding parameter ke query, "s" berarti string, "ss" berarti dua string
-            $query->bind_param('sssi', $data['deskripsi'], $data['id_tingkat'], $data['password_admin'], $data['id_kelas']);
+      
             // eksekusi query untuk menyimpan ke database
-            $query->execute();
-        } else {
-            // eksekusi query untuk menyimpan ke database
-            sqlsrv_query($this->db, "insert into {$this->table} (deskripsi, id_tingkat, password_admin, id_kelas) values(?,?,?,?)", array($data['deskripsi'], $data['id_tingkat'], $data['password_admin'], $data['id_kelas']));
-        }
+            sqlsrv_query($this->db, "insert into {$this->table} (deskripsi, id_tingkat) values(?,?)", array($data['deskripsi'], $data['id_tingkat']));
+        
     }
     public function getData()
     {
-        if ($this->driver == 'sqlsrv') {
-            // query untuk mengambil data dari tabel
-            return $this->db->query("select * from {$this->table} ")->fetch_all(MYSQLI_ASSOC);
-        } else {
+       
             // query untuk mengambil data dari tabel
             $query = sqlsrv_query($this->db, "select * from {$this->table}");
             $data = [];
@@ -115,64 +97,37 @@ class JenisPelanggaranModel extends Model
                 $data[] = $row;
             }
             return $data;
-        }
+        
     }
     public function getDataById($id)
     {
-        if ($this->driver == 'sqlsrv') {
+     
             // query untuk mengambil data berdasarkan id
-            $query = $this->db->prepare("select * from {$this->table} where id_jenis_pelanggaran =
-?");
-            // binding parameter ke query "i" berarti integer. Biar tidak kena SQL Injection
-            $query->bind_param('i', $id);
-            // eksekusi query
-            $query->execute();
-            // ambil hasil query
-            return $query->get_result()->fetch_assoc();
-        } else {
-            // query untuk mengambil data berdasarkan id
-            $query = sqlsrv_query($this->db, "select * from {$this->table} where id_jenis_pelanggaran
-= ?", [$id]);
+            $query = sqlsrv_query($this->db, "select * from {$this->table} where id_jenis_pelanggaran = ?", [$id]);
             // ambil hasil query
             return sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
-        }
+        
     }
     public function updateData($id, $data)
     {
-        if ($this->driver == 'mysql') {
+     
             // query untuk update data
-            $query = $this->db->prepare("update {$this->table} set deskripsi = ?, id_tingkat = ?, password_admin = ?, id_kelas = ? where id_jenis_pelanggaran = ?");
-            // binding parameter ke query
-            $query->bind_param('sssii',  $data['deskripsi'], $data['id_tingkat'], $data['password_admin'], $data['id_kelas'], $id);
-            // eksekusi query
-            $query->execute();
-        } else {
-            // query untuk update data
-            sqlsrv_query($this->db, "update {$this->table} set deskripsi = ?, id_tingkat = ?, password_admin = ?, id_kelas = ? where id_jenis_pelanggaran = ?", [
+            sqlsrv_query($this->db, "update {$this->table} set deskripsi = ?, id_tingkat = ? where id_jenis_pelanggaran = ?", [
                 $data['deskripsi'],
                 $data['id_tingkat'],
-                $data['password_admin'],
-                $data['id_kelas'],
                 $id
             ]);
-        }
     }
+
     public function deleteData($id)
     {
-        if ($this->driver == 'mysql') {
-            // query untuk delete data
-            $query = $this->db->prepare("delete from {$this->table} where id_jenis_pelanggaran = ?");
-            // binding parameter ke query
-            $query->bind_param('i', $id);
-            // eksekusi query
-            $query->execute();
-        } else {
+     
             // query untuk delete data
             sqlsrv_query(
                 $this->db,
                 "delete from {$this->table} where id_jenis_pelanggaran = ?",
                 [$id]
             );
-        }
+            
     }
 }
