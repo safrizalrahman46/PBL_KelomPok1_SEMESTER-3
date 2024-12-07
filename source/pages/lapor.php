@@ -5,22 +5,22 @@
 // include_once(__DIR__.'/../model/MahasiswaModel.php');
 
 // $classData = new MahasiswaModel();
-// $dataMahasiswa = $classData->getData();
+// $dataMah = $classData->getData();
 
 // include_once(__DIR__.'/../model/JenisPelanggaranModel.php');
 
 // $classData = new JenisPelanggaranModel();
-// $dataPelanggaran = $classData->getData();
+// $dataPel = $classData->getData();
 
 // include_once(__DIR__.'/../model/AdminModel.php');
 
 // $classData = new AdminModel();
 // $dataAdm = $classData->getData();
 
-include_once(__DIR__ . '/../model/DosenModel.php');
+// include_once(__DIR__ . '/../model/DosenModel.php');
 
-$classData = new DosenModel();
-$dataDos = $classData->getData();
+// $classData = new DosenModel();
+// $dataDos = $classData->getData();
 
 ?>
 
@@ -28,12 +28,12 @@ $dataDos = $classData->getData();
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Mahasiswa</h1>
+                <h1>Lapor</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Mahasiswa</li>
+                    <li class="breadcrumb-item active">Lapor</li>
                 </ol>
             </div>
         </div>
@@ -44,7 +44,7 @@ $dataDos = $classData->getData();
 <section class="content">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Daftar Mahasiswa</h3>
+            <h3 class="card-title">Daftar Lapor</h3>
             <div class="card-tools">
                 <button type="button" class="btn btn-md btn-primary" onclick="tambahData()">
                     Tambah
@@ -56,20 +56,18 @@ $dataDos = $classData->getData();
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Mahasiswa ID</th> <!-- 'mahasiswa_id' -->
+                        <th>Mahasiswa</th> <!-- 'id_mahasiswa' -->
                         <th>Jenis Pelanggaran</th> <!-- 'id_jenis_pelanggaran' -->
                         <th>Status</th> <!-- 'status' -->
                         <th>Komentar</th> <!-- 'komentar' -->
-                        <th>ID Admin</th> <!-- 'id_admin' -->
+                        <th>Admin</th> <!-- 'id_admin' -->
                         <th>Dosen</th> <!-- 'id_dosen' -->
                         <th>Status Verifikasi Admin</th> <!-- 'status_verifikasi_admin' -->
                         <th>NIM</th> <!-- 'nim' -->
                         <th>Foto</th> <!-- 'foto' -->
                         <th>Tanggal Laporan</th> <!-- 'tanggal_laporan' -->
-                        <th>Nama</th> <!-- 'nama' -->
+                        <th>Tempat Kejadian</th> <!-- 'tempat' -->
                         <th>Aksi</th> <!-- For actions (like edit, delete) -->
-
-
                     </tr>
                 </thead>
                 <tbody>
@@ -95,7 +93,7 @@ $dataDos = $classData->getData();
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Mahasiswa</label>
-                        <select name="mahasiswa_id" id="mahasiswa_id" class="form-control">
+                        <select name="id_mahasiswa" id="id_mahasiswa" class="form-control">
                             <?php
                             foreach ($dataMahasiswa as $key => $value) {
                             ?>
@@ -120,8 +118,8 @@ $dataDos = $classData->getData();
                     <div class="form-group">
                         <label>Status</label>
                         <select name="status" id="status" class="form-control">
-                            <option value="Aktif">Aktif</option>
-                            <option value="Lulus">Lulus</option>
+                            <option value="pending">Pending</option>
+                            <option value="sent">Sent</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -172,8 +170,8 @@ $dataDos = $classData->getData();
                         <input type="date" class="form-control" name="tanggal_laporan" id="tanggal_laporan">
                     </div>
                     <div class="form-group">
-                        <label>Nama</label>
-                        <input type="text" class="form-control" name="nama" id="nama">
+                        <label>tempat</label>
+                        <input type="text" class="form-control" name="tempat" id="tempat">
                     </div>
 
 
@@ -192,7 +190,7 @@ $dataDos = $classData->getData();
     function tambahData() {
         $('#form-data').modal('show');
         $('#form-tambah').attr('action', 'action/laporAction.php?act=save');
-        $('#mahasiswa_id').val('');
+        $('#id_mahasiswa').val('');
         $('#id_jenis_pelanggaran').val('');
         $('#status').val('');
         $('#id_admin').val('');
@@ -201,7 +199,7 @@ $dataDos = $classData->getData();
         $('#nim').val('');
         $('#foto').val('');
         $('#tanggal_laporan').val('');
-        $('#nama').val('');
+        $('#tempat').val('');
     }
 
     function editData(id) {
@@ -213,7 +211,7 @@ $dataDos = $classData->getData();
                 $('#form-data').modal('show');
                 $('#form-tambah').attr('action',
                     'action/laporAction.php?act=update&id=' + id);
-                $('#mahasiswa_id').val(data.mahasiswa_id);
+                $('#id_mahasiswa').val(data.id_mahasiswa);
                 $('#id_jenis_pelanggaran').val(data.id_jenis_pelanggaran);
                 $('#status').val(data.status);
                 $('#id_admin').val(data.id_admin);
@@ -222,7 +220,7 @@ $dataDos = $classData->getData();
                 $('#nim').val(data.nim);
                 $('#foto').val(data.foto);
                 $('#tanggal_laporan').val(data.tanggal_laporan);
-                $('#nama').val(data.nama);
+                $('#tempat').val(data.tempat);
 
             }
         });
@@ -257,24 +255,21 @@ $dataDos = $classData->getData();
                 url: 'action/laporAction.php?act=load',
                 type: 'POST',
             },
-            columns: [
-                {
+            columns: [{
                     data: 'no'
                 },
                 {
-                    data: 'id_pelanggaran'
-                },
-                {
-                    data: 'mahasiswa_id'
+                    data: 'id_mahasiswa'
                 },
                 {
                     data: 'id_jenis_pelanggaran'
                 },
-                {
-                    data: 'tanggal_laporan'
-                },
+               
                 {
                     data: 'status'
+                },
+                {
+                    data: 'komentar'
                 },
                 {
                     data: 'id_admin'
@@ -295,18 +290,23 @@ $dataDos = $classData->getData();
                     }
                 },
                 {
-                    data: 'nama'
+                    data: 'tanggal_laporan'
                 },
+                {
+                    data: 'tempat'
+                },
+              
                 {
                     data: 'aksi'
                 },
+                
             ],
         });
 
 
         $('#form-tambah').validate({
             rules: {
-                mahasiswa_id: {
+                id_mahasiswa: {
                     required: true,
 
                 },
@@ -327,7 +327,7 @@ $dataDos = $classData->getData();
                     required: true,
 
                 },
-                nama: {
+                tempat: {
                     required: true,
 
                 },

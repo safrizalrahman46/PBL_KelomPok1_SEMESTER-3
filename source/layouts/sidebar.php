@@ -1,21 +1,31 @@
+<?php
+
+
+// Check if the user is logged in
+if (isset($_SESSION['username'])) {
+    $username = $_SESSION['username'];
+} else {
+    $username = ''; // Default value if not logged in
+}
+?>
+
 <div class="sidebar">
     <!-- Sidebar user (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
+        <!-- <div class="image">
             <img src="../adminlte/dist/img/user2-160x160.jpg" class="img-circle elevation-2"
                 alt="User Image">
-        </div>
+        </div> -->
+        <div style="display: flex; justify-content: flex-start;">
+    <a href="#" class="d-block">Login Sebagai : <?php echo htmlspecialchars($username); ?></a>
+</div>
+        
         <div class="info">
-            <a href="#" class="d-block">KELOMPOK 1</a>
         </div>
     </div>
     <!-- SidebarSearch Form -->
     <div class="form-inline">
-        <!-- <div class="input-group" data-widget="sidebar-search">
-            <input class="form-control form-control-sidebar" type="search"
-                placeholder="Search" aria-label="Search">
-            <div class="input-group-append"><button class="btn btn-sidebar"><i class="fas fa-search fa-fw"></i></button></div>
-        </div> -->
+  
     </div>
     <!-- Sidebar Menu -->
     <nav class="mt-2">
@@ -27,6 +37,10 @@
                 </a>
             </li>
 
+
+            <?php
+                if($_SESSION['level'] == 'admin') {
+            ?>
 
             <li class="nav-item">
                 <a href="#" class="nav-link">
@@ -78,7 +92,12 @@
                         </a>
                     </li>
 
-
+                    <li class="nav-item">
+                        <a href="index.php?page=users" class="nav-link">
+                            <i class="nav-icon fas fa-bell"></i>
+                            <p>Users</p>
+                        </a>
+                    </li>
 
 
                     <li class="nav-item">
@@ -88,6 +107,12 @@
                         </a>
                     </li>
 
+                    <li class="nav-item">
+                <a href="index.php?page=lapor_pelanggaran_mahasiswa" class="nav-link">
+                    <i class="nav-icon fas fa-file-alt"></i>
+                    <p>Lapor Pelanggaran </p>
+                </a>
+            </li>
 
                 </ul>
             </li>
@@ -143,6 +168,17 @@
 
 
 
+            <?php 
+                }
+            ?>
+
+
+
+
+            
+            <?php
+                if($_SESSION['level'] == 'dosen') {
+            ?>
 
 
             <li class="nav-item">
@@ -152,6 +188,26 @@
                 </a>
             </li>
 
+            <?php 
+                }
+            ?>
+
+
+            <?php
+                if($_SESSION['level'] == 'mahasiswa') {
+            ?>
+
+
+            <li class="nav-item">
+                <a href="index.php?page=lapor_pelanggaran_mahasiswa" class="nav-link">
+                    <i class="nav-icon fas fa-file-alt"></i>
+                    <p>Lapor Pelanggaran </p>
+                </a>
+            </li>
+
+            <?php 
+                }
+            ?>
 
 
 

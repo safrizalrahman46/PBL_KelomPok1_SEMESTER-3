@@ -105,7 +105,7 @@ class NotifikasiModel extends Model
     public function getDataById($id)
     {
         // query untuk mengambil data berdasarkan id
-        $query = sqlsrv_query($this->db, "select * from {$this->table} where id_kelas = ?", [$id]);
+        $query = sqlsrv_query($this->db, "select * from {$this->table} where id = ?", [$id]);
         // ambil hasil query
         return sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
     }
@@ -113,7 +113,7 @@ class NotifikasiModel extends Model
     {
 
         // query untuk update data
-        $update = sqlsrv_query($this->db, "update {$this->table} set id_penerima = ?, pesan = ?, tanggal_kirim = ?, id_pelanggaran = ?, id_tipe_notifikasi = ? where id_kelas = ?", [
+        $update = sqlsrv_query($this->db, "update {$this->table} set id_penerima = ?, pesan = ?, tanggal_kirim = ?, id_pelanggaran = ?, id_tipe_notifikasi = ? where id = ?", [
             $data['id_penerima'],
             $data['pesan'],
             $data['tanggal_kirim'],
@@ -128,7 +128,7 @@ class NotifikasiModel extends Model
         // query untuk delete data
         sqlsrv_query(
             $this->db,
-            "delete from {$this->table} where id_kelas = ?",
+            "delete from {$this->table} where id = ?",
             [$id]
         );
     }

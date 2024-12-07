@@ -61,7 +61,11 @@
                     </div>
                     <div class="form-group">
                         <label>Level</label>
-                        <input type="text" class="form-control" name="level" id="level" required>
+                        <select name="level" id="level">
+                            <option value="dosen">Dosen</option>
+                            <option value="mahasiswa">Mahasiswa</option>
+                            <option value="admin">Admin</option>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -123,12 +127,21 @@
                 url: 'action/usersAction.php?act=load',
                 type: 'POST',
             },
-            columns: [
-                { data: 'no' },
-                { data: 'username' },
-                { data: 'password' },
-                { data: 'level' },
-                { data: 'aksi' }
+            columns: [{
+                    data: 'no'
+                },
+                {
+                    data: 'username'
+                },
+                {
+                    data: 'password'
+                },
+                {
+                    data: 'level'
+                },
+                {
+                    data: 'aksi'
+                }
             ]
         });
 

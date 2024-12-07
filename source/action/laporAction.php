@@ -13,8 +13,8 @@ include_once('../lib/Secure.php');
 $act = isset($_GET['act']) ? strtolower($_GET['act']) : '';
 
 if ($act == 'load') {
-    $admin = new laporModel();
-    $data = $admin->getDataForDataTables($_POST);
+    $langgar = new laporModel();
+    $data = $langgar->getDataForDataTables($_POST);
 
     // Prepare the response for DataTables
     $result = [
@@ -24,10 +24,10 @@ if ($act == 'load') {
         "data" => []
     ];
 
-    foreach ($data['data'] as $index => $row) {
+    foreach ($data['data'] as $key => $row) {
         $result['data'][] = [
-            'no' => $index + 1, // Correctly calculate the index
-            'mahasiswa_id' => htmlspecialchars($row['mahasiswa_id']),
+            'no' => ($key + 1), // Correctly calculate the index
+            'id_mahasiswa' => htmlspecialchars($row['id_mahasiswa']),
             'id_jenis_pelanggaran' => htmlspecialchars($row['id_jenis_pelanggaran']),
             'status' => htmlspecialchars($row['status']),
             'komentar' => htmlspecialchars($row['komentar']),
@@ -36,8 +36,8 @@ if ($act == 'load') {
             'status_verifikasi_admin' => htmlspecialchars($row['status_verifikasi_admin']),
             'nim' => htmlspecialchars($row['nim']),
             'foto' => htmlspecialchars($row['foto']),
-            'tanggal_laporan' => htmlspecialchars($row['tanggal_laporan']),
-            'nama' => htmlspecialchars($row['nama']),
+            'tanggal_laporan' => ($row['tanggal_laporan']->format('Y-m-d')),
+            'tempat' => htmlspecialchars($row['tempat']),
             'aksi' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_pelanggaran'] . ')"><i class="fa fa-edit"></i></button>
                        <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id_pelanggaran'] . ')"><i class="fa fa-trash"></i></button>'
         ];
@@ -49,14 +49,14 @@ if ($act == 'load') {
 if ($act == 'get') {
     $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : 0;
 
-    $admin = new laporModel();
-    $data = $admin->getDataById($id);
+    $langgar = new laporModel();
+    $data = $langgar->getDataById($id);
     echo json_encode($data);
 }
 
 if ($act == 'save') {
     $data = [
-        'mahasiswa_id' => antiSqlInjection($_POST['mahasiswa_id']),
+        'id_mahasiswa' => antiSqlInjection($_POST['id_mahasiswa']),
         'id_jenis_pelanggaran' => antiSqlInjection($_POST['id_jenis_pelanggaran']),
         'laporan_oleh' => antiSqlInjection($_POST['laporan_oleh']),
         'tanggal_laporan' => antiSqlInjection($_POST['tanggal_laporan']),
@@ -67,10 +67,12 @@ if ($act == 'save') {
         'status_verifikasi_admin' => antiSqlInjection($_POST['status_verifikasi_admin']),
         'nim' => antiSqlInjection($_POST['nim']),
         'foto' => antiSqlInjection($_POST['foto']),
+        'tempat' => htmlspecialchars($row['tempat']),
+
     ];
 
-    $admin = new laporModel();
-    $admin->insertData($data);
+    $langgar = new laporModel();
+    $langgar->insertData($data);
 
     echo json_encode([
         'status' => true,
@@ -81,7 +83,7 @@ if ($act == 'save') {
 if ($act == 'update') {
     $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : 0;
     $data = [
-        'mahasiswa_id' => antiSqlInjection($_POST['mahasiswa_id']),
+        'id_mahasiswa' => antiSqlInjection($_POST['id_mahasiswa']),
         'id_jenis_pelanggaran' => antiSqlInjection($_POST['id_jenis_pelanggaran']),
         'laporan_oleh' => antiSqlInjection($_POST['laporan_oleh']),
         'tanggal_laporan' => antiSqlInjection($_POST['tanggal_laporan']),
@@ -92,10 +94,12 @@ if ($act == 'update') {
         'status_verifikasi_admin' => antiSqlInjection($_POST['status_verifikasi_admin']),
         'nim' => antiSqlInjection($_POST['nim']),
         'foto' => antiSqlInjection($_POST['foto']),
+        'tempat' => htmlspecialchars($row['tempat']),
+
     ];
 
-    $admin = new laporModel();
-    $admin->updateData($id, $data);
+    $langgar = new laporModel();
+    $langgar->updateData($id, $data);
 
     echo json_encode([
         'status' => true,
@@ -106,8 +110,8 @@ if ($act == 'update') {
 if ($act == 'delete') {
     $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : 0;
 
-    $admin = new laporModel();
-    $admin->deleteData($id);
+    $langgar = new laporModel();
+    $langgar->deleteData($id);
 
     echo json_encode([
         'status' => true,

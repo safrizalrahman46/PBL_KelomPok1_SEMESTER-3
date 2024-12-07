@@ -87,7 +87,7 @@ $dataTingkat = $classData->getData();
                             <?php
                             foreach ($dataTingkat as $key => $value) {
                             ?>
-                                <option value="<?= $value['id_tingkat_pelanggaran']; ?>"><?= $value['deskripsi'] ?></option>
+                                <option value="<?= $value['id_tingkat_pelanggaran']; ?>"><?= $value['nama_tingkat'] ?></option>
                             <?php
                             }
                             ?>
@@ -165,8 +165,11 @@ $dataTingkat = $classData->getData();
                 {
                     data: 'deskripsi'
                 },
+                // {
+                //     data: 'id_tingkat'
+                // },
                 {
-                    data: 'id_tingkat'
+                    data: 'nama_tingkat'
                 },
                 {
                     data: 'aksi'

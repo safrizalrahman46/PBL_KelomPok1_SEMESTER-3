@@ -24,9 +24,9 @@ if ($act == 'load') {
         "data" => []
     ];
 
-    foreach ($data['data'] as $index => $row) {
+    foreach ($data['data'] as $key => $row) {
         $result['data'][] = [
-            'no' => ($index + 1), // Use $index instead of $row
+            'no' => ($key + 1), // Use $index instead of $row
             'email' => htmlspecialchars($row['email']),
             'id_users' => htmlspecialchars($row['id_users']),
             'nama' => htmlspecialchars($row['nama']),

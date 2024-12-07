@@ -120,7 +120,7 @@ $dataKelas = $classData->getData();
             url: 'action/dosenAction.php?act=get&id=' + id,
             method: 'post',
             success: function(response) {
-                console.log(response); // Add this line for debugging
+                console.log(response); // Add this line for debugging\
                 var data = JSON.parse(response);
                 $('#form-data').modal('show');
                 $('#form-tambah').attr('action', 'action/dosenAction.php?act=update&id=' + id);

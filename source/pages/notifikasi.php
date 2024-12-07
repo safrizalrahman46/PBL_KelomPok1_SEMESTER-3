@@ -17,20 +17,20 @@
 // $classData = new ProdiModel();
 // $dataProdi = $classData->getData();
 
-// include_once(__DIR__ . '/../model/KelasModel.php');
+// include_once(__DIR__ . '/../model/TipeNotikasiModel.php');
 
-// $classData = new KelasModel();
-// $dataKelas = $classData->getData();
+// $classData = new TipeNotikasiModel();
+// $dataNotifikasis = $classData->getData();
 
 include_once(__DIR__ . '/../model/JenisPelanggaranModel.php');
 
 $classData = new JenisPelanggaranModel();
-$dataLanggar = $classData->getData();
+$dataLanggars = $classData->getData();
 
 // include_once(__DIR__ . '/../model/.php');
 
 // $classData = new ();
-// $dataLanggar = $classData->getData();
+// $dataLanggars = $classData->getData();
 
 ?>
 
@@ -110,23 +110,35 @@ $dataLanggar = $classData->getData();
                             <input type="date" class="form-control" name="tanggal_kirim" id="tanggal_kirim" required>
                         </div>
                         <div class="form-group">
-                            <label>Pelanggaran</label>
-                            <select name="id_pelanggaran" id="id_pelanggaran" class="form-control">
-                            <label>Tipe Notif</label>
+                        <label>Tipe Notifikasi</label>
+
+                        <select name="id_pelanggaran" id="id_pelanggaran" class="form-control">
                             <?php
-                            foreach ($dataLanggar as $key => $value) {
+                            foreach ($dataLanggars as $key => $value) {
                             ?>
-                                <option value="<?= $value['id_jenis_pelanggaran']; ?>"><?= $value['deskripsi'] ?></option>
+                                <option value="<?= $value['id_jenis_pelanggaran']; ?>"><?= $value['dekripsi'] ?></option>
                             <?php
                             }
                             ?>
-                            </select>
-                        </div>
-                    
-                        
-                      
-                     
-                   
+                        </select>
+                        <!-- <input type="number" class="form-control" name="id_kelas" id="id_kelas"> -->
+                    </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tipe Notifikasi</label>
+
+                        <select name="id_tipe_notifikasi" id="id_tipe_notifikasi" class="form-control">
+                            <?php
+                            foreach ($dataNotifikasis as $key => $value) {
+                            ?>
+                                <option value="<?= $value['id_tipe_notifikasi']; ?>"><?= $value['notif_template'] ?></option>
+                            <?php
+                            }
+                            ?>
+                        </select>
+                        <!-- <input type="number" class="form-control" name="id_kelas" id="id_kelas"> -->
+                    </div>
                     </div>
 
                 </div>
@@ -199,7 +211,7 @@ $dataLanggar = $classData->getData();
             },
                     columns: [
                 { data: "no" },
-                { data: "penerima" },
+                { data: "id_penerima" },
                 { data: "pesan" },
                 { data: "tanggal_kirim" },
                 { data: "id_pelanggaran" },

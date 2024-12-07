@@ -264,7 +264,10 @@
                     data: "tingkat"
                 },
                 {
-                    data: "foto"
+                    data: "foto",
+                    render: function(data) {
+                        return `<img src="${data}" alt="Foto" class="img-thumbnail" style="width: 50px; height: 50px;">`;
+                    }
                 },
                 {
                     data: "status"

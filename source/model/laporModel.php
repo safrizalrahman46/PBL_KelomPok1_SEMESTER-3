@@ -5,7 +5,7 @@ include('Database.php');
 class LaporModel extends Model
 {
     protected $db;
-    protected $table = 'tb_laporpelanggranmahasiswa';
+    protected $table = 'tb_lapor';
     protected $driver;
     public function __construct()
     {
@@ -18,7 +18,7 @@ class LaporModel extends Model
     public function getDataForDataTables($request)
     {
         // Columns available for ordering and searching
-        $columns = [ 'mahasiswa_id', 'id_jenis_pelanggaran', 'status', 'komentar', 'id_admin', 'id_dosen', 'status_verifikasi_admin', 'nim', 'foto', 'tanggal_laporan', 'nama'];
+        $columns = ['id_mahasiswa', 'id_jenis_pelanggaran', 'status', 'komentar', 'id_admin', 'id_dosen', 'status_verifikasi_admin', 'nim', 'foto', 'tanggal_laporan', 'tempat'];
 
         // Extract search and pagination parameters
         $searchValue = isset($request['search']['value']) ? $request['search']['value'] : '';
@@ -33,18 +33,27 @@ class LaporModel extends Model
         $length = isset($request['length']) ? (int)$request['length'] : 10;
 
         // Ensure column index is valid
-        $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'id_pelanggaran';
+        $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'id_kelas';
 
-        // SQL Server query preparation for fetching data
-        $query = "SELECT * FROM {$this->table} WHERE 1=1 ";
+        // SQL query for fetching data with search and pagination
+        $query = "SELECT * FROM {$this->table}";
+
+        $queryParams = [];
+        if (!empty($searchValue)) {
+            $query .= " WHERE nama_kelas LIKE ? OR nama_dpa LIKE ?";
+            $queryParams[] = $searchTerm;
+            $queryParams[] = $searchTerm;
+        }
 
 
-        // Prepare parameters for SQL Server
-        $params = [$searchTerm, $searchTerm, $searchTerm, $start, $length];
+        $query .= " ORDER BY {$orderColumn} {$orderDir} OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        $queryParams[] = $start;
+        $queryParams[] = $length;
+
+
 
         // Execute the query
-        $stmt = sqlsrv_query($this->db, $query, $params);
-
+        $stmt = sqlsrv_query($this->db, $query, $queryParams);
         $data = [];
         if ($stmt) {
             while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
@@ -52,29 +61,38 @@ class LaporModel extends Model
             }
         }
 
-        // Count total filtered records for SQL Server
-        $queryFiltered = "SELECT *, COUNT(*) OVER() AS total_count FROM {$this->table} 
-WHERE mahasiswa_id LIKE ? OR id_jenis_pelanggaran LIKE ? OR status LIKE ? OR komentar LIKE ? 
-OR id_admin LIKE ? OR id_dosen LIKE ? OR status_verifikasi_admin LIKE ? OR nim LIKE ? 
-OR foto LIKE ? OR tanggal_laporan LIKE ? OR nama LIKE ? 
-ORDER BY {$orderColumn} {$orderDir} 
-OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        // Count total filtered records
+        $queryFiltered = "SELECT COUNT(*) as count FROM {$this->table}";
+        $filteredParams = [];
+        if (!empty($searchValue)) {
+            $queryFiltered .= " WHERE nama_kelas LIKE ? OR nama_dpa LIKE ?";
+            $filteredParams[] = $searchTerm;
+            $filteredParams[] = $searchTerm;
+        }
 
-
-        $stmtFiltered = sqlsrv_query($this->db, $queryFiltered, [$searchTerm, $searchTerm, $searchTerm]);
+        $stmtFiltered = sqlsrv_query($this->db, $queryFiltered, $filteredParams);
         $totalFiltered = 0;
         if ($stmtFiltered) {
             $rowFiltered = sqlsrv_fetch_array($stmtFiltered, SQLSRV_FETCH_ASSOC);
-            $totalFiltered = $rowFiltered['count'];
+            $totalFiltered = $rowFiltered ? $rowFiltered['count'] : 0;
         }
 
-        // Count total records for SQL Server
+        // Count total records
         $queryTotal = "SELECT COUNT(*) as count FROM {$this->table}";
-        $stmtTotal = sqlsrv_query($this->db, $queryTotal);
+        $filteredParams = [];
+
+        if (!empty($searchValue)) {
+            $queryTotal .= " WHERE nama_kelas LIKE ? OR nama_dpa LIKE ?";
+            $filteredParams[] = $searchTerm;
+            $filteredParams[] = $searchTerm;
+        }
+
+
+        $stmtTotal = sqlsrv_query($this->db, $queryTotal, $filteredParams);
         $totalRecords = 0;
         if ($stmtTotal) {
             $rowTotal = sqlsrv_fetch_array($stmtTotal, SQLSRV_FETCH_ASSOC);
-            $totalRecords = $rowTotal['count'];
+            $totalRecords = $rowTotal ? $rowTotal['count'] : 0;
         }
 
         // Return data in DataTables format
@@ -89,65 +107,61 @@ OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
     public function insertData($data)
     {
- 
-            // eksekusi query untuk menyimpan ke database
-            sqlsrv_query($this->db, "INSERT INTO {$this->table} (mahasiswa_id, id_jenis_pelanggaran, status, komentar, id_admin, id_dosen, status_verifikasi_admin, nim, foto, tanggal_laporan, nama) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 
-            array($data['mahasiswa_id'], $data['id_jenis_pelanggaran'], $data['status'], $data['komentar'], $data['id_admin'], $data['id_dosen'], $data['status_verifikasi_admin'], $data['nim'], $data['foto'], $data['tanggal_laporan'], $data['nama']));
-                    
+
+        // eksekusi query untuk menyimpan ke database
+        sqlsrv_query(
+            $this->db,
+            "INSERT INTO {$this->table} (id_mahasiswa, id_jenis_pelanggaran, status , komentar, id_admin, id_dosen, status_verifikasi_admin, nim, foto, tanggal_laporan, nama) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            array($data['id_mahasiswa'], $data['id_jenis_pelanggaran'], $data['status'], $data['komentar'], $data['id_admin'], $data['id_dosen'], $data['status_verifikasi_admin'], $data['nim'], $data['foto'], $data['tanggal_laporan'], $data['nama'])
+        );
     }
     public function getData()
     {
-       
-            // query untuk mengambil data dari tabel
-            $query = sqlsrv_query($this->db, "select * from {$this->table}");
-            $data = [];
-            while ($row = sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC)) {
-                $data[] = $row;
-            }
-            return $data;
-        
+
+        // query untuk mengambil data dari tabel
+        $query = sqlsrv_query($this->db, "select * from {$this->table}");
+        $data = [];
+        while ($row = sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC)) {
+            $data[] = $row;
+        }
+        return $data;
     }
     public function getDataById($id)
     {
-    
-            // query untuk mengambil data berdasarkan id
-            $query = sqlsrv_query($this->db, "select * from {$this->table} where id_admin
-= ?", [$id]);
-            // ambil hasil query
-            return sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
-        
+
+        // query untuk mengambil data berdasarkan id
+        $query = sqlsrv_query($this->db, "select * from {$this->table} where id_pelanggaran = ?", [$id]);
+        // ambil hasil query
+        return sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
     }
     public function updateData($id, $data)
     {
-     
-            // query untuk update data
-            sqlsrv_query($this->db, "UPDATE {$this->table} SET mahasiswa_id = ?, id_jenis_pelanggaran = ?, status = ?, komentar = ?, id_admin = ?, id_dosen = ?, status_verifikasi_admin = ?, nim = ?, foto = ?, tanggal_laporan = ?, nama = ? WHERE id_admin = ?", [
-                $data['mahasiswa_id'],
-                $data['id_jenis_pelanggaran'],
-                $data['status'],
-                $data['komentar'],
-                $data['id_admin'],
-                $data['id_dosen'],
-                $data['status_verifikasi_admin'],
-                $data['nim'],
-                $data['foto'],
-                $data['tanggal_laporan'],
-                $data['nama'],
-                $id
-            ]);
-            
-        
+
+        // query untuk update data
+        sqlsrv_query($this->db, "UPDATE {$this->table} SET id_mahasiswa = ?, id_jenis_pelanggaran = ?, status = ?, komentar = ?, id_admin = ?, id_dosen = ?, status_verifikasi_admin = ?, nim = ?, foto = ?, tanggal_laporan = ?, nama = ? WHERE id_admin = ?", [
+            $data['id_mahasiswa'],
+            $data['id_jenis_pelanggaran'],
+            $data['status'],
+            $data['komentar'],
+            $data['id_admin'],
+            $data['id_dosen'],
+            $data['status_verifikasi_admin'],
+            $data['nim'],
+            $data['foto'],
+            $data['tanggal_laporan'],
+            $data['nama'],
+            $id
+        ]);
     }
     public function deleteData($id)
     {
-    
-            // query untuk delete data
-            sqlsrv_query(
-                $this->db,
-                "delete from {$this->table} where id_admin = ?",
-                [$id]
-            );
-        
+
+        // query untuk delete data
+        sqlsrv_query(
+            $this->db,
+            "delete from {$this->table} where id_pelanggaran = ?",
+            [$id]
+        );
     }
 }

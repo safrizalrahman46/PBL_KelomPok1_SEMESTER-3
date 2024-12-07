@@ -24,9 +24,9 @@ if ($act == 'load') {
         "data" => []
     ];
 
-    foreach ($data['data'] as $index => $row) {
+    foreach ($data['data'] as $key => $row) {
         $result['data'][] = [
-            'no' => ($index + 1), // Use $index instead of $row
+            'no' => ($key + 1), // Use $index instead of $row
             'id_penerima' => htmlspecialchars($row['id_penerima'] ?? ''),
             'pesan' => htmlspecialchars($row['pesan']),
             'tanggal_kirim' => htmlspecialchars($row['tanggal_kirim'] instanceof DateTime ? $row['tanggal_kirim']->format('Y-m-d') : $row['tanggal_kirim'] ?? ''),
@@ -56,9 +56,7 @@ if ($act == 'save') {
         'pesan' => antiSqlInjection($_POST['pesan']),
         'tanggal_kirim' => antiSqlInjection($_POST['tanggal_kirim']),
         'id_pelanggaran' => antiSqlInjection($_POST['id_pelanggaran']),
-        'id_tipe_notifikasi' => antiSqlInjection($_POST['id_tipe_notifikasi']),
-
-
+        'id_tipe_notifikasi' => antiSqlInjection($_POST['id_tipe_notifikasi'] ?? ''),
     ];
     $admin = new NotifikasiModel();
     $admin->insertData($data);
@@ -76,8 +74,7 @@ if ($act == 'update') {
         'pesan' => antiSqlInjection($_POST['pesan']),
         'tanggal_kirim' => antiSqlInjection($_POST['tanggal_kirim']),
         'id_pelanggaran' => antiSqlInjection($_POST['id_pelanggaran']),
-        'id_tipe_notifikasi' => antiSqlInjection($_POST['id_tipe_notifikasi']),
-
+        'id_tipe_notifikasi' => antiSqlInjection($_POST['id_tipe_notifikasi'] ?? ''),
     ];
 
     $admin = new NotifikasiModel();

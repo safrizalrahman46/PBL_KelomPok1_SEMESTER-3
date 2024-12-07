@@ -57,7 +57,7 @@ if ($act == 'save') {
 
     $data = [
         'username' => antiSqlInjection($_POST['username']),
-        'password' => antiSqlInjection($_POST['password']),
+        'password' => $password,
         'level' => antiSqlInjection($_POST['level']),
     ];
     $admin = new UsersModel();
@@ -76,7 +76,7 @@ if ($act == 'update') {
     
     $data = [
         'username' => antiSqlInjection($_POST['username']),
-        'password' => antiSqlInjection($_POST['password']),
+        'password' => $password,
         'level' => antiSqlInjection($_POST['level']),
 
     ];

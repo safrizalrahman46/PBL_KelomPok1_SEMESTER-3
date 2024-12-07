@@ -164,7 +164,7 @@ $dataUser = $classData->getData();
                 { data: 'email_admin' },
                 { data: 'nama' },
                 { data: 'username' },
-                { data: 'aksi' }, // Add nama_kelas
+                { data: 'aksi' }, 
             ],
         });
 

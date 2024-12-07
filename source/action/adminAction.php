@@ -30,7 +30,7 @@ if ($act == 'load') {
             'no' => ($key + 1),
             'email_admin' => isset($row['email_admin']) ? htmlspecialchars($row['email_admin']) : '',
             'id_users' => isset($row['id_users']) ? htmlspecialchars($row['id_users']) : '',
-            'nama' => isset($row['nama']) ? htmlspecialchars($row['nama']) : '',
+            'nama' => isset($row['nama']) ? htmlspecialchars(string: $row['nama']) : '',
             'username' => isset($row['username']) ? htmlspecialchars($row['username']) : '',
             'aksi' => isset($row['id_admin']) ?
                 '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_admin'] . ')"><i class="fa fa-edit"></i></button>

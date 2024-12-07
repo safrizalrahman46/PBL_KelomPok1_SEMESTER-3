@@ -18,7 +18,7 @@ class JenisPelanggaranModel extends Model
     public function getDataForDataTables($request)
     {
         // Columns available for ordering and searching
-        $columns = ['id_jenis_pelanggaran', 'deskripsi', 'id_tingkat','nama_tingkat'];
+        $columns = ['id_jenis_pelanggaran', 'deskripsi', 'nama_tingkat'];
 
         // Extract search and pagination parameters
         $searchValue = isset($request['search']['value']) ? $request['search']['value'] : '';
@@ -36,7 +36,10 @@ class JenisPelanggaranModel extends Model
         $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'id_jenis_pelanggaran';
 
         // SQL Server query preparation for fetching data
-        $query = "SELECT * FROM {$this->table}";
+        $query = "SELECT {$this->table}.id_jenis_pelanggaran, {$this->table}.deskripsi, tb_tingkat_pelanggaran.nama_tingkat
+          FROM {$this->table}
+          INNER JOIN tb_tingkat_pelanggaran
+          ON {$this->table}.id_tingkat = tb_tingkat_pelanggaran.id_tingkat_pelanggaran";
 
         // Prepare parameters for SQL Server
         $params = [$searchTerm, $searchTerm, $searchTerm, $start, $length];
