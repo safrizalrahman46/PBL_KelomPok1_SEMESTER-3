@@ -16,6 +16,8 @@ if ($act == 'load') {
     $admin = new tingkatpelanggaranModel();
     $data = $admin->getDataForDataTables($_POST);
 
+
+
     // Prepare the response for DataTables
     $result = [
         "draw" => isset($_POST['draw']) ? intval($_POST['draw']) : 0, // Check if 'draw' is set
@@ -25,10 +27,11 @@ if ($act == 'load') {
     ];
 
     foreach ($data['data'] as $index => $row) {
+    
         $result['data'][] = [
             'no' => ($index + 1), // Use $index instead of $row
-            'nama_tingkat' => htmlspecialchars($row['nama_tingkat']),
-            'deskripsi' => htmlspecialchars($row['deskripsi']),
+            'nama_tingkat' => !empty($row['nama_tingkat']) ?  htmlspecialchars($row['nama_tingkat']) : "",
+            'deskripsi' => !empty($row['deskripsi']) ? htmlspecialchars($row['deskripsi']) : "",
             'aksi' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_tingkat_pelanggaran'] . ')"><i class="fa fa-edit"></i></button>
                        <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id_tingkat_pelanggaran'] . ')"><i class="fa fa-trash"></i></button>'
         ];

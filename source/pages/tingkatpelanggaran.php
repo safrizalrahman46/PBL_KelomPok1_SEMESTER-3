@@ -33,7 +33,7 @@
 <section class="content">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Daftar Kelas</h3>
+            <h3 class="card-title">Daftar Tingkat Pelanggaran</h3>
             <div class="card-tools">
                 <button type="button" class="btn btn-md btn-primary" onclick="tambahData()">
                     Tambah
@@ -68,7 +68,7 @@
         <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Tambah Admin</h4>
+                    <h4 class="modal-title">Tambah  Tingkat Pelanggaran</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
