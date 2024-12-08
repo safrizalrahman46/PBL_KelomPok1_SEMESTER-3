@@ -100,7 +100,7 @@ class MahasiswaModel extends Model
     {
 
         // eksekusi query untuk menyimpan ke database
-        sqlsrv_query($this->db, "INSERT INTO {$this->table} (email, semester, tingkat, foto, status , prodi, id_pelanggaran, id_prodi, id_kelas, id_users, nama) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array($data['email'], $data['semester'], $data['tingkat'], $data['foto'], $data['status'], $data['prodi'], $data['id_pelanggaran'], $data['id_prodi'], $data['id_kelas'], $data['id_users'], $data['nama']));
+        sqlsrv_query($this->db, "INSERT INTO {$this->table} (email, semester, tingkat, foto, status , id_prodi, id_kelas, id_users, nama) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", array($data['email'], $data['semester'], $data['tingkat'], $data['foto'], $data['status'], $data['id_prodi'], $data['id_kelas'], $data['id_users'], $data['nama']));
    
         // $stmt = sqlsrv_query(conn: $this->db, $query, $params);
     

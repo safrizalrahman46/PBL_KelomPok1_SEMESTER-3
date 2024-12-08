@@ -47,7 +47,7 @@ $dataKelas = $classData->getData();
                             <th>No telepon</th>
                             <th>Username</th>
                             <th>Aksi</th>
-    
+
                         </tr>
                     </thead>
                     <tbody>
@@ -65,19 +65,22 @@ $dataKelas = $classData->getData();
                     <h4 class="modal-title">Form Dosen</h4>
                 </div>
                 <div class="modal-body">
-                    
-                <div class="alert alert-danger" role="alert" id="formAlert" style="display:none" ;>
 
-                </div>
-                <input type="hidden" class="form-control" name="id" id="id">
+                    <div class="alert alert-danger" role="alert" id="formAlert" style="display:none" ;>
 
+                    </div>
+                    <input type="hidden" class="form-control" name="id" id="id">
 
+                    <div class="alert alert-danger" role="alert" id="formAlert" style="display:none" ;>
+
+                    </div>
+                    <input type="hidden" class="form-control" name="id" id="id">
 
                     <div class="form-group">
                         <label>Email</label>
                         <input type="email" class="form-control" name="email" id="email">
                     </div>
-            
+
                     <div class="form-group">
                         <label>Nama</label>
                         <input type="text" class="form-control" name="nama" id="nama">
@@ -99,7 +102,7 @@ $dataKelas = $classData->getData();
                         <label>Password</label>
                         <input type="password" class="form-control" name="password" id="password">
                     </div>
-                    
+
 
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -120,7 +123,7 @@ $dataKelas = $classData->getData();
         $('#nama').val('');
         $('#alamat').val('');
         $('#no_telepon').val('');
- 
+
     }
 
     function editData(id) {
@@ -132,10 +135,12 @@ $dataKelas = $classData->getData();
                 var data = JSON.parse(response);
                 $('#form-data').modal('show');
                 $('#form-tambah').attr('action', 'action/dosenAction.php?act=update&id=' + id);
+                $('#id').val(id);
                 $('#email').val(data.email);
                 $('#id_users').val(data.id_users);
                 $('#nama').val(data.nama);
                 $('#alamat').val(data.alamat);
+                $('#username').val(data.username);
                 $('#no_telepon').val(data.no_telepon);
             }
         });
@@ -190,7 +195,7 @@ $dataKelas = $classData->getData();
                 }
             ],
 
-            
+
             dom: 'Bfrtip', // Controls position of buttons
             buttons: [{
                 extend: 'excelHtml5',
@@ -210,7 +215,7 @@ $dataKelas = $classData->getData();
                     return "Export_Data_Kelas_" + dateString; // This will set the file name
                 },
                 exportOptions: {
-                    columns: [0, 1, 2,3,4,5] // Only export visible columns
+                    columns: [0, 1, 2, 3, 4, 5] // Only export visible columns
                 }
             }],
             customize: function(xlsx) {
@@ -247,7 +252,10 @@ $dataKelas = $classData->getData();
                     required: true,
                 },
                 password: {
-                    required: true,
+                    required: function(element) {
+                        // Require password only if the id field is empty (add action)
+                        return $('#id').val() === '';
+                    }
                 },
                 nama: {
                     required: true
@@ -255,10 +263,10 @@ $dataKelas = $classData->getData();
 
                 alamat: {
                     required: true
-                }, 
+                },
                 no_telepon: {
                     required: true
-                }, 
+                },
             },
             errorElement: 'span',
             errorPlacement: function(error, element) {
@@ -278,16 +286,12 @@ $dataKelas = $classData->getData();
                     data: $(form).serialize(),
                     success: function(response) {
                         var result = JSON.parse(response);
-
-                        console.log(result.message);
                         if (result.message != 'Username sudah digunakan oleh akun lainnya' && result.meessage != 'failed') {
                             $('#form-data').modal('hide');
                             tabelData.ajax.reload(); // reload data tabel 
                         } else {
                             $("#formAlert").show();
                             $("#formAlert").html(result.message);
-
-                            // alert(result.message);
                         }
                     }
                 });

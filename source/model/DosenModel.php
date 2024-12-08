@@ -143,7 +143,9 @@ class DosenModel extends Model
     {
 
         // query untuk mengambil data berdasarkan id
-        $query = sqlsrv_query($this->db, "select * from {$this->table} where nip = ?", [$id]);
+        $query = sqlsrv_query($this->db, "select * from {$this->table} 
+        INNER JOIN tb_users ON {$this->table}.id_users = tb_users.id_users
+        where nip = ?", [$id]);
         // ambil hasil query
         return sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
     }

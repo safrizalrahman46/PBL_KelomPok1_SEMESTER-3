@@ -119,7 +119,7 @@ if ($act == 'save') {
             'foto' => $foto,
             'status' => antiSqlInjection($_POST['status']),
             // 'prodi' => antiSqlInjection($_POST['prodi'] ?? ''),
-            'id_pelanggaran' => antiSqlInjection($_POST['id_pelanggaran']),
+            // 'id_pelanggaran' => antiSqlInjection($_POST['id_pelanggaran']),
             'id_prodi' => antiSqlInjection($_POST['id_prodi']),
             'id_kelas' => antiSqlInjection($_POST['id_kelas']),
             'nama' => antiSqlInjection($_POST['nama']),
