@@ -32,7 +32,7 @@ if ($act == 'load') {
             'email' => htmlspecialchars($row['email']),
             'semester' => htmlspecialchars($row['semester']),
             'tingkat' => htmlspecialchars($row['tingkat']),
-            'foto' => '',
+            'foto' => !empty($row['foto']) ? '<img class="img-thumbnail" style="width:120px;" src="/PBL_KelomPok1_SEMESTER-3/source/uploads/'.$row['foto'].'" /> ' : '-',
             'status' => htmlspecialchars($row['status']),
             'id_pelanggaran' => htmlspecialchars($row['id_pelanggaran'] ?? ''),
             'id_prodi' => htmlspecialchars($row['id_prodi'] ?? ''),

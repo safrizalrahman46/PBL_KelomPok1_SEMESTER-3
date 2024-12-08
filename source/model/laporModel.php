@@ -149,9 +149,9 @@ class LaporModel extends Model
         // eksekusi query untuk menyimpan ke database
         sqlsrv_query(
             $this->db,
-            "INSERT INTO {$this->table} (id_mahasiswa, id_jenis_pelanggaran, status , komentar, id_admin, id_dosen, status_verifikasi_admin, nim, foto, tanggal_laporan, nama) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            array($data['id_mahasiswa'], $data['id_jenis_pelanggaran'], $data['status'], $data['komentar'], $data['id_admin'], $data['id_dosen'], $data['status_verifikasi_admin'], $data['nim'], $data['foto'], $data['tanggal_laporan'], $data['nama'])
+            "INSERT INTO {$this->table} (id_mahasiswa, id_jenis_pelanggaran, komentar,  id_dosen, status_verifikasi_admin,  foto, tanggal_laporan) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            array($data['id_mahasiswa'], $data['id_jenis_pelanggaran'],  $data['komentar'],  $data['id_dosen'], $data['status_verifikasi_admin'],  $data['foto'], $data['tanggal_laporan'])
         );
     }
     public function getData()

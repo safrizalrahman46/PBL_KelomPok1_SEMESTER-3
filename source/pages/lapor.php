@@ -42,16 +42,15 @@ $dataDos = $classData->getData();
             <h3 class="card-title">Daftar Lapor</h3>
             <div class="card-tools">
 
-                <?php 
-                    if($_SESSION['level'] == 'dosen')
-                    {
+                <?php
+                if ($_SESSION['level'] == 'dosen') {
                 ?>
-                <button type="button" class="btn btn-md btn-primary" onclick="tambahData()">
-                    Tambah
-                </button>
+                    <button type="button" class="btn btn-md btn-primary" onclick="tambahData()">
+                        Tambah
+                    </button>
 
-                <?php 
-                    }
+                <?php
+                }
                 ?>
             </div>
         </div>
@@ -83,8 +82,8 @@ $dataDos = $classData->getData();
                 modal-xl : Modal ukuran sangat besar 
             penerapan setelah class modal-dialog seperti di bawah 
     -->
-        <div class="modal-dialog modal-md">
-            <div class="modal-content">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content modal-lg">
                 <div class="modal-header">
                     <h4 class="modal-title">Form Lapor</h4>
                 </div>
@@ -118,22 +117,22 @@ $dataDos = $classData->getData();
                             ?>
                         </select>
                     </div>
-     
+
                     <div class="form-group">
                         <label>Deskripsi Pelanggaran</label>
 
                         <textarea name="komentar" id="komentar" class="form-control"></textarea>
                         <!-- <input type="text" class="form-control" name="komentar" id="komentar"> -->
                     </div>
-            
-                    <div class="form-group">
+
+                    <!-- <div class="form-group">
                         <label>Status Verifikasi Admin</label>
                         <select name="status" id="status" class="form-control">
                             <option value="Valid">Valid</option>
                             <option value="Tidak Valid">Tidak Valid</option>
                         </select>
-                    </div>
-                 
+                    </div> -->
+
                     <div class="form-group">
                         <label>Foto</label>
                         <input type="file" class="form-control" name="foto" id="foto">
@@ -168,6 +167,16 @@ $dataDos = $classData->getData();
         $('#id_admin').val('');
         $('#id_dosen').val('');
         $('#status_verifikasi_admin').val('');
+
+
+        $('#komentar').summernote({
+            height: 300, // Set editor height
+            minHeight: null, // Set minimum height
+            maxHeight: null, // Set maximum height
+            focus: true // Focus the editor when loaded
+        });
+
+
         $('#nim').val('');
         $('#foto').val('');
         $('#tanggal_laporan').val('');
@@ -332,21 +341,44 @@ $dataDos = $classData->getData();
                 $(element).removeClass('is-invalid');
             },
             submitHandler: function(form) {
-                $.ajax({
-                    url: $(form).attr('action'),
-                    method: 'post',
-                    data: $(form).serialize(),
-                    success: function(response) {
-                        var result = JSON.parse(response);
-                        if (result.status) {
-                            $('#form-data').modal('hide');
-                            tabelData.ajax.reload();
-$.notify(result.message, "success");l // reload data tabel 
-                        } else {
-                            alert(result.message);
+                var formData = new FormData(form); // Create FormData object
+
+
+                $.confirm({
+                    title: 'Apakah anda sudah yakin ?',
+                    content: 'Data yang sudah di submit atau terkirim, akan diproses oleh admin dan tidak bisa di rubah',
+                    buttons: {
+                        confirm: function() {
+                            // $.alert('Confirmed!');
+
+                            $.ajax({
+                                url: $(form).attr('action'),
+                                method: 'POST',
+                                data: formData,
+                                contentType: false, // Required for file upload
+                                processData: false,
+                                // data: $(form).serialize(),
+                                success: function(response) {
+                                    var result = JSON.parse(response);
+                                    if (result.status) {
+                                        $('#form-data').modal('hide');
+                                        tabelData.ajax.reload();
+                                        $.notify('Laporan anda berhasil di ajukan oleh, mohon tunggu approval admin', "success");
+                                        l // reload data tabel 
+                                    } else {
+                                        alert(result.message);
+                                    }
+                                }
+                            });
+                        },
+                        cancel: function() {
+                            $.alert('Canceled!');
                         }
                     }
                 });
+
+
+
             }
         });
     });

@@ -376,7 +376,7 @@ $dataKelas = $classData->getData();
                         if (result.status) {
                             $('#form-data').modal('hide');
                             tabelData.ajax.reload();
-$.notify(result.message, "success");l // reload data tabel 
+                            $.notify(result.message, "success");l // reload data tabel 
                         } else {
                             alert(result.message);
                         }

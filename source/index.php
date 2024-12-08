@@ -59,6 +59,15 @@ if ($session->get('is_login') !== true) {
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
 
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.js"></script>
+
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.js"></script>
+
+
     <style>
         .questrial-regular {
             font-family: "Questrial", sans-serif;
@@ -79,9 +88,6 @@ if ($session->get('is_login') !== true) {
             --theadColor: #0984e3;
 
         }
-
-
-
     </style>
 
     <!-- jQuery -->

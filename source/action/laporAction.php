@@ -8,6 +8,7 @@ if ($session->get('is_login') !== true) {
 }
 
 include_once('../model/laporModel.php');
+include_once('../model/GlobalModel.php');
 include_once('../lib/Secure.php');
 
 $act = isset($_GET['act']) ? strtolower($_GET['act']) : '';
@@ -60,19 +61,50 @@ if ($act == 'get') {
 }
 
 if ($act == 'save') {
+    $global = new GlobalModel();
+
+    $conditions = ['id_users' => $_SESSION['id_users']];
+    $user = $global->getSingleData('tb_dosen', $conditions);
+    
+
+    $foto = '';
+    if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        $uploadDir = "../uploads/";
+
+        // Validate file type
+        if (!in_array($_FILES['foto']['type'], $allowedTypes)) {
+            $response['message'] = 'Invalid file type. Allowed types are JPEG, PNG, GIF.';
+            echo json_encode($response);
+            exit;
+        }
+
+        // Generate unique file name
+        $fileName = time() . "_" . basename($_FILES['foto']['name']);
+        $uploadFile = $uploadDir . $fileName;
+
+        // Move the file
+        if (!move_uploaded_file($_FILES['foto']['tmp_name'], $uploadFile)) {
+            $response['message'] = 'Failed to upload the file.';
+            echo json_encode($response);
+            exit;
+        }
+
+        $foto = $fileName;
+    } 
+
+
+
+
     $data = [
         'id_mahasiswa' => isset($_POST['id_mahasiswa']) ? antiSqlInjection($_POST['id_mahasiswa']) : null, // Check if 'id_users' exists
         'id_jenis_pelanggaran' => isset($_POST['id_jenis_pelanggaran']) ? antiSqlInjection($_POST['id_jenis_pelanggaran']) : null, // Check if 'id_users' exists
-        'laporan_oleh' => antiSqlInjection($_POST['laporan_oleh']),
         'tanggal_laporan' => antiSqlInjection($_POST['tanggal_laporan']),
         'komentar' => antiSqlInjection($_POST['komentar']),
-        'id_admin' => isset($_POST['id_admin']) ? antiSqlInjection($_POST['id_admin']) : null, // Check if 'id_users' exists
-        'id_dosen' => isset($_POST['id_dosen']) ? antiSqlInjection($_POST['id_dosen']) : null, // Check if 'id_users' exists
-        'status_verifikasi_admin' => antiSqlInjection($_POST['status_verifikasi_admin']),
-        'nim' => antiSqlInjection($_POST['nim']),
-        'foto' => antiSqlInjection($_POST['foto']),
-        'tempat' => htmlspecialchars($row['tempat']),
-
+        'id_dosen' => $user['nip'], // Check if 'id_users' exists
+        'status_verifikasi_admin' => 'Menunggu Approval',
+        'foto' => $foto,
+        'tempat' => htmlspecialchars($_POST['tempat']),
     ];
 
     $langgar = new laporModel();
