@@ -36,10 +36,15 @@ if ($act == 'load') {
         
         if($_SESSION['level'] == 'admin') {
             $buttons .= ' <button class="btn btn-sm btn-info" onclick="editData(' . $row['id_pelanggaran'] . ')">Cek Data</button><br /> <br /> ';
+            
 
 
-            $buttons .= '<a class="btn btn-sm btn-info" ><i class="fa fa-thumbs-up"></i>Disetuju</a>';
-            $buttons .= ' <a class="btn btn-sm btn-warning"><i class="fa fa-thumbs-down"></i>Tidak Disetujui</a>';
+            if($row['status_verifikasi_admin'] == 'Menunggu Approval') {
+        
+                    $buttons .= '<a href="/PBL_KelomPok1_SEMESTER-3/source/action/laporAction.php?act=approval&id='.$row['id_pelanggaran'].'&status=Disetujui" class="btn btn-sm btn-info" ><i class="fa fa-thumbs-up"></i>Disetuju</a>';
+                    $buttons .= ' <a href="/PBL_KelomPok1_SEMESTER-3/source/action/laporAction.php?act=approval&id='.$row['id_pelanggaran'].'&status=Tidak Disetujui" class="btn btn-sm btn-warning"><i class="fa fa-thumbs-down"></i>Tidak Disetujui</a>';
+
+            }
 
         }
 
@@ -163,15 +168,15 @@ if ($act == 'update') {
 
 
 if ($act == 'approval') {
-    $id = (isset($_GET['status']) && ctype_digit($_GET['status'])) ? $_GET['status'] : '';
+    $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : '';
+    $status = (isset($_GET['status']) && ctype_digit($_GET['status'])) ? $_GET['status'] : '';
+    
 
     $langgar = new laporModel();
-    $langgar->updateStatusData($id,['status' => $id]);
+    $langgar->updateStatusData($id,['status' => $_GET['status']]);
 
-    echo json_encode([
-        'status' => true,
-        'message' => 'Data berhasil diupdate.'
-    ]);
+    header('Location: http://localhost/PBL_KelomPok1_SEMESTER-3/source/index.php?page=lapor_pelanggaran_mahasiswa');
+    exit();
 }
 
 if ($act == 'delete') {

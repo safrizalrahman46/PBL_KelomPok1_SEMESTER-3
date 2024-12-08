@@ -340,7 +340,6 @@ class LaporModel extends Model
 
     public function updateStatusData($id, $data)
     {
-
         // query untuk update data
         sqlsrv_query($this->db, "UPDATE {$this->table} SET  status_verifikasi_admin = ? WHERE id_pelanggaran = ?", [
             $data['status'],
