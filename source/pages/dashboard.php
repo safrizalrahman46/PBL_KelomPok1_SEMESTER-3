@@ -1,48 +1,84 @@
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Blank Page</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Blank Page</li>
-                </ol>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
-</section>
+<?php 
+
+include_once(__DIR__ . '/../lib/Session.php');
+
+$session = new Session();
+
+if ($session->get('is_login') !== true) {
+    header('Location: login.php');
+}
+
+
+include_once(__DIR__ . '/../model/GlobalModel.php');
+
+$global = new GlobalModel();
+
+$kelas = $global->getCountData('tb_kelas');
+$prodi = $global->getCountData('tb_prodi');
+$mahasiswa = $global->getCountData('tb_mahasiswa');
+$lapor = $global->getCountData('tb_lapor');
+?>
 
 <!-- Main content -->
 <section class="content">
 
-    <!-- Default box -->
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">Title</h3>
+    <div class="row">
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3><?= $kelas;  ?></h3>
 
-            <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                    <i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                    <i class="fas fa-times"></i>
-                </button>
+                    <p>Kelas</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
             </div>
         </div>
-        <div class="card-body">
-            Selamat Datang <span style="color: blue;">KELOMPOK 1 </span>. Anda login sebagai <span style="color: blue">admin.</span>
-            <br>
-            Start creating your amazing application!
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3><?= $prodi;  ?></h3>
+
+                    <p>Prodi</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+            </div>
         </div>
-        <!-- /.card-body -->
-        <div class="card-footer">
-            Footer
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+                <div class="inner">
+                    <h3><?= $mahasiswa;  ?></h3>
+
+                    <p>Mahasiswa</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-person-add"></i>
+                </div>
+            </div>
         </div>
-        <!-- /.card-footer-->
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+                <div class="inner">
+                    <h3><?= $lapor;  ?></h3>
+
+                    <p>Tingkat Pelanggaran</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-pie-graph"></i>
+                </div>
+            </div>
+        </div>
+        <!-- ./col -->
     </div>
-    <!-- /.card -->
-
-
 </section>
+
