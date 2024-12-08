@@ -13,6 +13,7 @@ if ($act == 'login') {
     // jika password sesuai
     if (password_verify($password, $data['password'])) {
         $session->set('is_login', true);
+        $session->set('id_users', $data['id_users']);
         $session->set('username', $data['username']);
         $session->set('nama', $data['nama']);
         $session->set('level', $data['level']);

@@ -93,7 +93,7 @@ class GlobalModel extends Model
         }
 
         // Limit the result to one record
-        $query .= " FETCH NEXT 1 ROWS ONLY";
+        // $query .= " FETCH NEXT 1 ROWS ONLY";
 
         // Execute the query
         $stmt = sqlsrv_query($this->db, $query, $params);

@@ -93,10 +93,14 @@ $lapor = $global->getCountData('tb_lapor');
 if($level == 'dosen')
 {
 
-$conditions = ['id_users' => $sesion->get('id_users')];
-$user = $global->getSingleData('tb_admin', $conditions);
+$conditions = ['id_users' => $session->get('id_users')];
+$user = $global->getSingleData('tb_dosen', $conditions);
 
-var_dump($user);
+
+$conditionsx = ['id_dosen' => $user['nip']];
+
+$lapor = $global->getCountDynamicData('tb_lapor',$conditionsx);
+
 
 ?>
 <section class="content">
@@ -104,11 +108,11 @@ var_dump($user);
     <div class="row">
      
         <!-- ./col -->
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-5 col-6">
             <!-- small box -->
             <div class="small-box bg-danger">
                 <div class="inner">
-                    <h3></h3>
+                    <h3><?= $lapor ?></h3>
                     <p>Total pelaporan anda</p>
                 </div>
                 <div class="icon">
@@ -123,6 +127,15 @@ var_dump($user);
 }
 if($level == 'mahasiswa')
 {
+
+
+$conditions = ['id_users' => $session->get('id_users')];
+$user = $global->getSingleData('tb_mahasiswa', $conditions);
+
+
+$conditionsx = ['id_mahasiswa' => $user['nim']];
+
+$lapor = $global->getCountDynamicData('tb_lapor',$conditionsx);
 ?>
 <section class="content">
 

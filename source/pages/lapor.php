@@ -41,9 +41,18 @@ $dataDos = $classData->getData();
         <div class="card-header">
             <h3 class="card-title">Daftar Lapor</h3>
             <div class="card-tools">
+
+                <?php 
+                    if($_SESSION['level'] == 'dosen')
+                    {
+                ?>
                 <button type="button" class="btn btn-md btn-primary" onclick="tambahData()">
                     Tambah
                 </button>
+
+                <?php 
+                    }
+                ?>
             </div>
         </div>
         <div class="card-body">
