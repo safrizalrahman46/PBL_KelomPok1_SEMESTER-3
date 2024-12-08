@@ -35,9 +35,9 @@ $dataAdmin = $classData->getData();
         <div class="card-header">
             <h3 class="card-title">Daftar Admin</h3>
             <div class="card-tools">
-                <button type="button" class="btn btn-md btn-primary" onclick="tambahData()">
+                <!-- <button type="button" class="btn btn-md btn-primary" onclick="tambahData()">
                     Tambah
-                </button>
+                </button> -->
             </div>
         </div>
         <div class="card-body">
@@ -48,7 +48,7 @@ $dataAdmin = $classData->getData();
                         <th>Nama Admin</th>
                         <th>Deskripsi Tugas</th>
                         <th>Tanggal Tugas</th>
-                        <th>Aksi</th>
+                        <!-- <th>Aksi</th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -167,7 +167,7 @@ $dataAdmin = $classData->getData();
                 { data: 'admin_id' },
                 { data: 'deskripsi_tugas' },
                 { data: 'tanggal_tugas' },
-                { data: 'aksi' }, // Add nama_kelas
+                // { data: 'aksi' }, // Add nama_kelas
             ],
         });
 

@@ -28,7 +28,8 @@ if ($act == 'load') {
         $result['data'][] = [
             'no' => ($key + 1), // Use $index instead of $row
             'email' => htmlspecialchars($row['email']),
-            'id_users' => htmlspecialchars($row['id_users']),
+            'id_users' => isset($row['id_users']) ? htmlspecialchars(string: $row['id_users']) : '',
+            'username' => isset($row['username']) ? htmlspecialchars(string: $row['username']) : '',
             'nama' => htmlspecialchars($row['nama']),
             'alamat' => htmlspecialchars($row['alamat']),
             'no_telepon' => htmlspecialchars($row['no_telepon']),

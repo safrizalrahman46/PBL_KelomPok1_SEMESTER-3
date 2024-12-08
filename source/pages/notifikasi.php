@@ -110,35 +110,35 @@ $dataLanggars = $classData->getData();
                             <input type="date" class="form-control" name="tanggal_kirim" id="tanggal_kirim" required>
                         </div>
                         <div class="form-group">
-                        <label>Tipe Notifikasi</label>
+                            <label>Tipe Notifikasi</label>
 
-                        <select name="id_pelanggaran" id="id_pelanggaran" class="form-control">
-                            <?php
-                            foreach ($dataLanggars as $key => $value) {
-                            ?>
-                                <option value="<?= $value['id_jenis_pelanggaran']; ?>"><?= $value['dekripsi'] ?></option>
-                            <?php
-                            }
-                            ?>
-                        </select>
-                        <!-- <input type="number" class="form-control" name="id_kelas" id="id_kelas"> -->
-                    </div>
-                    </div>
+                            <select name="id_pelanggaran" id="id_pelanggaran" class="form-control">
+                                <?php
+                                foreach ($dataLanggars as $key => $value) {
+                                ?>
+                                    <option value="<?= $value['id_jenis_pelanggaran']; ?>"><?= $value['deskripsi'] ?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                            <!-- <input type="number" class="form-control" name="id_kelas" id="id_kelas"> -->
+                        </div>
 
-                    <div class="form-group">
-                        <label>Tipe Notifikasi</label>
 
-                        <select name="id_tipe_notifikasi" id="id_tipe_notifikasi" class="form-control">
-                            <?php
-                            foreach ($dataNotifikasis as $key => $value) {
-                            ?>
-                                <option value="<?= $value['id_tipe_notifikasi']; ?>"><?= $value['notif_template'] ?></option>
-                            <?php
-                            }
-                            ?>
-                        </select>
-                        <!-- <input type="number" class="form-control" name="id_kelas" id="id_kelas"> -->
-                    </div>
+                        <div class="form-group">
+                            <label>Tipe Notifikasi</label>
+
+                            <select name="id_tipe_notifikasi" id="id_tipe_notifikasi" class="form-control">
+                                <?php
+                                foreach ($dataNotifikasis as $key => $value) {
+                                ?>
+                                    <option value="<?= $value['id_tipe_notifikasi']; ?>"><?= $value['notif_template'] ?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                            <!-- <input type="number" class="form-control" name="id_kelas" id="id_kelas"> -->
+                        </div>
                     </div>
 
                 </div>
@@ -201,7 +201,7 @@ $dataLanggars = $classData->getData();
 
     var tabelData;
     $(document).ready(function() {
-        
+
         tabelData = $('#table-data').DataTable({
             processing: true,
             serverSide: true,
@@ -209,31 +209,85 @@ $dataLanggars = $classData->getData();
                 url: 'action/notifikasiAction.php?act=load',
                 type: 'POST',
             },
-                    columns: [
-                { data: "no" },
-                { data: "id_penerima" },
-                { data: "pesan" },
-                { data: "tanggal_kirim" },
-                { data: "id_pelanggaran" },
-                { data: "id_tipe_notifikasi" }, // Tambahkan kolom untuk Password Admin
-                { data: "aksi" }
-            ]
+            columns: [{
+                    data: "no"
+                },
+                {
+                    data: "id_penerima"
+                },
+                {
+                    data: "pesan"
+                },
+                {
+                    data: "tanggal_kirim"
+                },
+                {
+                    data: "id_pelanggaran"
+                },
+                {
+                    data: "id_tipe_notifikasi"
+                }, // Tambahkan kolom untuk Password Admin
+                {
+                    data: "aksi"
+                }
+            ],
+            dom: 'Bfrtip', // Controls position of buttons
+            buttons: [{
+                extend: 'excelHtml5',
+                text: 'Export to Excel',
+                title: "Data Kelas", // Title of the sheet (header)
+                filename: function() {
+                    var currentDate = new Date();
+                    var day = String(currentDate.getDate()).padStart(2, '0'); // Add leading zero if necessary
+                    var month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Add leading zero
+                    var year = currentDate.getFullYear();
+                    var hours = String(currentDate.getHours()).padStart(2, '0');
+                    var minutes = String(currentDate.getMinutes()).padStart(2, '0');
+                    var seconds = String(currentDate.getSeconds()).padStart(2, '0');
+
+                    // Format as DD-MM-YYYY_HH:MM:SS for the filename
+                    var dateString = day + '-' + month + '-' + year + '_' + hours + ':' + minutes + ':' + seconds;
+                    return "Export_Data_Kelas_" + dateString; // This will set the file name
+                },
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5] // Only export visible columns
+                }
+            }],
+            customize: function(xlsx) {
+                var sheet = xlsx.xl.worksheets['sheet1.xml'];
+
+                // Change the first row (header) to "Data Kelas"
+                var headerRow = sheet.getElementsByTagName('row')[0]; // First row (header row)
+                headerRow.firstChild.textContent = "Data Kelas"; // Set the header text to "Data Prodi"
+
+                // Make the header bold and centered (optional)
+                var styles = xlsx.xl.styles;
+                var cellStyle = styles.addStyle({
+                    font: {
+                        bold: true
+                    },
+                    alignment: {
+                        horizontal: 'center'
+                    }
+                });
+                headerRow.firstChild.setAttribute('s', cellStyle);
+            }
         });
 
         $('#form-tambah').validate({
             rules: {
-              
+
                 pesan: {
                     required: true,
                     minlength: 5
                 },
-              
-               
+
+
                 tanggal_kirim: {
                     required: true,
-                  
+
                 },
-               
+
             },
             errorElement: 'span',
             errorPlacement: function(error, element) {

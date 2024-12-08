@@ -93,8 +93,6 @@ $dataKelas = $classData->getData();
 <script>
     $(document).ready(function() {
 
-
-
         tabelData = $('#table-data').DataTable({
             processing: true,
             serverSide: true,

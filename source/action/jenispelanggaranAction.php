@@ -32,7 +32,7 @@ if ($act == 'load') {
             'id_tingkat' => isset($row['id_tingkat']) ? htmlspecialchars(string: $row['id_tingkat']) : '',
 
             // 'nama_tingkat' => htmlspecialchars($row['nama_tingkat']),
-            'nama_tingkat' => isset($row['nama_tingkat']) ? htmlspecialchars($row['nama_tingkat']) : '',
+            'nama_tingkat' => isset($row['nama_tingkat']) ? htmlspecialchars(string: $row['nama_tingkat']) : '',
 
             'aksi' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_jenis_pelanggaran'] . ')"><i class="fa fa-edit"></i></button>
                        <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id_jenis_pelanggaran'] . ')"><i class="fa fa-trash"></i></button>'
