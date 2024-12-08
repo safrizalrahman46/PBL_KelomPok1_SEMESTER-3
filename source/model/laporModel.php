@@ -145,15 +145,30 @@ class LaporModel extends Model
 
     public function insertData($data)
     {
-
-        // eksekusi query untuk menyimpan ke database
-        sqlsrv_query(
-            $this->db,
-            "INSERT INTO {$this->table} (id_mahasiswa, id_jenis_pelanggaran, komentar,  id_dosen, status_verifikasi_admin,  foto, tanggal_laporan) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            array($data['id_mahasiswa'], $data['id_jenis_pelanggaran'],  $data['komentar'],  $data['id_dosen'], $data['status_verifikasi_admin'],  $data['foto'], $data['tanggal_laporan'])
-        );
+        // Define the query
+        $query = "INSERT INTO {$this->table} 
+                  (id_mahasiswa, id_jenis_pelanggaran, komentar, id_dosen, status_verifikasi_admin, foto, tanggal_laporan) 
+                  VALUES (?, ?, ?, ?, ?, ?, ?)";
+    
+        // Execute the query with parameters
+        $stmt = sqlsrv_query($this->db, $query, [
+            $data['id_mahasiswa'], 
+            $data['id_jenis_pelanggaran'], 
+            $data['komentar'], 
+            $data['id_dosen'], 
+            $data['status_verifikasi_admin'], 
+            $data['foto'], 
+            $data['tanggal_laporan']
+        ]);
+    
+        // Check for errors
+        if ($stmt === false) {
+            die(print_r(sqlsrv_errors(), true)); // Display SQL Server error details
+        } else {
+            return "Data inserted successfully!";
+        }
     }
+    
     public function getData()
     {
 

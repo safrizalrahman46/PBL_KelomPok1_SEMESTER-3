@@ -41,7 +41,7 @@ if ($act == 'load') {
             // 'nim' => htmlspecialchars($row['nim']),
             // 'foto' => htmlspecialchars($row['foto']),
             'tanggal_laporan' => ($row['tanggal_laporan']->format('Y-m-d')),
-            'tempat' => htmlspecialchars($row['tempat']),
+            'tempat' => !empty($row['tempat']) ? htmlspecialchars($row['tempat']) : '',
             'aksi' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_pelanggaran'] . ')"><i class="fa fa-edit"></i></button>
                        <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id_pelanggaran'] . ')"><i class="fa fa-trash"></i></button>
                        <button class="btn btn-sm btn-succes" onclick="setujui(' . $row['id_pelanggaran'] . ')"><i class="fa fa-print"></i></button>
@@ -107,8 +107,11 @@ if ($act == 'save') {
         'tempat' => htmlspecialchars($_POST['tempat']),
     ];
 
+
+
     $langgar = new laporModel();
     $langgar->insertData($data);
+
 
     echo json_encode([
         'status' => true,
