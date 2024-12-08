@@ -209,7 +209,8 @@
                         var result = JSON.parse(response);
                         if (result.status) {
                             $('#form-data').modal('hide');
-                            tabelData.ajax.reload(); // reload data tabel 
+                            tabelData.ajax.reload();
+$.notify(result.message, "success");l // reload data tabel 
                         } else {
                             alert(result.message);
                         }

@@ -206,6 +206,7 @@
                         if (result.status) {
                             $('#form-data').modal('hide');
                             tabelData.ajax.reload();
+$.notify(result.message, "success");l
                         } else {
                             alert(result.message);
                         }
