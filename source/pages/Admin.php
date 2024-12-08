@@ -70,6 +70,7 @@ $dataUser = $classData->getData();
                     <div class="alert alert-danger" role="alert" id="formAlert" style="display:none" ;>
 
                     </div>
+                    <input type="hidden" class="form-control" name="idd" id="id">
 
 
                     <div class="form-group">
@@ -120,6 +121,7 @@ $dataUser = $classData->getData();
                 $('#form-data').modal('show');
                 $('#form-tambah').attr('action',
                     'action/adminAction.php?act=update&id=' + id);
+                $('#id').val(data.id);
                 $('#nama_admin').val(data.nama_admin);
                 $('#email_admin').val(data.email_admin);
                 $('#password_admin').val(data.password_admin);
@@ -233,7 +235,10 @@ $dataUser = $classData->getData();
                     required: true,
                 },
                 password: {
-                    required: true,
+                    required: function(element) {
+                        // Require password only if the id field is empty (add action)
+                        return $('#id').val() === ''; 
+                    }
                 }
             },
             errorElement: 'span',

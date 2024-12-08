@@ -62,17 +62,17 @@ if ($act == 'save') {
         'password' => $_POST['password'],
         'level' => 'admin',
     ];
-    
+
     $insert = $user->insertData($dataUser);
 
 
-    if($insert == 'Username sudah digunakan oleh akun lainnya') {
+    if ($insert == 'Username sudah digunakan oleh akun lainnya') {
         echo json_encode([
             'status' => true,
             'message' => $insert
         ]);
     } else {
-    
+
         $data = [
             'email_admin' => antiSqlInjection($_POST['email_admin']),
             'nama' => antiSqlInjection($_POST['nama']),
@@ -80,33 +80,56 @@ if ($act == 'save') {
         ];
         $admin = new AdminModel();
         $admin->insertData($data);
-    
+
         echo json_encode([
             'status' => true,
             'message' => 'Data berhasil disimpan.'
         ]);
-
     }
-
 }
 
 if ($act == 'update') {
     $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : 0;
-    $data = [
-
-        'email_admin' => antiSqlInjection($_POST['email_admin']),
-        'id_users' => antiSqlInjection($_POST['id_users']),
-        'nama' => antiSqlInjection($_POST['nama']),
-
-    ];
-
+    
     $admin = new AdminModel();
-    $admin->updateData($id, $data);
+    
+    $getData = $admin->getDataById($id);
 
-    echo json_encode([
-        'status' => true,
-        'message' => 'Data berhasil diupdate.'
-    ]);
+
+    if(!empty($getData)) {
+
+
+        $idUsers = $getData['id_users'];
+        $data = [
+            'email_admin' => antiSqlInjection($_POST['email_admin']),
+            'id_users' => $idUsers,
+            'nama' => antiSqlInjection($_POST['nama']),
+        ];
+    
+        $admin->updateData($id, $data);
+        $user = new UsersModel();
+
+
+        $dataUser['username'] = $_POST['username'];
+
+        if(!empty($password)) {
+            $dataUser['password'] = $_POST['password'];
+        }
+
+
+        $user->updateData($idUsers, $dataUser);
+        
+    
+        echo json_encode([
+            'status' => true,
+            'message' => 'Data berhasil diupdate.'
+        ]);
+    } else {
+        echo json_encode([
+            'status' => true,
+            'message' => 'Data tidak ditemukan.'
+        ]);
+    }
 }
 
 if ($act == 'delete') {

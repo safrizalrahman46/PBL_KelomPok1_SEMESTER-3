@@ -133,14 +133,22 @@ class UsersModel extends Model
     public function updateData($id, $data)
     {
 
-        // query untuk update data
-        $update = sqlsrv_query($this->db, "update {$this->table} set username = ?, password = ?, level = ? where id_users = ?", [
-            $data['username'],
-            password_hash($data['password'], PASSWORD_DEFAULT),
-            $data['level'],
 
-            $id
-        ]);
+        if(!empty($data['password'])) {
+            // query untuk update data
+            $update = sqlsrv_query($this->db, "update {$this->table} set username = ?, password = ? where id_users = ?", [
+                $data['username'],
+                password_hash($data['password'], PASSWORD_DEFAULT),
+    
+                $id
+            ]);
+
+        } else {
+            $update = sqlsrv_query($this->db, "update {$this->table} set username = ?,  where id_users = ?", [
+                $data['username'],
+                $id
+            ]);
+        }
     }
 
 
