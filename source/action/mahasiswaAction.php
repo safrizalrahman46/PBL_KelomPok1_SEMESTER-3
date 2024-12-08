@@ -28,19 +28,20 @@ if ($act == 'load') {
     foreach ($data['data'] as $key => $row) {
         $result['data'][] = [
             'no' => ($key + 1), // Use $index instead of $row
-            'NIM' => htmlspecialchars($row['NIM']),
+            'NIM' => htmlspecialchars($row['nim']),
             'email' => htmlspecialchars($row['email']),
             'semester' => htmlspecialchars($row['semester']),
             'tingkat' => htmlspecialchars($row['tingkat']),
-            'foto' => htmlspecialchars($row['foto']),
+            'foto' => '',
             'status' => htmlspecialchars($row['status']),
             'id_pelanggaran' => htmlspecialchars($row['id_pelanggaran'] ?? ''),
             'id_prodi' => htmlspecialchars($row['id_prodi'] ?? ''),
             'id_kelas' => htmlspecialchars($row['id_kelas'] ?? ''),
             'id_users' => htmlspecialchars($row['id_users'] ?? ''),
+            'username' => htmlspecialchars($row['username'] ?? ''),
             'nama' => htmlspecialchars($row['nama']),
-            'aksi' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['NIM'] . ')"><i class="fa fa-edit"></i></button>
-                       <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['NIM'] . ')"><i class="fa fa-trash"></i></button>'
+            'aksi' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['nim'] . ')"><i class="fa fa-edit"></i></button>
+                       <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['nim'] . ')"><i class="fa fa-trash"></i></button>'
         ];
     }
 

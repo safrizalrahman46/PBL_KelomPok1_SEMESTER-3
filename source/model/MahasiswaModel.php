@@ -35,11 +35,12 @@ class MahasiswaModel extends Model
             $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'id_admin';
         
             // SQL query for fetching data with search and pagination
-            $query = "SELECT * FROM {$this->table} ";
+            $query = "SELECT * FROM {$this->table}  
+            INNER JOIN tb_users ON {$this->table}.id_users = tb_users.id_users";
         
             $queryParams = [];
             if (!empty($searchValue)) {
-                $query .= " WHERE email_admin LIKE ? OR nama LIKE ? OR username LIKE ?";
+                $query .= " WHERE {$this->table}.nama LIKE ? OR {$this->table}.email LIKE ? OR tb_users.username LIKE ?";
                 $queryParams[] = $searchTerm;
                 $queryParams[] = $searchTerm;
                 $queryParams[] = $searchTerm;
@@ -62,7 +63,7 @@ class MahasiswaModel extends Model
             $queryFiltered = "SELECT COUNT(*) as count FROM tb_admin";
             $filteredParams = [];
             if (!empty($searchValue)) {
-                $queryFiltered .= " WHERE email_admin LIKE ? OR nama LIKE ? OR username LIKE ?";
+                $queryFiltered ." WHERE {$this->table}.nama LIKE ? OR {$this->table}.email LIKE ? OR tb_users.username LIKE ?";
                 $filteredParams[] = $searchTerm;
                 $filteredParams[] = $searchTerm;
                 $filteredParams[] = $searchTerm;
@@ -91,78 +92,8 @@ class MahasiswaModel extends Model
                 "recordsFiltered" => $totalFiltered,
                 "data" => $data
             ];
-        }
+    }
         
-    // {
-    //     // Columns available for ordering and searching
-    //     $columns = [ 'email', 'semester', 'tingkat', 'foto', 'status', 'prodi', 'id_pelanggaran', 'id_prodi', 'NIM', 'id_users', 'nama'];
-
-
-    //     // Extract search and pagination parameters
-    //     $searchValue = isset($request['search']['value']) ? $request['search']['value'] : '';
-    //     $searchTerm = "%{$searchValue}%";
-
-    //     $orderColumnIndex = isset($request['order'][0]['column']) ? (int) $request['order'][0]['column'] : 0;
-    //     $orderDir = isset($request['order'][0]['dir']) && in_array(strtolower($request['order'][0]['dir']), ['asc', 'desc'])
-    //         ? $request['order'][0]['dir']
-    //         : 'asc';
-
-    //     $start = isset($request['start']) ? (int) $request['start'] : 0;
-    //     $length = isset($request['length']) ? (int) $request['length'] : 10;
-
-    //     // Ensure column index is valid
-    //     $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'NIM';
-
-    //     // SQL Server query preparation for fetching data
-    //     $query = "SELECT * FROM {$this->table} ";
-
-    //     // Prepare parameters for SQL Server
-    //     $params = [$searchTerm, $searchTerm, $start, $length];
-
-    //     // Execute the query
-    //     $stmt = sqlsrv_query($this->db, $query, $params);
-
-    //     $data = [];
-    //     if ($stmt) {
-    //         while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
-    //             $data[] = $row;
-    //         }
-    //     }
-
-    //     // Count total filtered records for SQL Server
-    //     $queryFiltered = "SELECT COUNT(*) as count FROM {$this->table} 
-    //     WHERE email LIKE ? OR semester LIKE ? OR tingkat LIKE ? OR foto LIKE ? OR status LIKE ? 
-    //     OR prodi LIKE ? OR id_pelanggaran LIKE ? OR id_prodi LIKE ? OR id_kelas LIKE ? 
-    //     OR id_users LIKE ? OR nama LIKE ?";
-    //     $stmtFiltered = sqlsrv_query($this->db, $queryFiltered, [$searchTerm, $searchTerm]);
-    //     $totalFiltered = 0;
-    //     if ($stmtFiltered) {
-    //         $rowFiltered = sqlsrv_fetch_array($stmtFiltered, SQLSRV_FETCH_ASSOC);
-    //         if ($rowFiltered) {
-    //             $totalFiltered = $rowFiltered['count'];
-    //         }
-    //     }
-
-    //     // Count total records for SQL Server
-    //     $queryTotal = "SELECT COUNT(*) as count FROM {$this->table}";
-    //     $stmtTotal = sqlsrv_query($this->db, $queryTotal);
-    //     $totalRecords = 0;
-    //     if ($stmtTotal) {
-    //         $rowTotal = sqlsrv_fetch_array($stmtTotal, SQLSRV_FETCH_ASSOC);
-    //         if ($rowTotal) {
-    //             $totalRecords = $rowTotal['count'];
-    //         }
-    //     }
-
-    //     // Return data in DataTables format
-    //     return [
-    //         "draw" => isset($request['draw']) ? intval($request['draw']) : 0,
-    //         "recordsTotal" => $totalRecords,
-    //         "recordsFiltered" => $totalFiltered,
-    //         "data" => $data
-    //     ];
-    // }
-
 
 
     public function insertData($data)
@@ -192,7 +123,7 @@ class MahasiswaModel extends Model
     public function getDataById($id)
     {
         // query untuk mengambil data berdasarkan id
-        $query = sqlsrv_query($this->db, "select * from {$this->table} where NIM = ?", [$id]);
+        $query = sqlsrv_query($this->db, "select {$this->table}.*,tb_users.username,tb_users.password from {$this->table} INNER JOIN tb_users ON {$this->table}.id_users = tb_users.id_users where {$this->table}.nim = ? ", [$id]);
         // ambil hasil query
         return sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
     }
@@ -220,7 +151,7 @@ class MahasiswaModel extends Model
         // query untuk delete data
         sqlsrv_query(
             $this->db,
-            "delete from {$this->table} where NIM = ?",
+            "delete from {$this->table} where nim = ?",
             [$id]
         );
     }

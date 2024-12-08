@@ -66,6 +66,7 @@ $dataKelas = $classData->getData();
                         <th>Email</th>
                         <th>Semester</th>
                         <th>Tingkat</th>
+                        <th>Username</th>
                         <th>Foto</th>
                         <!-- <th>Status</th> -->
                         <!-- <th>Prodi</th> -->
@@ -255,7 +256,6 @@ $dataKelas = $classData->getData();
                     data: "nama"
                 },
 
-
                 {
                     data: "email"
                 },
@@ -264,6 +264,10 @@ $dataKelas = $classData->getData();
                 },
                 {
                     data: "tingkat"
+                },
+
+                {
+                    data: "username"
                 },
                 {
                     data: "foto",
