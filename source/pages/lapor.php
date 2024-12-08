@@ -141,6 +141,16 @@ $dataDos = $classData->getData();
                         </select>
                     </div> -->
 
+
+                    <div class="form-group" id="previewPhoto" style="display:none;">
+                        <label>Uploaded Photo</label>
+                        <br />
+
+                        <hr>
+                        
+                        <img src="" class="img-thumbnail imgPreviewx" style="width:200px;" alt="">
+                    </div>
+
                     <div class="form-group">
                         <label>Foto</label>
                         <input type="file" class="form-control" name="foto" id="foto">
@@ -184,6 +194,8 @@ $dataDos = $classData->getData();
             focus: true // Focus the editor when loaded
         });
 
+        $("#previewPhoto").hide();
+
 
         $('#nim').val('');
         $('#foto').val('');
@@ -200,14 +212,43 @@ $dataDos = $classData->getData();
                 $('#form-data').modal('show');
                 $('#form-tambah').attr('action',
                     'action/laporAction.php?act=update&id=' + id);
+
+
+                $('#komentar').summernote({
+                    height: 300, // Set editor height
+                    minHeight: null, // Set minimum height
+                    maxHeight: null, // Set maximum height
+                    focus: true // Focus the editor when loaded
+                });
+                $('#komentar').summernote('code', data.komentar);
+
+
                 $('#id_mahasiswa').val(data.id_mahasiswa);
                 $('#id_jenis_pelanggaran').val(data.id_jenis_pelanggaran);
-                $('#id_admin').val(data.id_admin);
                 $('#id_dosen').val(data.id_dosen);
                 $('#status_verifikasi_admin').val(data.status_verifikasi_admin);
-                $('#nim').val(data.nim);
-                $('#foto').val(data.foto);
-                $('#tanggal_laporan').val(data.tanggal_laporan);
+                // $('#tanggal_laporan').val(data.tanggal_laporan.date);
+
+                
+                if (data.foto) {
+
+                    console.log('Foto is:', data.foto); // Check the value of data.foto
+
+                    $("#previewPhoto").show();
+                    var imagePath = 'http://localhost/PBL_KelomPok1_SEMESTER-3/source/uploads/'+data.foto; // Image URL or path
+                    $('.imgPreviewx').attr('src', imagePath);
+                }
+
+
+                if (data.tanggal_laporan && data.tanggal_laporan.date) {
+                        // Assuming data.tanggal_laporan.date contains the date string
+                        var formattedDate = data.tanggal_laporan.date.split(' ')[0]; // Extract only the date part (YYYY-MM-DD)
+
+                        // Set the value of the input field with the id 'tanggal_laporan'
+                        $('#tanggal_laporan').val(formattedDate);
+                    } else {
+                        console.log('Tanggal Laporan is empty or undefined');
+                    }
                 $('#tempat').val(data.tempat);
 
             }

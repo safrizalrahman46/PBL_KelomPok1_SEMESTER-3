@@ -26,6 +26,25 @@ if ($act == 'load') {
     ];
 
     foreach ($data['data'] as $key => $row) {
+
+
+        $buttons = '';
+        
+        if($_SESSION['level'] == 'admin' || $_SESSION['level'] == 'dosen') {
+            $buttons .= '<button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id_pelanggaran'] . ')"><i class="fa fa-trash"></i></button>';
+        }
+        
+        if($_SESSION['level'] == 'admin') {
+            $buttons .= ' <button class="btn btn-sm btn-info" onclick="editData(' . $row['id_pelanggaran'] . ')">Cek Data</button><br /> <br /> ';
+
+
+            $buttons .= '<a class="btn btn-sm btn-info" ><i class="fa fa-thumbs-up"></i>Disetuju</a>';
+            $buttons .= ' <a class="btn btn-sm btn-warning"><i class="fa fa-thumbs-down"></i>Tidak Disetujui</a>';
+
+        }
+
+
+
         $result['data'][] = [
             'no' => ($key + 1), // Correctly calculate the index
             // 'id_mahasiswa' => isset($row['id_mahasiswa']) ? htmlspecialchars(string: $row['id_mahasiswa']) : '',
@@ -42,10 +61,7 @@ if ($act == 'load') {
             'foto' => !empty($row['foto']) ? '<img class="img-thumbnail" style="width:120px;" src="/PBL_KelomPok1_SEMESTER-3/source/uploads/'.$row['foto'].'" /> ' : '-',
             'tanggal_laporan' => ($row['tanggal_laporan']->format('Y-m-d')),
             'tempat' => !empty($row['tempat']) ? htmlspecialchars($row['tempat']) : '',
-            'aksi' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_pelanggaran'] . ')"><i class="fa fa-edit"></i></button>
-                       <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id_pelanggaran'] . ')"><i class="fa fa-trash"></i></button>
-                       <button class="btn btn-sm btn-succes" onclick="setujui(' . $row['id_pelanggaran'] . ')"><i class="fa fa-print"></i></button>
-                       <button class="btn btn-sm btn-succes" onclick="tidak-setujui(' . $row['id_pelanggaran'] . ')"><i class="fa fa-reply"></i></button>'
+            'aksi' => $buttons
         ];
     }
 
@@ -138,6 +154,19 @@ if ($act == 'update') {
 
     $langgar = new laporModel();
     $langgar->updateData($id, $data);
+
+    echo json_encode([
+        'status' => true,
+        'message' => 'Data berhasil diupdate.'
+    ]);
+}
+
+
+if ($act == 'approval') {
+    $id = (isset($_GET['status']) && ctype_digit($_GET['status'])) ? $_GET['status'] : '';
+
+    $langgar = new laporModel();
+    $langgar->updateStatusData($id,['status' => $id]);
 
     echo json_encode([
         'status' => true,
