@@ -18,9 +18,9 @@ class LaporModel extends Model
     public function getDataForDataTables($request)
     {
         // Columns available for ordering and searching
-        $columns = ['id_pelanggaran','dosen_nama','mahasiswa_nama', 'pelanggaran_deskripsi','tanggal_laporan', 'tempat'];
-// var_dump($columns);
-//         exit();
+        $columns = ['id_pelanggaran', 'dosen_nama', 'mahasiswa_nama', 'pelanggaran_deskripsi', 'tanggal_laporan', 'tempat'];
+        // var_dump($columns);
+        //         exit();
         // Extract search and pagination parameters
         $searchValue = isset($request['search']['value']) ? $request['search']['value'] : '';
         $searchTerm = "%{$searchValue}%";
@@ -37,30 +37,28 @@ class LaporModel extends Model
         $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'id_pelanggaran';
 
         // SQL query for fetching data with search and pagination
-        // $query = "SELECT * FROM {$this->table}";
-        // $query = "SELECT * FROM {$this->table} INNER JOIN tb_users ON tb_dosen.id_users = tb_users.id_users";
         $query = "SELECT 
-    tb_lapor.id_pelanggaran, 
-    tb_mahasiswa.nama AS mahasiswa_nama, 
-    tb_jenis_pelanggaran.deskripsi AS pelanggaran_deskripsi, 
-    tb_lapor.tanggal_laporan,
-    tb_lapor.tempat,
-    tb_dosen.nama AS dosen_nama
-FROM 
-    tb_lapor
-INNER JOIN 
-    tb_mahasiswa ON tb_lapor.id_mahasiswa = tb_mahasiswa.nim
-INNER JOIN 
-    tb_jenis_pelanggaran ON tb_lapor.id_jenis_pelanggaran = tb_jenis_pelanggaran.id_jenis_pelanggaran
-INNER JOIN 
-    tb_dosen ON tb_lapor.id_dosen = tb_dosen.nip
-  ";
-    
-    // var_dump($query);
-    // exit();
-    
-// var_dump($query);
-//         exit();
+                tb_lapor.id_pelanggaran, 
+                tb_mahasiswa.nama AS mahasiswa_nama, 
+                tb_jenis_pelanggaran.deskripsi AS pelanggaran_deskripsi, 
+                tb_lapor.tanggal_laporan,
+                tb_lapor.tempat,
+                tb_dosen.nama AS dosen_nama
+            FROM 
+                tb_lapor
+            INNER JOIN 
+                tb_mahasiswa ON tb_lapor.id_mahasiswa = tb_mahasiswa.nim
+            INNER JOIN 
+                tb_jenis_pelanggaran ON tb_lapor.id_jenis_pelanggaran = tb_jenis_pelanggaran.id_jenis_pelanggaran
+            INNER JOIN 
+                tb_dosen ON tb_lapor.id_dosen = tb_dosen.nip
+        ";
+
+        // var_dump($query);
+        // exit();
+
+        // var_dump($query);
+        //         exit();
         $queryParams = [];
         if (!empty($searchValue)) {
             $query .= " WHERE dosen_nama LIKE ? OR 
@@ -68,12 +66,11 @@ INNER JOIN
         pelanggaran_deskripsi LIKE ? OR 
         tanggal_laporan LIKE ?
         tempat LIKE ?";
-        $queryParams[] = $searchTerm;
-        $queryParams[] = $searchTerm;
-        $queryParams[] = $searchTerm;
-        $queryParams[] = $searchTerm;
-        $queryParams[] = $searchTerm;
-
+            $queryParams[] = $searchTerm;
+            $queryParams[] = $searchTerm;
+            $queryParams[] = $searchTerm;
+            $queryParams[] = $searchTerm;
+            $queryParams[] = $searchTerm;
         }
 
 
@@ -104,7 +101,6 @@ INNER JOIN
             $filteredParams[] = $searchTerm;
             $filteredParams[] = $searchTerm;
             $filteredParams[] = $searchTerm;
-
         }
 
         $stmtFiltered = sqlsrv_query($this->db, $queryFiltered, $filteredParams);
@@ -127,7 +123,6 @@ INNER JOIN
             $filteredParams[] = $searchTerm;
             $filteredParams[] = $searchTerm;
             $filteredParams[] = $searchTerm;
-
         }
 
 

@@ -2,22 +2,17 @@
 
 
 // EROR
-include_once(__DIR__.'/../model/MahasiswaModel.php');
+include_once(__DIR__ . '/../model/MahasiswaModel.php');
+include_once(__DIR__ . '/../model/JenisPelanggaranModel.php');
+include_once(__DIR__ . '/../model/DosenModel.php');
 
 $classData = new MahasiswaModel();
 $dataMah = $classData->getData();
 
-include_once(__DIR__.'/../model/JenisPelanggaranModel.php');
 
 $classData = new JenisPelanggaranModel();
 $dataPel = $classData->getData();
 
-// include_once(__DIR__.'/../model/AdminModel.php');
-
-// $classData = new AdminModel();
-// $dataAdm = $classData->getData();
-
-include_once(__DIR__ . '/../model/DosenModel.php');
 
 $classData = new DosenModel();
 $dataDos = $classData->getData();
@@ -82,16 +77,18 @@ $dataDos = $classData->getData();
         <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Form Admin</h4>
+                    <h4 class="modal-title">Form Lapor</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Mahasiswa</label>
                         <select name="id_mahasiswa" id="id_mahasiswa" class="form-control">
+
+                            <option value="">Pilih Mahasiswa</option>
                             <?php
-                            foreach ($dataMahasiswa as $key => $value) {
+                            foreach ($dataMah as $key => $value) {
                             ?>
-                                <option value="<?= $value['NIM']; ?>"><?= $value['nama'] ?></option>
+                                <option value="<?= $value['nim']; ?>"><?= $value['nama'] ?></option>
                             <?php
                             }
                             ?>
@@ -100,50 +97,26 @@ $dataDos = $classData->getData();
                     <div class="form-group">
                         <label>Jenis Pelanggaran</label>
                         <select name="id_jenis_pelanggaran" id="id_jenis_pelanggaran" class="form-control">
+
+                            <option value="">Pilih Jenis Pelanggaran</option>
+
                             <?php
-                            foreach ($dataPelanggaran as $key => $value) {
+                            foreach ($dataPel as $key => $value) {
                             ?>
-                                <option value="<?= $value['id_pelanggaran']; ?>"><?= $value['deskripsi'] ?></option>
-                            <?php
-                            }
-                            ?>
-                        </select>
-                    </div>
-                    <!-- <div class="form-group">
-                        <label>Status</label>
-                        <select name="status" id="status" class="form-control">
-                            <option value="pending">Pending</option>
-                            <option value="sent">Sent</option>
-                        </select>
-                    </div> -->
-                    <div class="form-group">
-                        <label>Komentar</label>
-                        <input type="text" class="form-control" name="komentar" id="komentar">
-                    </div>
-                    <div class="form-group">
-                        <label>ID Admin</label>
-                        <select name="id_admin" id="id_admin" class="form-control">
-                            <?php
-                            foreach ($dataAdm as $key => $value) {
-                            ?>
-                                <option value="<?= $value['id_admin']; ?>"><?= $value['nama'] ?></option>
+                                <option value="<?= $value['id_jenis_pelanggaran']; ?>"><?= $value['deskripsi'] ?></option>
                             <?php
                             }
                             ?>
                         </select>
                     </div>
+     
                     <div class="form-group">
-                        <label>ID Dosen</label>
-                        <select name="id_dosen" id="id_dosen" class="form-control">
-                            <?php
-                            foreach ($dataDos as $key => $value) {
-                            ?>
-                                <option value="<?= $value['nip']; ?>"><?= $value['nama'] ?></option>
-                            <?php
-                            }
-                            ?>
-                        </select>
+                        <label>Deskripsi Pelanggaran</label>
+
+                        <textarea name="komentar" id="komentar" class="form-control"></textarea>
+                        <!-- <input type="text" class="form-control" name="komentar" id="komentar"> -->
                     </div>
+            
                     <div class="form-group">
                         <label>Status Verifikasi Admin</label>
                         <select name="status" id="status" class="form-control">
@@ -151,10 +124,7 @@ $dataDos = $classData->getData();
                             <option value="Tidak Valid">Tidak Valid</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>NIM</label>
-                        <input type="text" class="form-control" name="nim" id="nim">
-                    </div>
+                 
                     <div class="form-group">
                         <label>Foto</label>
                         <input type="file" class="form-control" name="foto" id="foto">
@@ -164,7 +134,7 @@ $dataDos = $classData->getData();
                         <input type="date" class="form-control" name="tanggal_laporan" id="tanggal_laporan">
                     </div>
                     <div class="form-group">
-                        <label>tempat</label>
+                        <label>Tempat Kejadian</label>
                         <input type="text" class="form-control" name="tempat" id="tempat">
                     </div>
 
@@ -258,7 +228,7 @@ $dataDos = $classData->getData();
                 }, // Adjusted to match the alias in the SQL query
                 {
                     data: 'pelanggaran_deskripsi'
-                }, 
+                },
                 {
                     data: 'tanggal_laporan'
                 },
