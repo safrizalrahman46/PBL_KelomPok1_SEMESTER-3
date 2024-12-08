@@ -64,7 +64,14 @@ $dataDos = $classData->getData();
                         <th>Jenis Pelanggaran</th> <!-- 'id_jenis_pelanggaran' -->
                         <th>Tanggal Laporan</th> <!-- 'tanggal_laporan' -->
                         <th>Tempat Kejadian</th> <!-- 'tempat' -->
+
+                        <?php 
+                            if($_SESSION['level']  =='dosen' || $_SESSION['level'] == 'admin') {
+                        ?>
                         <th>Aksi</th> <!-- For actions (like edit, delete) -->
+                        <?php 
+                            }
+                        ?>
                     </tr>
                 </thead>
                 <tbody>
@@ -250,18 +257,38 @@ $dataDos = $classData->getData();
                 {
                     data: 'tanggal_laporan'
                 },
+                
+
+                <?php 
+                        if($_SESSION['level']  =='dosen' || $_SESSION['level'] == 'admin') {
+                ?>
                 {
                     data: 'tempat'
                 },
                 {
                     data: 'aksi'
                 }
+
+                <?php 
+                            }
+                ?>
+
+
+                <?php 
+                        if($_SESSION['level']  =='mahasiswa') {
+                ?>
+                {
+                    data: 'tempat'
+                }
+                <?php 
+                            }
+                ?>
             ],
             dom: 'Bfrtip', // Controls position of buttons
             buttons: [{
                 extend: 'excelHtml5',
                 text: 'Export to Excel',
-                title: "Data Kelas", // Title of the sheet (header)
+                title: "Data Laporan", // Title of the sheet (header)
                 filename: function() {
                     var currentDate = new Date();
                     var day = String(currentDate.getDate()).padStart(2, '0'); // Add leading zero if necessary
@@ -273,7 +300,7 @@ $dataDos = $classData->getData();
 
                     // Format as DD-MM-YYYY_HH:MM:SS for the filename
                     var dateString = day + '-' + month + '-' + year + '_' + hours + ':' + minutes + ':' + seconds;
-                    return "Export_Data_Kelas_" + dateString; // This will set the file name
+                    return "Export_Data_Laporan_" + dateString; // This will set the file name
                 },
                 exportOptions: {
                     columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] // Only export visible columns
@@ -284,7 +311,7 @@ $dataDos = $classData->getData();
 
                 // Change the first row (header) to "Data Kelas"
                 var headerRow = sheet.getElementsByTagName('row')[0]; // First row (header row)
-                headerRow.firstChild.textContent = "Data Kelas"; // Set the header text to "Data Prodi"
+                headerRow.firstChild.textContent = "Data Laporan"; // Set the header text to "Data Prodi"
 
                 // Make the header bold and centered (optional)
                 var styles = xlsx.xl.styles;

@@ -39,7 +39,7 @@ if ($act == 'load') {
             'dosen_nama' => isset($row['dosen_nama']) ? htmlspecialchars(string: $row['dosen_nama']) : '',
             // 'status_verifikasi_admin' => htmlspecialchars($row['status_verifikasi_admin']),
             // 'nim' => htmlspecialchars($row['nim']),
-            // 'foto' => htmlspecialchars($row['foto']),
+            'foto' => !empty($row['foto']) ? '<img class="img-thumbnail" style="width:120px;" src="/PBL_KelomPok1_SEMESTER-3/source/uploads/'.$row['foto'].'" /> ' : '-',
             'tanggal_laporan' => ($row['tanggal_laporan']->format('Y-m-d')),
             'tempat' => !empty($row['tempat']) ? htmlspecialchars($row['tempat']) : '',
             'aksi' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_pelanggaran'] . ')"><i class="fa fa-edit"></i></button>

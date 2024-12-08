@@ -1,5 +1,6 @@
 <?php
 include_once('Model.php');
+include_once('GlobalModel.php');
 include_once('Database.php');
 
 class LaporModel extends Model
@@ -36,41 +37,123 @@ class LaporModel extends Model
         // Ensure column index is valid
         $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'id_pelanggaran';
 
+        $idUsers = $_SESSION['id_users'];
+        $level = $_SESSION['level'];
+
+        $global = new GlobalModel();
+        $user = null;
+
+        if ($level == 'dosen') {
+
+            $conditions = ['id_users' => $idUsers];
+            $user = $global->getSingleData('tb_dosen', $conditions);
+        }
+
+        if ($level == 'mahasiswa') {
+            $conditions = ['id_users' => $idUsers];
+            $user = $global->getSingleData('tb_mahasiswa', $conditions);
+        }
+
         // SQL query for fetching data with search and pagination
-        $query = "SELECT 
-                tb_lapor.id_pelanggaran, 
-                tb_mahasiswa.nama AS mahasiswa_nama, 
-                tb_jenis_pelanggaran.deskripsi AS pelanggaran_deskripsi, 
-                tb_lapor.tanggal_laporan,
-                tb_lapor.tempat,
-                tb_dosen.nama AS dosen_nama
-            FROM 
-                tb_lapor
-            INNER JOIN 
-                tb_mahasiswa ON tb_lapor.id_mahasiswa = tb_mahasiswa.nim
-            INNER JOIN 
-                tb_jenis_pelanggaran ON tb_lapor.id_jenis_pelanggaran = tb_jenis_pelanggaran.id_jenis_pelanggaran
-            INNER JOIN 
-                tb_dosen ON tb_lapor.id_dosen = tb_dosen.nip
-        ";
 
-        // var_dump($query);
-        // exit();
 
-        // var_dump($query);
-        //         exit();
-        $queryParams = [];
-        if (!empty($searchValue)) {
-            $query .= " WHERE dosen_nama LIKE ? OR 
-        mahasiswa_nama LIKE ? OR 
-        pelanggaran_deskripsi LIKE ? OR 
-        tanggal_laporan LIKE ?
-        tempat LIKE ?";
-            $queryParams[] = $searchTerm;
-            $queryParams[] = $searchTerm;
-            $queryParams[] = $searchTerm;
-            $queryParams[] = $searchTerm;
-            $queryParams[] = $searchTerm;
+        if ($level == 'dosen') {
+            $query = "SELECT 
+            tb_lapor.id_pelanggaran, 
+            tb_mahasiswa.nama AS mahasiswa_nama, 
+            tb_jenis_pelanggaran.deskripsi AS pelanggaran_deskripsi, 
+            tb_lapor.tanggal_laporan,
+            tb_lapor.tempat,
+            tb_dosen.nama AS dosen_nama
+        FROM 
+            tb_lapor
+        INNER JOIN 
+            tb_mahasiswa ON tb_lapor.id_mahasiswa = tb_mahasiswa.nim
+        INNER JOIN 
+            tb_jenis_pelanggaran ON tb_lapor.id_jenis_pelanggaran = tb_jenis_pelanggaran.id_jenis_pelanggaran
+        INNER JOIN 
+            tb_dosen ON tb_lapor.id_dosen = tb_dosen.nip
+        where tb_lapor.id_dosen = " . $user['nip'];
+
+
+            $queryParams = [];
+            if (!empty($searchValue)) {
+                $query .= " and (dosen_nama LIKE ? OR 
+                    mahasiswa_nama LIKE ? OR 
+                    pelanggaran_deskripsi LIKE ? OR 
+                    tanggal_laporan LIKE ?
+                    tempat LIKE ?)";
+                $queryParams[] = $searchTerm;
+                $queryParams[] = $searchTerm;
+                $queryParams[] = $searchTerm;
+                $queryParams[] = $searchTerm;
+                $queryParams[] = $searchTerm;
+            }
+        } else if ($level == 'mahasiswa') {
+            $query = "SELECT 
+            tb_lapor.id_pelanggaran, 
+            tb_mahasiswa.nama AS mahasiswa_nama, 
+            tb_jenis_pelanggaran.deskripsi AS pelanggaran_deskripsi, 
+            tb_lapor.tanggal_laporan,
+            tb_lapor.tempat,
+            tb_dosen.nama AS dosen_nama
+        FROM 
+            tb_lapor
+        INNER JOIN 
+            tb_mahasiswa ON tb_lapor.id_mahasiswa = tb_mahasiswa.nim
+        INNER JOIN 
+            tb_jenis_pelanggaran ON tb_lapor.id_jenis_pelanggaran = tb_jenis_pelanggaran.id_jenis_pelanggaran
+        INNER JOIN 
+            tb_dosen ON tb_lapor.id_dosen = tb_dosen.nip
+        where tb_lapor.id_mahasiswa = " . $user['nim'];
+
+
+            $queryParams = [];
+            if (!empty($searchValue)) {
+                $query .= " and (dosen_nama LIKE ? OR 
+                        mahasiswa_nama LIKE ? OR 
+                        pelanggaran_deskripsi LIKE ? OR 
+                        tanggal_laporan LIKE ?
+                        tempat LIKE ?)";
+                $queryParams[] = $searchTerm;
+                $queryParams[] = $searchTerm;
+                $queryParams[] = $searchTerm;
+                $queryParams[] = $searchTerm;
+                $queryParams[] = $searchTerm;
+            }
+        } else {
+
+            $query = "SELECT 
+                    tb_lapor.id_pelanggaran, 
+                    tb_mahasiswa.nama AS mahasiswa_nama, 
+                    tb_jenis_pelanggaran.deskripsi AS pelanggaran_deskripsi, 
+                    tb_lapor.tanggal_laporan,
+                    tb_lapor.tempat,
+                    tb_dosen.nama AS dosen_nama
+                FROM 
+                    tb_lapor
+                INNER JOIN 
+                    tb_mahasiswa ON tb_lapor.id_mahasiswa = tb_mahasiswa.nim
+                INNER JOIN 
+                    tb_jenis_pelanggaran ON tb_lapor.id_jenis_pelanggaran = tb_jenis_pelanggaran.id_jenis_pelanggaran
+                INNER JOIN 
+                    tb_dosen ON tb_lapor.id_dosen = tb_dosen.nip
+            ";
+
+
+            $queryParams = [];
+            if (!empty($searchValue)) {
+                $query .= " WHERE dosen_nama LIKE ? OR 
+            mahasiswa_nama LIKE ? OR 
+            pelanggaran_deskripsi LIKE ? OR 
+            tanggal_laporan LIKE ?
+            tempat LIKE ?";
+                $queryParams[] = $searchTerm;
+                $queryParams[] = $searchTerm;
+                $queryParams[] = $searchTerm;
+                $queryParams[] = $searchTerm;
+                $queryParams[] = $searchTerm;
+            }
         }
 
 
@@ -90,18 +173,58 @@ class LaporModel extends Model
         }
 
         // Count total filtered records
-        $queryFiltered = "SELECT COUNT(*) as count FROM {$this->table}";
-        $filteredParams = [];
-        if (!empty($searchValue)) {
-            $queryFiltered .= " WHERE  tb_mahasiswa.nama LIKE ? OR 
-        tb_jenis_pelanggaran.deskripsi LIKE ? OR 
-        tb_dosen.nama LIKE ? OR 
-        tb_lapor.tempat LIKE ?";
-            $filteredParams[] = $searchTerm;
-            $filteredParams[] = $searchTerm;
-            $filteredParams[] = $searchTerm;
-            $filteredParams[] = $searchTerm;
+
+        if ($level == 'dosen') {
+            $queryFiltered = "SELECT COUNT(*) as count FROM {$this->table} where tb_lapor.id_dosen = " . $user['nip'];
+            $filteredParams = [];
+
+            
+            if (!empty($searchValue)) {
+                $queryFiltered .= " and ( tb_mahasiswa.nama LIKE ? OR 
+                    tb_jenis_pelanggaran.deskripsi LIKE ? OR 
+                    tb_dosen.nama LIKE ? OR 
+                    tb_lapor.tempat LIKE ?)";
+                $filteredParams[] = $searchTerm;
+                $filteredParams[] = $searchTerm;
+                $filteredParams[] = $searchTerm;
+                $filteredParams[] = $searchTerm;
+            }
+    
+    
+        } else if($level == 'mahasiswa') {
+            $queryFiltered = "SELECT COUNT(*) as count FROM {$this->table} where tb_lapor.id_mahasiswa = " . $user['nim'];
+            $filteredParams = [];
+
+
+            if (!empty($searchValue)) {
+                $queryFiltered .= " and ( tb_mahasiswa.nama LIKE ? OR 
+                    tb_jenis_pelanggaran.deskripsi LIKE ? OR 
+                    tb_dosen.nama LIKE ? OR 
+                    tb_lapor.tempat LIKE ?)";
+                $filteredParams[] = $searchTerm;
+                $filteredParams[] = $searchTerm;
+                $filteredParams[] = $searchTerm;
+                $filteredParams[] = $searchTerm;
+            }
+    
+    
+        } else {
+            $queryFiltered = "SELECT COUNT(*) as count FROM {$this->table}";
+            $filteredParams = [];
+
+            if (!empty($searchValue)) {
+                $queryFiltered .= " WHERE  tb_mahasiswa.nama LIKE ? OR 
+                    tb_jenis_pelanggaran.deskripsi LIKE ? OR 
+                    tb_dosen.nama LIKE ? OR 
+                    tb_lapor.tempat LIKE ?";
+                $filteredParams[] = $searchTerm;
+                $filteredParams[] = $searchTerm;
+                $filteredParams[] = $searchTerm;
+                $filteredParams[] = $searchTerm;
+            }
+    
         }
+   
 
         $stmtFiltered = sqlsrv_query($this->db, $queryFiltered, $filteredParams);
         $totalFiltered = 0;
@@ -111,22 +234,22 @@ class LaporModel extends Model
         }
 
         // Count total records
-        $queryTotal = "SELECT COUNT(*) as count FROM {$this->table}";
-        $filteredParams = [];
 
-        if (!empty($searchValue)) {
-            $queryTotal .= " WHERE  tb_mahasiswa.nama LIKE ? OR 
-        tb_jenis_pelanggaran.deskripsi LIKE ? OR 
-        tb_dosen.nama LIKE ? OR 
-        tb_lapor.tempat LIKE ?";
-            $filteredParams[] = $searchTerm;
-            $filteredParams[] = $searchTerm;
-            $filteredParams[] = $searchTerm;
-            $filteredParams[] = $searchTerm;
+        if ($level == 'dosen') {
+            $queryTotal = "SELECT COUNT(*) as count FROM {$this->table} where tb_lapor.id_dosen = " . $user['nip'];
+            $filteredParams = [];
+        } else if($level == 'mahasiswa') {
+            $queryTotal = "SELECT COUNT(*) as count FROM {$this->table} where tb_lapor.id_mahasiswa = " . $user['nim'];
+            $filteredParams = [];
+        } else {
+            $queryTotal = "SELECT COUNT(*) as count FROM {$this->table}";
+            $filteredParams = [];
         }
 
 
-        $stmtTotal = sqlsrv_query($this->db, $queryTotal, $filteredParams);
+  
+
+        $stmtTotal = sqlsrv_query($this->db, $queryTotal);
         $totalRecords = 0;
         if ($stmtTotal) {
             $rowTotal = sqlsrv_fetch_array($stmtTotal, SQLSRV_FETCH_ASSOC);
@@ -149,18 +272,18 @@ class LaporModel extends Model
         $query = "INSERT INTO {$this->table} 
                   (id_mahasiswa, id_jenis_pelanggaran, komentar, id_dosen, status_verifikasi_admin, foto, tanggal_laporan) 
                   VALUES (?, ?, ?, ?, ?, ?, ?)";
-    
+
         // Execute the query with parameters
         $stmt = sqlsrv_query($this->db, $query, [
-            $data['id_mahasiswa'], 
-            $data['id_jenis_pelanggaran'], 
-            $data['komentar'], 
-            $data['id_dosen'], 
-            $data['status_verifikasi_admin'], 
-            $data['foto'], 
+            $data['id_mahasiswa'],
+            $data['id_jenis_pelanggaran'],
+            $data['komentar'],
+            $data['id_dosen'],
+            $data['status_verifikasi_admin'],
+            $data['foto'],
             $data['tanggal_laporan']
         ]);
-    
+
         // Check for errors
         if ($stmt === false) {
             die(print_r(sqlsrv_errors(), true)); // Display SQL Server error details
@@ -168,7 +291,7 @@ class LaporModel extends Model
             return "Data inserted successfully!";
         }
     }
-    
+
     public function getData()
     {
 
