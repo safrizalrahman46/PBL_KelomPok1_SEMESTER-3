@@ -30,12 +30,14 @@ if ($act == 'load') {
         $result['data'][] = [
             'no' => ($key + 1), // Use $index instead of $row
             'email' => htmlspecialchars($row['email']),
-            'id_users' => isset($row['id_users']) ? htmlspecialchars(string: $row['id_users']) : '',
+            // 'id_users' => isset($row['id_users']) ? htmlspecialchars(string: $row['id_users']) : '',
+            'username' => isset($row['username']) ? htmlspecialchars(string: $row['username']) : '',
             'nama' => htmlspecialchars($row['nama']),
             'alamat' => htmlspecialchars($row['alamat']),
             'no_telepon' => htmlspecialchars($row['no_telepon']),
-            'aksi' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['nip'] . ')"><i class="fa fa-edit"></i></button>
-                       <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['nip'] . ')"><i class="fa fa-trash"></i></button>'
+             'aksi' => isset($row['nip']) ?
+            '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['nip'] . ')"><i class="fa fa-edit"></i></button>
+                       <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['nip'] . ')"><i class="fa fa-trash"></i></button>': ''
         ];
     }
 
@@ -88,23 +90,51 @@ if ($act == 'save') {
     }
 }
 
+
 if ($act == 'update') {
     $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : 0;
-    $data = [
-        'email' => antiSqlInjection($_POST['email']),
-        'id_users' => isset($_POST['id_users']) ? antiSqlInjection($_POST['id_users']) : null, // Check if 'id_users' exists
-        'nama' => antiSqlInjection($_POST['nama']),
-        'alamat' => antiSqlInjection($_POST['alamat']),
-        'no_telepon' => antiSqlInjection($_POST['no_telepon']),
-    ];
+    
+    $dosen = new DosenModel();
+    
+    $getData = $dosen->getDataById($id);
+    if(!empty($getData)) {
+        
+        
+        $idUsers = $getData['id_users'];
+        // var_dump($idUsers);
+        // exit();
+        $data = [
+            'email' => antiSqlInjection($_POST['email']),
+            'id_users' => $idUsers,
+            'nama' => antiSqlInjection($_POST['nama']),
+            'alamat' => antiSqlInjection($_POST['alamat']),
+            'no_telepon' => antiSqlInjection($_POST['no_telepon']),
+        ];
+    
+        $dosen->updateData($id, $data);
+        $user = new UsersModel();
 
-    $admin = new DosenModel();
-    $admin->updateData($id, $data);
 
-    echo json_encode([
-        'status' => true,
-        'message' => 'Data berhasil diupdate.'
-    ]);
+        $dataUser['username'] = $_POST['username'];
+
+        if(!empty($password)) {
+            $dataUser['password'] = $_POST['password'];
+        }
+
+
+        $user->updateData($idUsers, $dataUser);
+        
+    
+        echo json_encode([
+            'status' => true,
+            'message' => 'Data berhasil diupdate.'
+        ]);
+    } else {
+        echo json_encode([
+            'status' => true,
+            'message' => 'Data tidak ditemukan.'
+        ]);
+    }
 }
 
 if ($act == 'delete') {

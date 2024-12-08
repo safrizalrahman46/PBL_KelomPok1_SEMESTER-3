@@ -27,22 +27,24 @@ if ($act == 'load') {
     foreach ($data['data'] as $key => $row) {
         $result['data'][] = [
             'no' => ($key + 1), // Correctly calculate the index
-            'id_mahasiswa' => isset($row['id_mahasiswa']) ? htmlspecialchars(string: $row['id_mahasiswa']) : '',
+            // 'id_mahasiswa' => isset($row['id_mahasiswa']) ? htmlspecialchars(string: $row['id_mahasiswa']) : '',
             'mahasiswa_nama' => isset($row['mahasiswa_nama']) ? htmlspecialchars(string: $row['mahasiswa_nama']) : '',
-            'id_jenis_pelanggaran' => isset($row['id_jenis_pelanggaran']) ? htmlspecialchars(string: $row['id_jenis_pelanggaran']) : '',
-            'deskripsi' => isset($row['deskripsi']) ? htmlspecialchars(string: $row['deskripsi']) : '',
-            'komentar' => htmlspecialchars($row['komentar']),
-            'id_admin' => isset($row['id_admin']) ? htmlspecialchars(string: $row['id_admin']) : '',
-            'admin_nama' => isset($row['admin_nama']) ? htmlspecialchars(string: $row['admin_nama']) : '',
-            'id_dosen' => isset($row['id_dosen']) ? htmlspecialchars(string: $row['id_dosen']) : '',
+            // 'id_jenis_pelanggaran' => isset($row['id_jenis_pelanggaran']) ? htmlspecialchars(string: $row['id_jenis_pelanggaran']) : '',
+            'pelanggaran_deskripsi' => isset($row['pelanggaran_deskripsi']) ? htmlspecialchars(string: $row['pelanggaran_deskripsi']) : '',
+            // 'komentar' => htmlspecialchars($row['komentar']),
+            // 'id_admin' => isset($row['id_admin']) ? htmlspecialchars(string: $row['id_admin']) : '',
+            // 'admin_nama' => isset($row['admin_nama']) ? htmlspecialchars(string: $row['admin_nama']) : '',
+            // 'id_dosen' => isset($row['id_dosen']) ? htmlspecialchars(string: $row['id_dosen']) : '',
             'dosen_nama' => isset($row['dosen_nama']) ? htmlspecialchars(string: $row['dosen_nama']) : '',
-            'status_verifikasi_admin' => htmlspecialchars($row['status_verifikasi_admin']),
-            'nim' => htmlspecialchars($row['nim']),
-            'foto' => htmlspecialchars($row['foto']),
+            // 'status_verifikasi_admin' => htmlspecialchars($row['status_verifikasi_admin']),
+            // 'nim' => htmlspecialchars($row['nim']),
+            // 'foto' => htmlspecialchars($row['foto']),
             'tanggal_laporan' => ($row['tanggal_laporan']->format('Y-m-d')),
             'tempat' => htmlspecialchars($row['tempat']),
             'aksi' => '<button class="btn btn-sm btn-warning" onclick="editData(' . $row['id_pelanggaran'] . ')"><i class="fa fa-edit"></i></button>
-                       <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id_pelanggaran'] . ')"><i class="fa fa-trash"></i></button>'
+                       <button class="btn btn-sm btn-danger" onclick="deleteData(' . $row['id_pelanggaran'] . ')"><i class="fa fa-trash"></i></button>
+                       <button class="btn btn-sm btn-succes" onclick="setujui(' . $row['id_pelanggaran'] . ')"><i class="fa fa-print"></i></button>
+                       <button class="btn btn-sm btn-succes" onclick="tidak-setujui(' . $row['id_pelanggaran'] . ')"><i class="fa fa-reply"></i></button>'
         ];
     }
 

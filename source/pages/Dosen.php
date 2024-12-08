@@ -39,11 +39,11 @@ $dataKelas = $classData->getData();
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Nama</th>
                         <th>Email</th>
-                        <th>Users</th>
-                        <th>Username</th>
                         <th>Alamat</th>
-                        <th>No_telepon</th>
+                        <th>No telepon</th>
+                        <th>Username</th>
                         <th>Aksi</th>
 
                     </tr>
@@ -168,19 +168,19 @@ $dataKelas = $classData->getData();
                     data: 'no'
                 },
                 {
-                    data: 'email'
-                },
-                {
-                    data: 'username'
-                },
-                {
                     data: 'nama'
+                },
+                {
+                    data: 'email'
                 },
                 {
                     data: 'alamat'
                 },
                 {
                     data: 'no_telepon'
+                },
+                {
+                    data: 'username'
                 },
                 {
                     data: 'aksi'

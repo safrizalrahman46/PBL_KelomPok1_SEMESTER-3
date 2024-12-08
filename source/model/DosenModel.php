@@ -37,7 +37,7 @@ class DosenModel extends Model
         $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'nip';
 
         // SQL query for fetching data with search and pagination
-        $query = "SELECT * FROM {$this->table}";
+        $query = "SELECT * FROM {$this->table} INNER JOIN tb_users ON tb_dosen.id_users = tb_users.id_users";
 
         $queryParams = [];
         if (!empty($searchValue)) {

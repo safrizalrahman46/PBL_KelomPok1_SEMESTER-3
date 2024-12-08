@@ -2,25 +2,25 @@
 
 
 // EROR
-// include_once(__DIR__.'/../model/MahasiswaModel.php');
+include_once(__DIR__.'/../model/MahasiswaModel.php');
 
-// $classData = new MahasiswaModel();
-// $dataMah = $classData->getData();
+$classData = new MahasiswaModel();
+$dataMah = $classData->getData();
 
-// include_once(__DIR__.'/../model/JenisPelanggaranModel.php');
+include_once(__DIR__.'/../model/JenisPelanggaranModel.php');
 
-// $classData = new JenisPelanggaranModel();
-// $dataPel = $classData->getData();
+$classData = new JenisPelanggaranModel();
+$dataPel = $classData->getData();
 
 // include_once(__DIR__.'/../model/AdminModel.php');
 
 // $classData = new AdminModel();
 // $dataAdm = $classData->getData();
 
-// include_once(__DIR__ . '/../model/DosenModel.php');
+include_once(__DIR__ . '/../model/DosenModel.php');
 
-// $classData = new DosenModel();
-// $dataDos = $classData->getData();
+$classData = new DosenModel();
+$dataDos = $classData->getData();
 
 ?>
 
@@ -56,14 +56,9 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Dosen</th> <!-- 'id_dosen' -->
                         <th>Mahasiswa</th> <!-- 'id_mahasiswa' -->
                         <th>Jenis Pelanggaran</th> <!-- 'id_jenis_pelanggaran' -->
-                        <th>Komentar</th> <!-- 'komentar' -->
-                        <th>Admin</th> <!-- 'id_admin' -->
-                        <th>Dosen</th> <!-- 'id_dosen' -->
-                        <th>Status Verifikasi Admin</th> <!-- 'status_verifikasi_admin' -->
-                        <th>NIM</th> <!-- 'nim' -->
-                        <th>Foto</th> <!-- 'foto' -->
                         <th>Tanggal Laporan</th> <!-- 'tanggal_laporan' -->
                         <th>Tempat Kejadian</th> <!-- 'tempat' -->
                         <th>Aksi</th> <!-- For actions (like edit, delete) -->
@@ -256,32 +251,14 @@
                     data: 'no'
                 },
                 {
+                    data: 'dosen_nama'
+                },
+                {
                     data: 'mahasiswa_nama'
                 }, // Adjusted to match the alias in the SQL query
                 {
                     data: 'pelanggaran_deskripsi'
-                }, // Adjusted to match the alias in the SQL query
-                {
-                    data: 'komentar'
-                },
-                {
-                    data: 'admin_nama'
-                }, // Adjusted to match the alias in the SQL query
-                {
-                    data: 'dosen_nama'
-                }, // Adjusted to match the alias in the SQL query
-                {
-                    data: 'status_verifikasi_admin'
-                },
-                {
-                    data: 'nim'
-                },
-                {
-                    data: 'foto',
-                    render: function(data) {
-                        return `<img src="${data}" alt="Foto" class="img-thumbnail" style="width: 50px; height: 50px;">`;
-                    }
-                },
+                }, 
                 {
                     data: 'tanggal_laporan'
                 },
