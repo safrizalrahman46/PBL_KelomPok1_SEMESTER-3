@@ -64,6 +64,7 @@ $dataDos = $classData->getData();
                         <th>Jenis Pelanggaran</th> <!-- 'id_jenis_pelanggaran' -->
                         <th>Tanggal Laporan</th> <!-- 'tanggal_laporan' -->
                         <th>Tempat Kejadian</th> <!-- 'tempat' -->
+                        <th>Status Verifikasi Admin</th> <!-- 'tempat' -->
 
                         <?php 
                             if($_SESSION['level']  =='dosen' || $_SESSION['level'] == 'admin') {
@@ -258,12 +259,16 @@ $dataDos = $classData->getData();
                     data: 'tanggal_laporan'
                 },
                 
-
+               
+                
                 <?php 
                         if($_SESSION['level']  =='dosen' || $_SESSION['level'] == 'admin') {
                 ?>
                 {
                     data: 'tempat'
+                },
+                {
+                    data: 'status_verifikasi_admin'
                 },
                 {
                     data: 'aksi'
@@ -279,6 +284,9 @@ $dataDos = $classData->getData();
                 ?>
                 {
                     data: 'tempat'
+                },
+                {
+                    data: 'status_verifikasi_admin'
                 }
                 <?php 
                             }

@@ -64,6 +64,7 @@ class LaporModel extends Model
             tb_jenis_pelanggaran.deskripsi AS pelanggaran_deskripsi, 
             tb_lapor.tanggal_laporan,
             tb_lapor.tempat,
+            tb_lapor.status_verifikasi_admin,
             tb_dosen.nama AS dosen_nama
         FROM 
             tb_lapor
@@ -96,6 +97,8 @@ class LaporModel extends Model
             tb_jenis_pelanggaran.deskripsi AS pelanggaran_deskripsi, 
             tb_lapor.tanggal_laporan,
             tb_lapor.tempat,
+            tb_lapor.status_verifikasi_admin,
+
             tb_dosen.nama AS dosen_nama
         FROM 
             tb_lapor
@@ -129,6 +132,8 @@ class LaporModel extends Model
                     tb_jenis_pelanggaran.deskripsi AS pelanggaran_deskripsi, 
                     tb_lapor.tanggal_laporan,
                     tb_lapor.tempat,
+            tb_lapor.status_verifikasi_admin,
+
                     tb_dosen.nama AS dosen_nama
                 FROM 
                     tb_lapor
@@ -270,8 +275,8 @@ class LaporModel extends Model
     {
         // Define the query
         $query = "INSERT INTO {$this->table} 
-                  (id_mahasiswa, id_jenis_pelanggaran, komentar, id_dosen, status_verifikasi_admin, foto, tanggal_laporan) 
-                  VALUES (?, ?, ?, ?, ?, ?, ?)";
+                  (id_mahasiswa, id_jenis_pelanggaran, komentar, id_dosen, status_verifikasi_admin, foto, tempat, tanggal_laporan) 
+                  VALUES (?, ?, ?, ?, ?, ?,?, ?)";
 
         // Execute the query with parameters
         $stmt = sqlsrv_query($this->db, $query, [
@@ -281,6 +286,7 @@ class LaporModel extends Model
             $data['id_dosen'],
             $data['status_verifikasi_admin'],
             $data['foto'],
+            $data['tempat'],
             $data['tanggal_laporan']
         ]);
 

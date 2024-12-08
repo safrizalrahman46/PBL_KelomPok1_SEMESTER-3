@@ -37,7 +37,7 @@ if ($act == 'load') {
             // 'admin_nama' => isset($row['admin_nama']) ? htmlspecialchars(string: $row['admin_nama']) : '',
             // 'id_dosen' => isset($row['id_dosen']) ? htmlspecialchars(string: $row['id_dosen']) : '',
             'dosen_nama' => isset($row['dosen_nama']) ? htmlspecialchars(string: $row['dosen_nama']) : '',
-            // 'status_verifikasi_admin' => htmlspecialchars($row['status_verifikasi_admin']),
+            'status_verifikasi_admin' => $row['status_verifikasi_admin'],
             // 'nim' => htmlspecialchars($row['nim']),
             'foto' => !empty($row['foto']) ? '<img class="img-thumbnail" style="width:120px;" src="/PBL_KelomPok1_SEMESTER-3/source/uploads/'.$row['foto'].'" /> ' : '-',
             'tanggal_laporan' => ($row['tanggal_laporan']->format('Y-m-d')),
