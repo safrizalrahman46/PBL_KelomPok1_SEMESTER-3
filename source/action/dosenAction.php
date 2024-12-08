@@ -7,7 +7,9 @@ if ($session->get('is_login') !== true) {
     header('Location: login.php');
 }
 
+
 include_once('../model/DosenModel.php');
+include_once('../model/UsersModel.php');
 include_once('../lib/Secure.php');
 
 $act = isset($_GET['act']) ? strtolower($_GET['act']) : '';
@@ -29,7 +31,6 @@ if ($act == 'load') {
             'no' => ($key + 1), // Use $index instead of $row
             'email' => htmlspecialchars($row['email']),
             'id_users' => isset($row['id_users']) ? htmlspecialchars(string: $row['id_users']) : '',
-            'username' => isset($row['username']) ? htmlspecialchars(string: $row['username']) : '',
             'nama' => htmlspecialchars($row['nama']),
             'alamat' => htmlspecialchars($row['alamat']),
             'no_telepon' => htmlspecialchars($row['no_telepon']),
@@ -51,22 +52,40 @@ if ($act == 'get') {
 }
 
 if ($act == 'save') {
-    $data = [
 
-        'email' => antiSqlInjection($_POST['email']),
-        'id_users' => isset($_POST['id_users']) ? antiSqlInjection($_POST['id_users']) : null, // Check if 'id_users' exists
-        'nama' => antiSqlInjection($_POST['nama']),
-        'alamat' => antiSqlInjection($_POST['alamat']),
-        'no_telepon' => antiSqlInjection($_POST['no_telepon']),
+    $user = new UsersModel();
 
+    $dataUser = [
+        'username' => $_POST['username'],
+        'password' => $_POST['password'],
+        'level' => 'dosen',
     ];
-    $admin = new DosenModel();
-    $admin->insertData($data);
 
-    echo json_encode([
-        'status' => true,
-        'message' => 'Data berhasil disimpan.'
-    ]);
+    $insert = $user->insertData($dataUser);
+
+
+    if ($insert == 'Username sudah digunakan oleh akun lainnya') {
+        echo json_encode([
+            'status' => true,
+            'message' => $insert
+        ]);
+    } else {
+
+        $data = [
+            'email' => antiSqlInjection($_POST['email']),
+            'nama' => antiSqlInjection($_POST['nama']),
+            'alamat' => antiSqlInjection($_POST['alamat']),
+            'no_telepon' => antiSqlInjection($_POST['no_telepon']),
+            'id_users' => $insert
+        ];
+        $dosen = new DosenModel();
+        $dosen->insertData($data);
+
+        echo json_encode([
+            'status' => true,
+            'message' => 'Data berhasil disimpan.'
+        ]);
+    }
 }
 
 if ($act == 'update') {

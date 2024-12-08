@@ -27,12 +27,15 @@ if ($act == 'load') {
     foreach ($data['data'] as $key => $row) {
         $result['data'][] = [
             'no' => ($key + 1), // Correctly calculate the index
-            'id_mahasiswa' => htmlspecialchars($row['id_mahasiswa']),
-            'id_jenis_pelanggaran' => htmlspecialchars($row['id_jenis_pelanggaran']),
-            'status' => htmlspecialchars($row['status']),
+            'id_mahasiswa' => isset($row['id_mahasiswa']) ? htmlspecialchars(string: $row['id_mahasiswa']) : '',
+            'mahasiswa_nama' => isset($row['mahasiswa_nama']) ? htmlspecialchars(string: $row['mahasiswa_nama']) : '',
+            'id_jenis_pelanggaran' => isset($row['id_jenis_pelanggaran']) ? htmlspecialchars(string: $row['id_jenis_pelanggaran']) : '',
+            'deskripsi' => isset($row['deskripsi']) ? htmlspecialchars(string: $row['deskripsi']) : '',
             'komentar' => htmlspecialchars($row['komentar']),
-            'id_admin' => htmlspecialchars($row['id_admin']),
-            'id_dosen' => htmlspecialchars($row['id_dosen']),
+            'id_admin' => isset($row['id_admin']) ? htmlspecialchars(string: $row['id_admin']) : '',
+            'admin_nama' => isset($row['admin_nama']) ? htmlspecialchars(string: $row['admin_nama']) : '',
+            'id_dosen' => isset($row['id_dosen']) ? htmlspecialchars(string: $row['id_dosen']) : '',
+            'dosen_nama' => isset($row['dosen_nama']) ? htmlspecialchars(string: $row['dosen_nama']) : '',
             'status_verifikasi_admin' => htmlspecialchars($row['status_verifikasi_admin']),
             'nim' => htmlspecialchars($row['nim']),
             'foto' => htmlspecialchars($row['foto']),
@@ -56,14 +59,13 @@ if ($act == 'get') {
 
 if ($act == 'save') {
     $data = [
-        'id_mahasiswa' => antiSqlInjection($_POST['id_mahasiswa']),
-        'id_jenis_pelanggaran' => antiSqlInjection($_POST['id_jenis_pelanggaran']),
+        'id_mahasiswa' => isset($_POST['id_mahasiswa']) ? antiSqlInjection($_POST['id_mahasiswa']) : null, // Check if 'id_users' exists
+        'id_jenis_pelanggaran' => isset($_POST['id_jenis_pelanggaran']) ? antiSqlInjection($_POST['id_jenis_pelanggaran']) : null, // Check if 'id_users' exists
         'laporan_oleh' => antiSqlInjection($_POST['laporan_oleh']),
         'tanggal_laporan' => antiSqlInjection($_POST['tanggal_laporan']),
-        'status' => antiSqlInjection($_POST['status']),
         'komentar' => antiSqlInjection($_POST['komentar']),
-        'id_admin' => antiSqlInjection($_POST['id_admin']),
-        'id_dosen' => antiSqlInjection($_POST['id_dosen']),
+        'id_admin' => isset($_POST['id_admin']) ? antiSqlInjection($_POST['id_admin']) : null, // Check if 'id_users' exists
+        'id_dosen' => isset($_POST['id_dosen']) ? antiSqlInjection($_POST['id_dosen']) : null, // Check if 'id_users' exists
         'status_verifikasi_admin' => antiSqlInjection($_POST['status_verifikasi_admin']),
         'nim' => antiSqlInjection($_POST['nim']),
         'foto' => antiSqlInjection($_POST['foto']),
@@ -83,14 +85,13 @@ if ($act == 'save') {
 if ($act == 'update') {
     $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : 0;
     $data = [
-        'id_mahasiswa' => antiSqlInjection($_POST['id_mahasiswa']),
-        'id_jenis_pelanggaran' => antiSqlInjection($_POST['id_jenis_pelanggaran']),
+   'id_mahasiswa' => isset($_POST['id_mahasiswa']) ? antiSqlInjection($_POST['id_mahasiswa']) : null, // Check if 'id_users' exists
+        'id_jenis_pelanggaran' => isset($_POST['id_jenis_pelanggaran']) ? antiSqlInjection($_POST['id_jenis_pelanggaran']) : null, // Check if 'id_users' exists
         'laporan_oleh' => antiSqlInjection($_POST['laporan_oleh']),
         'tanggal_laporan' => antiSqlInjection($_POST['tanggal_laporan']),
-        'status' => antiSqlInjection($_POST['status']),
         'komentar' => antiSqlInjection($_POST['komentar']),
-        'id_admin' => antiSqlInjection($_POST['id_admin']),
-        'id_dosen' => antiSqlInjection($_POST['id_dosen']),
+        'id_admin' => isset($_POST['id_admin']) ? antiSqlInjection($_POST['id_admin']) : null, // Check if 'id_users' exists
+        'id_dosen' => isset($_POST['id_dosen']) ? antiSqlInjection($_POST['id_dosen']) : null, // Check if 'id_users' exists
         'status_verifikasi_admin' => antiSqlInjection($_POST['status_verifikasi_admin']),
         'nim' => antiSqlInjection($_POST['nim']),
         'foto' => antiSqlInjection($_POST['foto']),

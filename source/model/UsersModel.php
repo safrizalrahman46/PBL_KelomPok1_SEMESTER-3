@@ -1,6 +1,6 @@
 <?php
-include('Model.php');
-include('Database.php');
+include_once('Model.php');
+include_once('Database.php');
 
 class UsersModel extends Model
 {
@@ -87,8 +87,29 @@ class UsersModel extends Model
     public function insertData($data)
     {
 
-        // eksekusi query untuk menyimpan ke database
-        sqlsrv_query($this->db, "insert into {$this->table} (username, password, level) values(?,?,?)", array($data['username'], $data['password'], $data['level']));
+        $check = $this->getSingleDataByKeyword('username',$data['username']);
+
+        if(empty($check)) {
+            // sqlsrv_query(conn: $this->db, "insert into {$this->table} (username, password, level) values(?,?,?)", array($data['username'], $data['password'], $data['level']));
+            
+            
+            $sql = "INSERT INTO {$this->table} (username, password, level) VALUES (?, ?, ?); SELECT SCOPE_IDENTITY() AS last_id;";
+            $query = sqlsrv_query($this->db, $sql, array($data['username'], password_hash($data['password'], PASSWORD_DEFAULT), $data['level']));
+
+            if ($query) {
+                // Fetch the result to get the last inserted ID
+                sqlsrv_next_result($query); // Advance to the next result set if needed
+                $row = sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
+                $lastId = $row['last_id'];
+                return (string) $lastId;
+            } else {
+
+                return 'failed';
+            }
+
+        } else {
+            return 'Username sudah digunakan oleh akun lainnya';
+        }
     }
     public function getData()
     {
@@ -115,12 +136,26 @@ class UsersModel extends Model
         // query untuk update data
         $update = sqlsrv_query($this->db, "update {$this->table} set username = ?, password = ?, level = ? where id_users = ?", [
             $data['username'],
-            $data['password'],
+            password_hash($data['password'], PASSWORD_DEFAULT),
             $data['level'],
 
             $id
         ]);
     }
+
+
+
+    public function getSingleDataByKeyword($column, $keyword)
+    {
+   
+        // query untuk mengambil data berdasarkan id
+        $query = sqlsrv_query($this->db, "select * from {$this->table} where {$column} =
+        ?", [$keyword]);
+        // ambil hasil query
+        return sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
+    }
+
+
     public function deleteData($id)
     {
 

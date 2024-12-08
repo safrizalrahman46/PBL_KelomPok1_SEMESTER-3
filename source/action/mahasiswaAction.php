@@ -8,6 +8,7 @@ if ($session->get('is_login') !== true) {
 }
 
 include_once('../model/MahasiswaModel.php');
+include_once('../model/UsersModel.php');
 include_once('../lib/Secure.php');
 
 $act = isset($_GET['act']) ? strtolower($_GET['act']) : '';
@@ -24,9 +25,10 @@ if ($act == 'load') {
         "data" => []
     ];
 
-    foreach ($data['data'] as $index => $row) {
+    foreach ($data['data'] as $key => $row) {
         $result['data'][] = [
-            'no' => ($index + 1), // Use $index instead of $row
+            'no' => ($key + 1), // Use $index instead of $row
+            'NIM' => htmlspecialchars($row['NIM']),
             'email' => htmlspecialchars($row['email']),
             'semester' => htmlspecialchars($row['semester']),
             'tingkat' => htmlspecialchars($row['tingkat']),
@@ -55,30 +57,91 @@ if ($act == 'get') {
     echo json_encode($data);
 }
 
+// if ($act == 'save') {
+//     $data = [
+//         'email' => antiSqlInjection($_POST['email']),
+//         'semester' => antiSqlInjection($_POST['semester']),
+//         'tingkat' => antiSqlInjection($_POST['tingkat']),
+//         'foto' => antiSqlInjection($_POST['foto']),
+//         'status' => antiSqlInjection($_POST['status']),
+//         'prodi' => antiSqlInjection($_POST['prodi']),
+//         'id_pelanggaran' => antiSqlInjection($_POST['id_pelanggaran']),
+//         'id_prodi' => antiSqlInjection($_POST['id_prodi']),
+//         'id_kelas' => antiSqlInjection($_POST['id_kelas']),
+//         'id_users' => antiSqlInjection($_POST['id_users']),
+//         'nama' => antiSqlInjection($_POST['nama']),
+
+//     ];
+//     $admin = new MahasiswaModel();
+//     $admin->insertData($data);
+
+//     echo json_encode([
+//         'status' => true,
+//         'message' => 'Data berhasil disimpan.'
+//     ]);
+// }
+
 if ($act == 'save') {
-    $data = [
-        'email' => antiSqlInjection($_POST['email']),
-        'semester' => antiSqlInjection($_POST['semester']),
-        'tingkat' => antiSqlInjection($_POST['tingkat']),
-        'foto' => antiSqlInjection($_POST['foto']),
-        'status' => antiSqlInjection($_POST['status']),
-        'prodi' => antiSqlInjection($_POST['prodi']),
-        'id_pelanggaran' => antiSqlInjection($_POST['id_pelanggaran']),
-        'id_prodi' => antiSqlInjection($_POST['id_prodi']),
-        'id_kelas' => antiSqlInjection($_POST['id_kelas']),
-        'id_users' => antiSqlInjection($_POST['id_users']),
-        'nama' => antiSqlInjection($_POST['nama']),
 
+    // if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
+    //     // Validate file type
+    //     $allowedTypes = ['image/jpeg','image/jpg', 'image/png', 'image/gif'];
+    //     if (!in_array($_FILES['foto']['type'], $allowedTypes)) {
+    //         echo json_encode(['status' => false, 'message' => 'Invalid file type. Only JPG, PNG, and GIF are allowed.']);
+    //         exit;
+    //     }
+
+    //     // Move the uploaded file to the desired directory
+    //     $folder = "../source/image/" . basename($_FILES['foto']['name']);
+    //     if (!move_uploaded_file($_FILES['foto']['tmp_name'], $folder)) {
+    //         echo json_encode(['status' => false, 'message' => 'Failed to move uploaded file.']);
+    //         exit;
+    //     }
+    // } else {
+    //     echo json_encode(['status' => false, 'message' => 'File upload error.']);
+    //     exit;
+    // }
+
+    $user = new UsersModel();
+
+    $dataUser = [
+        'username' => $_POST['username'],
+        'password' => $_POST['password'],
+        'level' => 'mahasiswa',
     ];
-    $admin = new MahasiswaModel();
-    $admin->insertData($data);
 
-    echo json_encode([
-        'status' => true,
-        'message' => 'Data berhasil disimpan.'
-    ]);
+    $insert = $user->insertData($dataUser);
+
+
+    if ($insert == 'Username sudah digunakan oleh akun lainnya') {
+        echo json_encode([
+            'status' => true,
+            'message' => $insert
+        ]);
+    } else {
+
+        $data = [
+            'email' => antiSqlInjection($_POST['email']),
+            'semester' => antiSqlInjection($_POST['semester']),
+            'tingkat' => antiSqlInjection($_POST['tingkat']),
+            'foto' => antiSqlInjection($_POST['foto'] ?? ''),
+            'status' => antiSqlInjection($_POST['status']),
+            'prodi' => antiSqlInjection($_POST['prodi'] ?? ''),
+            'id_pelanggaran' => antiSqlInjection($_POST['id_pelanggaran']),
+            'id_prodi' => antiSqlInjection($_POST['id_prodi']),
+            'id_kelas' => antiSqlInjection($_POST['id_kelas']),
+            'nama' => antiSqlInjection($_POST['nama']),
+            'id_users' => $insert
+        ];
+        $mahasiswa = new MahasiswaModel();
+        $mahasiswa->insertData($data);
+
+        echo json_encode([
+            'status' => true,
+            'message' => 'Data berhasil disimpan.'
+        ]);
+    }
 }
-
 if ($act == 'update') {
     $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : 0;
     $data = [

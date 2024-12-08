@@ -1,6 +1,6 @@
 <?php
-include('Model.php');
-include('Database.php');
+include_once('Model.php');
+include_once('Database.php');
 
 class UserModel extends Model
 {
@@ -152,7 +152,7 @@ class UserModel extends Model
             
             // binding parameter ke query "i" berarti integer. Biar tidak kena SQL Injection
             $query->bind_param('s', $keyword);
-            // eksekusi query
+            // eksekusi querye
             $query->execute();
             return $query->get_result()->fetch_assoc();
         } else {

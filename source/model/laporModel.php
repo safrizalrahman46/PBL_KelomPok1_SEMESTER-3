@@ -1,6 +1,6 @@
 <?php
-include('Model.php');
-include('Database.php');
+include_once('Model.php');
+include_once('Database.php');
 
 class LaporModel extends Model
 {
@@ -18,7 +18,7 @@ class LaporModel extends Model
     public function getDataForDataTables($request)
     {
         // Columns available for ordering and searching
-        $columns = ['id_mahasiswa', 'id_jenis_pelanggaran', 'status', 'komentar', 'id_admin', 'id_dosen', 'status_verifikasi_admin', 'nim', 'foto', 'tanggal_laporan', 'tempat'];
+        $columns = ['mahasiswa_nama', 'deskripsi',  'komentar', 'admin_nama', 'dosen_nama', 'status_verifikasi_admin', 'nim', 'foto', 'tanggal_laporan', 'tempat'];
 
         // Extract search and pagination parameters
         $searchValue = isset($request['search']['value']) ? $request['search']['value'] : '';
@@ -33,10 +33,52 @@ class LaporModel extends Model
         $length = isset($request['length']) ? (int)$request['length'] : 10;
 
         // Ensure column index is valid
-        $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'id_kelas';
+        $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'id_pelanggaran';
 
         // SQL query for fetching data with search and pagination
-        $query = "SELECT * FROM {$this->table}";
+        // $query = "SELECT * FROM {$this->table}";
+        $query = "SELECT 
+            tb_lapor.id_pelanggaran, 
+            tb_mahasiswa.nama AS mahasiswa_nama, 
+            tb_jenis_pelanggaran.deskripsi AS pelanggaran_deskripsi, 
+            tb_lapor.komentar, 
+            tb_lapor.status_verifikasi_admin,
+            tb_lapor.nim, 
+            tb_lapor.foto, 
+            tb_lapor.tanggal_laporan,
+            tb_lapor.tempat 
+          FROM 
+            tb_lapor
+          INNER JOIN 
+            tb_mahasiswa ON tb_lapor.id_mahasiswa = tb_mahasiswa.NIM
+          INNER JOIN 
+            tb_jenis_pelanggaran ON tb_lapor.id_jenis_pelanggaran = tb_jenis_pelanggaran.id_jenis_pelanggaran
+          INNER JOIN 
+            tb_admin ON tb_lapor.id_admin = tb_admin.id_admin
+          INNER JOIN 
+            tb_dosen ON tb_lapor.id_dosen = tb_dosen.nip";
+        // $query = "SELECT 
+        //     tb_lapor.id_pelanggaran, 
+        //     tb_lapor.komentar, 
+        //     tb_lapor.status_verifikasi_admin,
+        //     tb_lapor.nim, 
+        //     tb_lapor.foto, 
+        //     tb_lapor.tanggal_laporan,
+        //     tb_lapor.tempat, 
+        //     tb_mahasiswa.nama AS mahasiswa_nama,
+        //     tb_jenis_pelanggaran.deskripsi AS pelanggaran_deskripsi,
+        //     tb_admin.nama AS admin_nama,
+        //     tb_dosen.nama AS dosen_nama
+        //   FROM 
+        //     tb_lapor
+        //   INNER JOIN 
+        //     tb_mahasiswa ON tb_lapor.id_mahasiswa = tb_mahasiswa.NIM
+        //   INNER JOIN 
+        //     tb_jenis_pelanggaran ON tb_lapor.id_jenis_pelanggaran = tb_jenis_pelanggaran.id_jenis_pelanggaran
+        //   INNER JOIN 
+        //     tb_admin ON tb_lapor.id_admin = tb_admin.id_admin
+        //   INNER JOIN 
+        //     tb_dosen ON tb_lapor.id_dosen = tb_dosen.id_dosen";
 
         $queryParams = [];
         if (!empty($searchValue)) {

@@ -1,6 +1,6 @@
 <?php
-include('Model.php');
-include('Database.php');
+include_once('Model.php');
+include_once('Database.php');
 
 class DosenModel extends Model
 {
@@ -41,8 +41,13 @@ class DosenModel extends Model
     
         $queryParams = [];
         if (!empty($searchValue)) {
-            $query .= " WHERE email LIKE ? OR id_users LIKE ?  OR nama LIKE ? OR alamat LIKE ? OR no_telepon LIKE ?";
-            $queryParams[] = $searchTerm;
+            $query .= " WHERE 
+                        tb_dosen.email LIKE ? OR 
+                         tb_dosen.id_users LIKE ? OR 
+                        tb_dosen.nama LIKE ? OR 
+                        tb_dosen.alamat LIKE ? OR 
+                        tb_dosen.no_telepon LIKE ? OR 
+                        ";
             $queryParams[] = $searchTerm;
             $queryParams[] = $searchTerm;
             $queryParams[] = $searchTerm;
@@ -63,11 +68,17 @@ class DosenModel extends Model
         }
     
         // Count total filtered records
-        $queryFiltered = "SELECT COUNT(*) as count FROM {$this->table}";
+        $queryFiltered = "SELECT COUNT(*) as count FROM tb_dosen
+                          INNER JOIN tb_users ON tb_dosen.id_users = tb_users.id_users";
         $filteredParams = [];
         if (!empty($searchValue)) {
-            $queryFiltered .= " WHERE email LIKE ? OR id_users LIKE ?  OR nama LIKE ? OR alamat LIKE ? OR no_telepon LIKE ?";
-            $filteredParams[] = $searchTerm;
+            $queryFiltered .= " WHERE 
+                               tb_dosen.email LIKE ? OR
+                                tb_dosen.id_users LIKE ? OR  
+                               tb_dosen.nama LIKE ? OR 
+                               tb_dosen.alamat LIKE ? OR 
+                               tb_dosen.no_telepon LIKE ? OR 
+                               ";
             $filteredParams[] = $searchTerm;
             $filteredParams[] = $searchTerm;
             $filteredParams[] = $searchTerm;
@@ -82,7 +93,8 @@ class DosenModel extends Model
         }
     
         // Count total records
-        $queryTotal = "SELECT COUNT(*) as count FROM {$this->table}";
+        $queryTotal = "SELECT COUNT(*) as count FROM tb_dosen
+                       INNER JOIN tb_users ON tb_dosen.id_users = tb_users.id_users";
         $stmtTotal = sqlsrv_query($this->db, $queryTotal);
         $totalRecords = 0;
         if ($stmtTotal) {
@@ -98,6 +110,7 @@ class DosenModel extends Model
             "data" => $data
         ];
     }
+    
     
 
 

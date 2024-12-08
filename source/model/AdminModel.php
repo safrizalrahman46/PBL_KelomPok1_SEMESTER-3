@@ -1,6 +1,6 @@
 <?php
-include('Model.php');
-include('Database.php');
+include_once('Model.php');
+include_once('Database.php');
 
 class AdminModel extends Model
 {
@@ -15,7 +15,7 @@ class AdminModel extends Model
         $this->driver = $database->getDriver(); // Set the driver being used
     }
     public function getDataForDataTables($request)
-    {
+{
         // Columns available for ordering and searching
         $columns = ['id_admin', 'email_admin', 'nama', 'username'];
     

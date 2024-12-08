@@ -8,6 +8,7 @@ if ($session->get('is_login') !== true) {
 }
 
 include_once('../model/AdminModel.php');
+include_once('../model/UsersModel.php');
 include_once('../lib/Secure.php');
 
 $act = isset($_GET['act']) ? strtolower($_GET['act']) : '';
@@ -41,19 +42,31 @@ if ($act == 'get') {
 }
 
 if ($act == 'save') {
-    $data = [
-        'nama_admin' => antiSqlInjection($_POST['nama_admin']),
-        'email_admin' => antiSqlInjection($_POST['email_admin']),
-        'password_admin' => antiSqlInjection($_POST['password_admin']),
-        'id_kelas' => antiSqlInjection($_POST['id_kelas'])
-    ];
-    $admin = new AdminModel();
-    $admin->insertData($data);
 
-    echo json_encode([
-        'status' => true,
-        'message' => 'Data berhasil disimpan.'
-    ]);
+    $users = new UserModel();
+    $check = $users->insertData($_POST['username'],$_POST['password']);
+
+
+    if($check == 'Username sudah digunakan oleh akun lainnya' || $check == 'failed') {
+        echo json_encode([
+            'status' => false,
+            'message' => $check
+        ]);
+    } else {
+
+        $data = [
+            'nama_admin' => antiSqlInjection($_POST['nama_admin']),
+            'email_admin' => antiSqlInjection($_POST['email_admin']),
+            'id_users' => $check,
+        ];
+        $admin = new AdminModel();
+        $admin->insertData($data);
+    
+        echo json_encode([
+            'status' => true,
+            'message' => 'Data berhasil disimpan.'
+        ]);
+    }
 }
 
 if ($act == 'update') {

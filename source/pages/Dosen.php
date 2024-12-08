@@ -41,7 +41,7 @@ $dataKelas = $classData->getData();
                         <th>No</th>
                         <th>Email</th>
                         <th>Users</th>
-                        <th>Nama</th>
+                        <th>Username</th>
                         <th>Alamat</th>
                         <th>No_telepon</th>
                         <th>Aksi</th>
@@ -62,24 +62,22 @@ $dataKelas = $classData->getData();
                     <h4 class="modal-title">Tambah Dosen</h4>
                 </div>
                 <div class="modal-body">
+                    
                     <div class="form-group">
                         <label>Email</label>
                         <input type="email" class="form-control" name="email" id="email">
                     </div>
+            
                     <div class="form-group">
-                        <label>Users</label>
-                        <!-- <input type="text" class="form-control" name="NIP" id="NIP"> -->
-
-                        <select name="id_users" id="id_users" class="form-control">
-                            <?php
-                            foreach ($dataKelas as $key => $value) {
-                            ?>
-                                <option value="<?= $value['id_users']; ?>"><?= $value['username'] ?></option>
-                            <?php
-                            }
-                            ?>
-                        </select>
+                        <label>Username </label>
+                        <input type="text" class="form-control" name="username" id="username">
                     </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="password" id="password">
+                    </div>
+                    
                     <div class="form-group">
                         <label>Nama</label>
                         <input type="text" class="form-control" name="nama" id="nama">
@@ -231,9 +229,16 @@ $dataKelas = $classData->getData();
                     required: true,
                     email: true
                 },
+                username: {
+                    required: true,
+                },
+                password: {
+                    required: true,
+                },
                 nama: {
                     required: true
                 },
+
                 alamat: {
                     required: true
                 }, 

@@ -1,16 +1,11 @@
-<?php 
-include_once(__DIR__.'/../model/UserModel.php');
+<?php
+include_once(__DIR__ . '/../model/UserModel.php');
 
 
 $classData = new UserModel();
 $dataUser = $classData->getData();
 
 ?>
-
-
-
-
-
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -70,6 +65,13 @@ $dataUser = $classData->getData();
                     <h4 class="modal-title">Tambah Admin</h4>
                 </div>
                 <div class="modal-body">
+
+
+                    <div class="alert alert-danger" role="alert" id="formAlert" style="display:none" ;>
+
+                    </div>
+
+
                     <div class="form-group">
                         <label>Email Admin</label>
                         <input type="email" class="form-control" name="email_admin" id="email_admin">
@@ -78,24 +80,20 @@ $dataUser = $classData->getData();
                         <label>Nama</label>
                         <input type="text" class="form-control" name="nama" id="nama">
                     </div>
-                    <div class="form-group">
-                        <label>Users</label>
 
-                        <select name="id_users" id="id_users" class="form-control">
-                            <?php 
-                                foreach ($dataUser as $key => $value) {
-                            ?>  
-                                <option value="<?= $value['id_users']; ?>"><?= $value['username'] ?></option>
-                            <?php 
-                                }
-                            ?>
-                        </select>
-                        <!-- <input type="number" class="form-control" name="nama" id="nama"> -->
+                    <div class="form-group">
+                        <label>Username </label>
+                        <input type="text" class="form-control" name="username" id="username">
                     </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="password" id="password">
+                    </div>
+
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </div>
@@ -109,8 +107,8 @@ $dataUser = $classData->getData();
         $('#form-tambah').attr('action', 'action/adminAction.php?act=save');
         $('#nama_admin').val('');
         $('#email_admin').val('');
-        $('#id_users').val('');
-        $('#nama').val('');
+        $('#ussrname').val('');
+        $('#passwor').val('');
     }
 
     function editData(id) {
@@ -149,7 +147,7 @@ $dataUser = $classData->getData();
 
     var tabelData;
     $(document).ready(function() {
-    
+
 
 
         tabelData = $('#table-data').DataTable({
@@ -159,12 +157,21 @@ $dataUser = $classData->getData();
                 url: 'action/adminAction.php?act=load',
                 type: 'POST',
             },
-            columns: [
-                { data: 'no' },
-                { data: 'email_admin' },
-                { data: 'nama' },
-                { data: 'username' },
-                { data: 'aksi' }, 
+            columns: [{
+                    data: 'no'
+                },
+                {
+                    data: 'email_admin'
+                },
+                {
+                    data: 'nama'
+                },
+                {
+                    data: 'username'
+                },
+                {
+                    data: 'aksi'
+                },
             ],
             dom: 'Bfrtip', // Controls position of buttons
             buttons: [{
@@ -212,13 +219,20 @@ $dataUser = $classData->getData();
 
         $('#form-tambah').validate({
             rules: {
-               
+
                 email_admin: {
                     required: true,
                     email: true
                 },
-        
+
                 nama: {
+                    required: true,
+                },
+
+                username: {
+                    required: true,
+                },
+                password: {
                     required: true,
                 }
             },
@@ -240,11 +254,16 @@ $dataUser = $classData->getData();
                     data: $(form).serialize(),
                     success: function(response) {
                         var result = JSON.parse(response);
-                        if (result.status) {
+
+                        console.log(result.message);
+                        if (result.message != 'Username sudah digunakan oleh akun lainnya' && result.meessage != 'failed') {
                             $('#form-data').modal('hide');
                             tabelData.ajax.reload(); // reload data tabel 
                         } else {
-                            alert(result.message);
+                            $("#formAlert").show();
+                            $("#formAlert").html(result.message);
+
+                            // alert(result.message);
                         }
                     }
                 });

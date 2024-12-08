@@ -58,7 +58,6 @@
                         <th>No</th>
                         <th>Mahasiswa</th> <!-- 'id_mahasiswa' -->
                         <th>Jenis Pelanggaran</th> <!-- 'id_jenis_pelanggaran' -->
-                        <th>Status</th> <!-- 'status' -->
                         <th>Komentar</th> <!-- 'komentar' -->
                         <th>Admin</th> <!-- 'id_admin' -->
                         <th>Dosen</th> <!-- 'id_dosen' -->
@@ -115,13 +114,13 @@
                             ?>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label>Status</label>
                         <select name="status" id="status" class="form-control">
                             <option value="pending">Pending</option>
                             <option value="sent">Sent</option>
                         </select>
-                    </div>
+                    </div> -->
                     <div class="form-group">
                         <label>Komentar</label>
                         <input type="text" class="form-control" name="komentar" id="komentar">
@@ -192,7 +191,6 @@
         $('#form-tambah').attr('action', 'action/laporAction.php?act=save');
         $('#id_mahasiswa').val('');
         $('#id_jenis_pelanggaran').val('');
-        $('#status').val('');
         $('#id_admin').val('');
         $('#id_dosen').val('');
         $('#status_verifikasi_admin').val('');
@@ -213,7 +211,6 @@
                     'action/laporAction.php?act=update&id=' + id);
                 $('#id_mahasiswa').val(data.id_mahasiswa);
                 $('#id_jenis_pelanggaran').val(data.id_jenis_pelanggaran);
-                $('#status').val(data.status);
                 $('#id_admin').val(data.id_admin);
                 $('#id_dosen').val(data.id_dosen);
                 $('#status_verifikasi_admin').val(data.status_verifikasi_admin);
@@ -259,24 +256,20 @@
                     data: 'no'
                 },
                 {
-                    data: 'id_mahasiswa'
-                },
+                    data: 'mahasiswa_nama'
+                }, // Adjusted to match the alias in the SQL query
                 {
-                    data: 'id_jenis_pelanggaran'
-                },
-               
-                {
-                    data: 'status'
-                },
+                    data: 'pelanggaran_deskripsi'
+                }, // Adjusted to match the alias in the SQL query
                 {
                     data: 'komentar'
                 },
                 {
-                    data: 'id_admin'
-                },
+                    data: 'admin_nama'
+                }, // Adjusted to match the alias in the SQL query
                 {
-                    data: 'id_dosen'
-                },
+                    data: 'dosen_nama'
+                }, // Adjusted to match the alias in the SQL query
                 {
                     data: 'status_verifikasi_admin'
                 },
@@ -295,12 +288,51 @@
                 {
                     data: 'tempat'
                 },
-              
                 {
                     data: 'aksi'
-                },
-                
+                }
             ],
+            dom: 'Bfrtip', // Controls position of buttons
+            buttons: [{
+                extend: 'excelHtml5',
+                text: 'Export to Excel',
+                title: "Data Kelas", // Title of the sheet (header)
+                filename: function() {
+                    var currentDate = new Date();
+                    var day = String(currentDate.getDate()).padStart(2, '0'); // Add leading zero if necessary
+                    var month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Add leading zero
+                    var year = currentDate.getFullYear();
+                    var hours = String(currentDate.getHours()).padStart(2, '0');
+                    var minutes = String(currentDate.getMinutes()).padStart(2, '0');
+                    var seconds = String(currentDate.getSeconds()).padStart(2, '0');
+
+                    // Format as DD-MM-YYYY_HH:MM:SS for the filename
+                    var dateString = day + '-' + month + '-' + year + '_' + hours + ':' + minutes + ':' + seconds;
+                    return "Export_Data_Kelas_" + dateString; // This will set the file name
+                },
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] // Only export visible columns
+                }
+            }],
+            customize: function(xlsx) {
+                var sheet = xlsx.xl.worksheets['sheet1.xml'];
+
+                // Change the first row (header) to "Data Kelas"
+                var headerRow = sheet.getElementsByTagName('row')[0]; // First row (header row)
+                headerRow.firstChild.textContent = "Data Kelas"; // Set the header text to "Data Prodi"
+
+                // Make the header bold and centered (optional)
+                var styles = xlsx.xl.styles;
+                var cellStyle = styles.addStyle({
+                    font: {
+                        bold: true
+                    },
+                    alignment: {
+                        horizontal: 'center'
+                    }
+                });
+                headerRow.firstChild.setAttribute('s', cellStyle);
+            }
         });
 
 

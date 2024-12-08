@@ -7,5 +7,6 @@ abstract class Model
     public abstract function getDataById($id);
     public abstract function updateData($id, $data);
     public abstract function deleteData($id);
+
 }
 
