@@ -62,16 +62,13 @@ $dataKelas = $classData->getData();
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Nama</th>
                         <th>Email</th>
                         <th>Semester</th>
                         <th>Tingkat</th>
                         <th>Foto</th>
-                        <th>Status</th>
-                        <th>Prodi</th>
-                        <th>Total Pelanggaran</th>
-                        <th>Kelas</th>
-                        <th>Username</th>
-                        <th>Nama</th>
+                        <!-- <th>Status</th> -->
+                        <!-- <th>Prodi</th> -->
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -253,6 +250,12 @@ $dataKelas = $classData->getData();
             columns: [{
                     data: "no"
                 },
+
+                {
+                    data: "nama"
+                },
+
+
                 {
                     data: "email"
                 },
@@ -268,24 +271,7 @@ $dataKelas = $classData->getData();
                     //     return `<image src="${data}" alt="Foto" class="img-thumbnail" style="width: 50px; height: 50px;">`;
                     // }
                 },
-                {
-                    data: "status"
-                },
-                {
-                    data: "id_pelanggaran"
-                },
-                {
-                    data: "id_prodi"
-                },
-                {
-                    data: "id_kelas"
-                },
-                {
-                    data: "id_users"
-                },
-                {
-                    data: "nama"
-                },
+             
                 {
                     data: "aksi"
                 }

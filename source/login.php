@@ -24,11 +24,23 @@ if ($session->get('is_login') === true) {
     <link rel="stylesheet" href="../adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="../adminlte/dist/css/adminlte.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
+
+
     <style>
         body {
             background: url('img/BG.png') no-repeat center center fixed;
             background-size: cover;
         }
+
+        /* Apply Google Font to all elements */
+        * {
+            font-family: 'Questrial', sans-serif;
+        }
+        
     </style>
 </head>
 
@@ -38,10 +50,10 @@ if ($session->get('is_login') === true) {
         <div class="card card-outline card-primary">
 
             <div class="card-header text-center">
-            <img src="img/JTI.png" alt="JTI Logo" style="max-width: 100px; margin-bottom: 15px;">    
-            <a href="/" class="h1"><b>JTI</b>MELAPOR</a>
+                <img src="img/JTI.png" alt="JTI Logo" style="max-width: 100px; margin-bottom: 15px;">
+                <a href="/" class="h1"><b>JTI</b>MELAPOR</a>
 
-        </div>
+            </div>
             <div class="card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
                 <?php
@@ -77,23 +89,23 @@ if ($session->get('is_login') === true) {
                                 <label for="remember">Remember Me</label>
                             </div>
                         </div> -->
-                        <!-- /.col -->
-                        <div class="d-flex justify-content-between">
-                            <div class="col-4">
-                                <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-                            </div>
-                            <div class="col-4">
-                                <a href="http://localhost/PBL_KelomPok1_SEMESTER-3/" class="btn btn-danger btn-block">Back</a>
-                            </div>
+                    <!-- /.col -->
+                    <div class="d-flex justify-content-between">
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
                         </div>
-
-                        <!-- /.col -->
+                        <div class="col-4">
+                            <a href="http://localhost/PBL_KelomPok1_SEMESTER-3/" class="btn btn-danger btn-block">Back</a>
+                        </div>
                     </div>
-                </form>
+
+                    <!-- /.col -->
             </div>
-            <!-- /.card-body -->
+            </form>
         </div>
-        <!-- /.card -->
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
     </div>
     <!-- /.login-box -->
 
@@ -136,8 +148,6 @@ if ($session->get('is_login') === true) {
                 }
             });
         });
-
-        
     </script>
 </body>
 
