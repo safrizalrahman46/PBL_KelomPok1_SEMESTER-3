@@ -68,7 +68,7 @@
         <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Tambah  Tingkat Pelanggaran</h4>
+                    <h4 class="modal-title">Form  Tingkat Pelanggaran</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">

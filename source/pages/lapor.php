@@ -82,7 +82,7 @@ $dataDos = $classData->getData();
         <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Tambah Admin</h4>
+                    <h4 class="modal-title">Form Admin</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">

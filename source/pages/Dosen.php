@@ -35,22 +35,25 @@ $dataKelas = $classData->getData();
             </div>
         </div>
         <div class="card-body">
-            <table class="table table-sm table-bordered table-striped" id="table-data">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Nama</th>
-                        <th>Email</th>
-                        <th>Alamat</th>
-                        <th>No telepon</th>
-                        <th>Username</th>
-                        <th>Aksi</th>
+            <div class="table-responsive">
 
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+                <table class="table table-sm table-bordered table-striped" id="table-data">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Email</th>
+                            <th>Alamat</th>
+                            <th>No telepon</th>
+                            <th>Username</th>
+                            <th>Aksi</th>
+    
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </section>
@@ -59,7 +62,7 @@ $dataKelas = $classData->getData();
         <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Tambah Dosen</h4>
+                    <h4 class="modal-title">Form Dosen</h4>
                 </div>
                 <div class="modal-body">
                     

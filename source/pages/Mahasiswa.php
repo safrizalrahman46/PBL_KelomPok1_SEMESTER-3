@@ -58,24 +58,26 @@ $dataKelas = $classData->getData();
             </div>
         </div>
         <div class="card-body">
-            <table class="table table-sm table-bordered table-striped" id="table-data">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Nama</th>
-                        <th>Email</th>
-                        <th>Semester</th>
-                        <th>Tingkat</th>
-                        <th>Username</th>
-                        <th>Foto</th>
-                        <!-- <th>Status</th> -->
-                        <!-- <th>Prodi</th> -->
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-sm table-bordered table-striped" id="table-data">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Email</th>
+                            <th>Semester</th>
+                            <th>Tingkat</th>
+                            <th>Username</th>
+                            <th>Foto</th>
+                            <!-- <th>Status</th> -->
+                            <!-- <th>Prodi</th> -->
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </section>
@@ -91,7 +93,7 @@ $dataKelas = $classData->getData();
         <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Tambah Kelas</h4>
+                    <h4 class="modal-title">Form Mahasiswa</h4>
                 </div>
                 <div class="modal-body">
                     <div class="modal-body">
@@ -113,15 +115,15 @@ $dataKelas = $classData->getData();
                         </div>
                         <div class="form-group">
                             <label>Foto</label>
-                            <input type="text" class="form-control" name="foto" id="foto" required>
+                            <input type="file" class="form-control" name="foto" id="foto">
 
                             <!-- <input type="file" class="form-control" name="foto" id="foto" value="Upload Image"> -->
                         </div>
                         <div class="form-group">
                             <label>Status</label>
-                            <select class="form-control" name="status" id="status" required>
-                                <option value="Aktif">Aktif</option>
-                                <option value="Lulus">Lulus</option>
+                            <select class="form-control" name="status" id="status">
+                                <option value="aktif" selected>Aktif</option>
+                                <option value="lulus">Lulus</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -136,7 +138,7 @@ $dataKelas = $classData->getData();
                                 ?>
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" style="display:none;">
                             <label>Jenis Pelanggaran</label>
                             <select name="id_pelanggaran" id="id_pelanggaran" class="form-control">
                                 <?php
@@ -191,10 +193,10 @@ $dataKelas = $classData->getData();
         $('#jurusan').val('');
         $('#username').val('');
         $('#password').val('');
-        $('#status').val('');
+        // $('#status').val('');
         $('#semester').val('');
         $('#tingkat').val('');
-        $('#foto').val('');
+        // $('#foto').val('');
         $('#nama').val('');
     }
 
@@ -209,9 +211,8 @@ $dataKelas = $classData->getData();
                     'action/mahasiswaAction.php?act=update&id=' + id);
                 $('#name').val(data.name);
                 $('#email').val(data.email);
-                $('#jurusan').val(data.jurusan);
                 $('#username').val(data.username);
-                $('#password').val(data.password);
+                // $('#password').val(data.password);
                 $('#status').val(data.status);
                 $('#semester').val(data.semester);
                 $('#tingkat').val(data.tingkat);
@@ -361,10 +362,15 @@ $dataKelas = $classData->getData();
                 $(element).removeClass('is-invalid');
             },
             submitHandler: function(form) {
+                var formData = new FormData(form); // Create FormData object
+
                 $.ajax({
                     url: $(form).attr('action'),
-                    method: 'post',
-                    data: $(form).serialize(),
+                    method: 'POST',
+                    data: formData,
+                    contentType: false, // Required for file upload
+                    processData: false,
+                    // data: $(form).serialize(),
                     success: function(response) {
                         var result = JSON.parse(response);
                         if (result.status) {

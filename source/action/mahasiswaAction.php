@@ -58,50 +58,37 @@ if ($act == 'get') {
     echo json_encode($data);
 }
 
-// if ($act == 'save') {
-//     $data = [
-//         'email' => antiSqlInjection($_POST['email']),
-//         'semester' => antiSqlInjection($_POST['semester']),
-//         'tingkat' => antiSqlInjection($_POST['tingkat']),
-//         'foto' => antiSqlInjection($_POST['foto']),
-//         'status' => antiSqlInjection($_POST['status']),
-//         'prodi' => antiSqlInjection($_POST['prodi']),
-//         'id_pelanggaran' => antiSqlInjection($_POST['id_pelanggaran']),
-//         'id_prodi' => antiSqlInjection($_POST['id_prodi']),
-//         'id_kelas' => antiSqlInjection($_POST['id_kelas']),
-//         'id_users' => antiSqlInjection($_POST['id_users']),
-//         'nama' => antiSqlInjection($_POST['nama']),
-
-//     ];
-//     $admin = new MahasiswaModel();
-//     $admin->insertData($data);
-
-//     echo json_encode([
-//         'status' => true,
-//         'message' => 'Data berhasil disimpan.'
-//     ]);
-// }
 
 if ($act == 'save') {
 
-    // if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
-    //     // Validate file type
-    //     $allowedTypes = ['image/jpeg','image/jpg', 'image/png', 'image/gif'];
-    //     if (!in_array($_FILES['foto']['type'], $allowedTypes)) {
-    //         echo json_encode(['status' => false, 'message' => 'Invalid file type. Only JPG, PNG, and GIF are allowed.']);
-    //         exit;
-    //     }
 
-    //     // Move the uploaded file to the desired directory
-    //     $folder = "../source/image/" . basename($_FILES['foto']['name']);
-    //     if (!move_uploaded_file($_FILES['foto']['tmp_name'], $folder)) {
-    //         echo json_encode(['status' => false, 'message' => 'Failed to move uploaded file.']);
-    //         exit;
-    //     }
-    // } else {
-    //     echo json_encode(['status' => false, 'message' => 'File upload error.']);
-    //     exit;
-    // }
+    $foto = '';
+    if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        $uploadDir = "../uploads/";
+
+        // Validate file type
+        if (!in_array($_FILES['foto']['type'], $allowedTypes)) {
+            $response['message'] = 'Invalid file type. Allowed types are JPEG, PNG, GIF.';
+            echo json_encode($response);
+            exit;
+        }
+
+        // Generate unique file name
+        $fileName = time() . "_" . basename($_FILES['foto']['name']);
+        $uploadFile = $uploadDir . $fileName;
+
+        // Move the file
+        if (!move_uploaded_file($_FILES['foto']['tmp_name'], $uploadFile)) {
+            $response['message'] = 'Failed to upload the file.';
+            echo json_encode($response);
+            exit;
+        }
+
+        $foto = $fileName;
+    } 
+
+
 
     $user = new UsersModel();
 
@@ -121,13 +108,17 @@ if ($act == 'save') {
         ]);
     } else {
 
+        
+        
+
+    
         $data = [
             'email' => antiSqlInjection($_POST['email']),
             'semester' => antiSqlInjection($_POST['semester']),
             'tingkat' => antiSqlInjection($_POST['tingkat']),
-            'foto' => antiSqlInjection($_POST['foto'] ?? ''),
+            'foto' => $foto,
             'status' => antiSqlInjection($_POST['status']),
-            'prodi' => antiSqlInjection($_POST['prodi'] ?? ''),
+            // 'prodi' => antiSqlInjection($_POST['prodi'] ?? ''),
             'id_pelanggaran' => antiSqlInjection($_POST['id_pelanggaran']),
             'id_prodi' => antiSqlInjection($_POST['id_prodi']),
             'id_kelas' => antiSqlInjection($_POST['id_kelas']),
@@ -145,28 +136,91 @@ if ($act == 'save') {
 }
 if ($act == 'update') {
     $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : 0;
-    $data = [
-        'email' => antiSqlInjection($_POST['email']),
-        'semester' => antiSqlInjection($_POST['semester']),
-        'tingkat' => antiSqlInjection($_POST['tingkat']),
-        'foto' => antiSqlInjection($_POST['foto']),
-        'status' => antiSqlInjection($_POST['status']),
-        'prodi' => antiSqlInjection($_POST['prodi']),
-        'id_pelanggaran' => antiSqlInjection($_POST['id_pelanggaran']),
-        'id_prodi' => antiSqlInjection($_POST['id_prodi']),
-        'id_kelas' => antiSqlInjection($_POST['id_kelas']),
-        'id_users' => antiSqlInjection($_POST['id_users']),
-        'nama' => antiSqlInjection($_POST['nama']),
 
-    ];
+
+    $foto = '';
+    if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        $uploadDir = "../uploads/";
+
+        // Validate file type
+        if (!in_array($_FILES['foto']['type'], $allowedTypes)) {
+            $response['message'] = 'Invalid file type. Allowed types are JPEG, PNG, GIF.';
+            echo json_encode($response);
+            exit;
+        }
+
+        // Generate unique file name
+        $fileName = time() . "_" . basename($_FILES['foto']['name']);
+        $uploadFile = $uploadDir . $fileName;
+
+        // Move the file
+        if (!move_uploaded_file($_FILES['foto']['tmp_name'], $uploadFile)) {
+            $response['message'] = 'Failed to upload the file.';
+            echo json_encode($response);
+            exit;
+        }
+
+        $foto = $fileName;
+    } 
+
+
 
     $admin = new MahasiswaModel();
-    $admin->updateData($id, $data);
+    
+    $getData = $admin->getDataById($id);
 
-    echo json_encode([
-        'status' => true,
-        'message' => 'Data berhasil diupdate.'
-    ]);
+
+    if(!empty($getData)) {
+
+
+        $idUsers = $getData['id_users'];
+
+        $data = [
+            'email' => antiSqlInjection($_POST['email']),
+            'semester' => antiSqlInjection($_POST['semester']),
+            'tingkat' => antiSqlInjection($_POST['tingkat']),
+            'status' => antiSqlInjection($_POST['status']),
+            // 'id_pelanggaran' => antiSqlInjection($_POST['id_pelanggaran']),
+            'id_prodi' => antiSqlInjection($_POST['id_prodi']),
+            'id_kelas' => antiSqlInjection($_POST['id_kelas']),
+            'nama' => antiSqlInjection($_POST['nama']),
+        ];
+
+        if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
+            // unset($data['foto']);
+            $data['foto'] = $foto;
+        }
+
+
+        $admin->updateData($id, $data);
+
+
+        $user = new UsersModel();
+
+
+        $dataUser['username'] = $_POST['username'];
+
+        if(!empty($password)) {
+            $dataUser['password'] = $_POST['password'];
+        }
+
+
+        $user->updateData($idUsers, $dataUser);
+        
+    
+        echo json_encode([
+            'status' => true,
+            'message' => 'Data berhasil diupdate.'
+        ]);
+    } else {
+        echo json_encode([
+            'status' => true,
+            'message' => 'Data tidak ditemukan.'
+        ]);
+    }
+
+ 
 }
 
 if ($act == 'delete') {

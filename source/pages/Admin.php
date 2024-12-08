@@ -34,19 +34,21 @@ $dataUser = $classData->getData();
             </div>
         </div>
         <div class="card-body">
-            <table class="table table-sm table-bordered table-striped" id="table-data">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Email Admin</th>
-                        <th>Nama</th>
-                        <th>Username</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-sm table-bordered table-striped" id="table-data">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Email Admin</th>
+                            <th>Nama</th>
+                            <th>Username</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </section>
@@ -62,7 +64,7 @@ $dataUser = $classData->getData();
         <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Tambah Admin</h4>
+                    <h4 class="modal-title">Form Admin</h4>
                 </div>
                 <div class="modal-body">
 

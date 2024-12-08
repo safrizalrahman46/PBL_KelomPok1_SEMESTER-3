@@ -129,21 +129,31 @@ class MahasiswaModel extends Model
     }
     public function updateData($id, $data)
     {
+        if(!empty($data['foto'])) {
 
-        $update = sqlsrv_query($this->db, "UPDATE {$this->table} SET email = ?, semester = ?, tingkat = ?, foto = ?, status = ?, prodi = ?, id_pelanggaran = ?, id_prodi = ?, id_kelas = ?, id_users = ?, nama = ? WHERE id_users = ?", [
-            $data['email'],
-            $data['semester'],
-            $data['tingkat'],
-            $data['foto'],
-            $data['status'],
-            $data['prodi'],
-            $data['id_pelanggaran'],
-            $data['id_prodi'],
-            $data['id_kelas'],
-            $data['id_users'],
-            $data['nama'],
-            $id
-        ]);
+            $update = sqlsrv_query($this->db, "UPDATE {$this->table} SET email = ?, semester = ?, tingkat = ?, foto = ?, status = ?,   id_prodi = ?, id_kelas = ?,  nama = ? WHERE nim = ?", [
+                $data['email'],
+                $data['semester'],
+                $data['tingkat'],
+                $data['foto'],
+                $data['status'],
+                $data['id_prodi'],
+                $data['id_kelas'],
+                $data['nama'],
+                $id
+            ]);
+        } else {
+            $update = sqlsrv_query($this->db, "UPDATE {$this->table} SET email = ?, semester = ?, tingkat = ?,  status = ?,   id_prodi = ?, id_kelas = ?,  nama = ? WHERE nim = ?", [
+                $data['email'],
+                $data['semester'],
+                $data['tingkat'],
+                $data['status'],
+                $data['id_prodi'],
+                $data['id_kelas'],
+                $data['nama'],
+                $id
+            ]);
+        }
     }
     public function deleteData($id)
     {
