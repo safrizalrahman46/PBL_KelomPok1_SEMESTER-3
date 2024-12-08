@@ -146,7 +146,7 @@ $lapor = $global->getCountDynamicData('tb_lapor',$conditionsx);
             <!-- small box -->
             <div class="small-box bg-danger">
                 <div class="inner">
-                    <h3></h3>
+                    <h3><?= $lapor; ?></h3>
 
                     <p>Total pelanggaran anda</p>
                 </div>
