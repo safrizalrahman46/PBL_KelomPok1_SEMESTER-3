@@ -144,7 +144,7 @@ class UsersModel extends Model
             ]);
 
         } else {
-            $update = sqlsrv_query($this->db, "update {$this->table} set username = ?,  where id_users = ?", [
+            $update = sqlsrv_query($this->db, "update {$this->table} set username = ?, password = ?, level = ? where id_users = ?", [
                 $data['username'],
                 $id
             ]);

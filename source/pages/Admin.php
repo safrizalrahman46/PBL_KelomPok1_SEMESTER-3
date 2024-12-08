@@ -70,7 +70,7 @@ $dataUser = $classData->getData();
                     <div class="alert alert-danger" role="alert" id="formAlert" style="display:none" ;>
 
                     </div>
-                    <input type="hidden" class="form-control" name="idd" id="id">
+                    <input type="hidden" class="form-control" name="id" id="id">
 
 
                     <div class="form-group">

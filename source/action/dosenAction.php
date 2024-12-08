@@ -91,7 +91,6 @@ if ($act == 'save') {
 if ($act == 'update') {
     $id = (isset($_GET['id']) && ctype_digit($_GET['id'])) ? $_GET['id'] : 0;
     $data = [
-
         'email' => antiSqlInjection($_POST['email']),
         'id_users' => isset($_POST['id_users']) ? antiSqlInjection($_POST['id_users']) : null, // Check if 'id_users' exists
         'nama' => antiSqlInjection($_POST['nama']),

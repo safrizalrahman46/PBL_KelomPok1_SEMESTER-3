@@ -8,10 +8,15 @@ if ($session->get('is_login') !== true) {
     header('Location: login.php');
 }
 
+$level = $session->get('level');
+
 
 include_once(__DIR__ . '/../model/GlobalModel.php');
 
 $global = new GlobalModel();
+
+if($level == 'admin') {
+
 
 $kelas = $global->getCountData('tb_kelas');
 $prodi = $global->getCountData('tb_prodi');
@@ -81,4 +86,68 @@ $lapor = $global->getCountData('tb_lapor');
         <!-- ./col -->
     </div>
 </section>
+
+<?php 
+}
+
+if($level == 'dosen')
+{
+
+$conditions = ['id_users' => $sesion->get('id_users')];
+$user = $global->getSingleData('tb_admin', $conditions);
+
+var_dump($user);
+
+?>
+<section class="content">
+
+    <div class="row">
+     
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+                <div class="inner">
+                    <h3></h3>
+                    <p>Total pelaporan anda</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-pie-graph"></i>
+                </div>
+            </div>
+        </div>
+        <!-- ./col -->
+    </div>
+</section>
+<?php 
+}
+if($level == 'mahasiswa')
+{
+?>
+<section class="content">
+
+    <div class="row">
+     
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+                <div class="inner">
+                    <h3></h3>
+
+                    <p>Total pelanggaran anda</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-pie-graph"></i>
+                </div>
+            </div>
+        </div>
+        <!-- ./col -->
+    </div>
+</section>
+<?php 
+}
+?>
+
+
 

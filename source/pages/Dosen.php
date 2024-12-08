@@ -63,21 +63,18 @@ $dataKelas = $classData->getData();
                 </div>
                 <div class="modal-body">
                     
+                <div class="alert alert-danger" role="alert" id="formAlert" style="display:none" ;>
+
+                </div>
+                <input type="hidden" class="form-control" name="id" id="id">
+
+
+
                     <div class="form-group">
                         <label>Email</label>
                         <input type="email" class="form-control" name="email" id="email">
                     </div>
             
-                    <div class="form-group">
-                        <label>Username </label>
-                        <input type="text" class="form-control" name="username" id="username">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" class="form-control" name="password" id="password">
-                    </div>
-                    
                     <div class="form-group">
                         <label>Nama</label>
                         <input type="text" class="form-control" name="nama" id="nama">
@@ -90,6 +87,16 @@ $dataKelas = $classData->getData();
                         <label>No telepon</label>
                         <input type="text" class="form-control" name="no_telepon" id="no_telepon">
                     </div>
+                    <div class="form-group">
+                        <label>Username </label>
+                        <input type="text" class="form-control" name="username" id="username">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="password" id="password">
+                    </div>
+                    
 
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -225,6 +232,10 @@ $dataKelas = $classData->getData();
         });
         $('#form-tambah').validate({
             rules: {
+
+                // nip: {
+                //     required: true,
+                // },
                 email: {
                     required: true,
                     email: true
@@ -258,24 +269,22 @@ $dataKelas = $classData->getData();
                 $(element).removeClass('is-invalid');
             },
             submitHandler: function(form) {
-    
-                try {
-                    console.log('a');
-                } catch (error) {
-                    console.log(error);
-                    return;
-                }
                 $.ajax({
                     url: $(form).attr('action'),
                     method: 'post',
                     data: $(form).serialize(),
                     success: function(response) {
                         var result = JSON.parse(response);
-                        if (result.status) {
+
+                        console.log(result.message);
+                        if (result.message != 'Username sudah digunakan oleh akun lainnya' && result.meessage != 'failed') {
                             $('#form-data').modal('hide');
                             tabelData.ajax.reload(); // reload data tabel 
                         } else {
-                            alert(result.message);
+                            $("#formAlert").show();
+                            $("#formAlert").html(result.message);
+
+                            // alert(result.message);
                         }
                     }
                 });
