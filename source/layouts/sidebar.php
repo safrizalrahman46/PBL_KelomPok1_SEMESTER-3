@@ -85,12 +85,12 @@ if (isset($_SESSION['username'])) {
                         </li>
 
 
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a href="index.php?page=tipe_notifikasi" class="nav-link">
                                 <i class="nav-icon fas fa-bell"></i>
                                 <p>Tipe Notifikasi</p>
                             </a>
-                        </li>
+                        </li> -->
 
                         <!-- <li class="nav-item">
                         <a href="index.php?page=users" class="nav-link">
@@ -145,12 +145,12 @@ if (isset($_SESSION['username'])) {
                             </a>
                         </li>
 
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a href="index.php?page=log" class="nav-link">
                                 <i class="nav-icon fas fa-user-shield"></i>
                                 <p>Log</p>
                             </a>
-                        </li>
+                        </li> -->
 
                         <!-- <li class="nav-item">
                         <a href="index.php?page=users" class="nav-link">
