@@ -84,6 +84,20 @@ if (isset($_SESSION['username'])) {
                             </a>
                         </li>
 
+                        <li class="nav-item">
+                    <a href="index.php?page=auditlog" class="nav-link">
+                        <i class="nav-icon fas fa-history"></i>
+                        <p>Audit Log</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="index.php?page=studentviolations" class="nav-link">
+                        <i class="nav-icon fas fa-exclamation-circle"></i>
+                        <p>Student Violations</p>
+                    </a>
+                </li>
+
 
                         <!-- <li class="nav-item">
                             <a href="index.php?page=tipe_notifikasi" class="nav-link">
@@ -169,7 +183,7 @@ if (isset($_SESSION['username'])) {
                     </a>
                 </li>
 
-
+            
 
 
 

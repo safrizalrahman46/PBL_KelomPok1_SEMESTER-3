@@ -160,6 +160,12 @@ if ($session->get('is_login') !== true) {
                 case 'kelas':
                     include('pages/kelas.php'); // Halaman untuk tabel dbo.tb_kelas
                     break;
+                case 'auditlog':
+                    include('pages/auditlog.php'); // Halaman untuk tabel AuditLog
+                    break;
+                case 'studentviolations':
+                    include('pages/studentViolations.php'); // Halaman untuk tabel Student Violations
+                    break;
                 default:
                     include('pages/404.php'); // Halaman untuk error 404
                     break;

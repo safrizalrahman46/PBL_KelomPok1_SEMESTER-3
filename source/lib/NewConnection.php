@@ -16,6 +16,17 @@ $credential = [
     'PWD' => $password
 ];
 try {
+
+      $sql = "
+    CREATE TRIGGER trgAfterUpdate 
+    ON dbo.tb_lapor 
+    AFTER UPDATE 
+    AS 
+    BEGIN 
+        INSERT INTO dbo.AuditLog (Action, ID_Pelanggaran, Komentar, Tanggal_Laporan, Tempat, LogDate) 
+        SELECT 'UPDATE', ID_Pelanggaran, Komentar, Tanggal_Laporan, Tempat, GETDATE() 
+        FROM inserted; 
+    END";
     // echo"<br>mencoba koneksi<br>";
     $db = sqlsrv_connect($host, $credential);
     if (!$db) {

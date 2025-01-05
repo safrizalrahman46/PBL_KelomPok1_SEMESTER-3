@@ -300,6 +300,7 @@ $dataDos = $classData->getData();
                     data: 'tanggal_laporan'
                 },
                 
+                
                
                 
                 <?php 
@@ -309,7 +310,15 @@ $dataDos = $classData->getData();
                     data: 'tempat'
                 },
                 {
-                    data: 'status_verifikasi_admin'
+                    data: "status_verifikasi_admin",
+                    render: function(data, type, row) {
+                        if (data === "Setuju" || data === "Disetujui") {
+                            return '<span class="badge badge-success">Disetujui</span>';
+                        } else if (data === "Tidak Setuju" || data === "Tidak Disetujui") {
+                            return '<span class="badge badge-danger">Tidak Disetujui</span>';
+                        }
+                        return '<span class="badge badge-secondary">Belom Diverifikasi</span>';  // Fallback for other values
+                    }
                 },
                 {
                     data: 'aksi'
@@ -327,8 +336,16 @@ $dataDos = $classData->getData();
                     data: 'tempat'
                 },
                 {
-                    data: 'status_verifikasi_admin'
-                }
+                    data: "status_verifikasi_admin",
+                    render: function(data, type, row) {
+                        if (data === "Setuju" || data === "Disetujui") {
+                            return '<span class="badge badge-success">Disetujui</span>';
+                        } else if (data === "Tidak Setuju" || data === "Tidak Disetujui") {
+                            return '<span class="badge badge-danger">Tidak Disetujui</span>';
+                        }
+                        return ''; // Fallback for other values
+                    }
+                },
                 <?php 
                             }
                 ?>
@@ -352,7 +369,7 @@ $dataDos = $classData->getData();
                     return "Export_Data_Laporan_" + dateString; // This will set the file name
                 },
                 exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] // Only export visible columns
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7] // Only export visible columns
                 }
             }],
             customize: function(xlsx) {

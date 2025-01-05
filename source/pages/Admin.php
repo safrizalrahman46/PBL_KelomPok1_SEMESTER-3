@@ -181,7 +181,7 @@ $dataUser = $classData->getData();
             buttons: [{
                 extend: 'excelHtml5',
                 text: 'Export to Excel',
-                title: "Data Kelas", // Title of the sheet (header)
+                title: "Data admin", // Title of the sheet (header)
                 filename: function() {
                     var currentDate = new Date();
                     var day = String(currentDate.getDate()).padStart(2, '0'); // Add leading zero if necessary
@@ -193,7 +193,7 @@ $dataUser = $classData->getData();
 
                     // Format as DD-MM-YYYY_HH:MM:SS for the filename
                     var dateString = day + '-' + month + '-' + year + '_' + hours + ':' + minutes + ':' + seconds;
-                    return "Export_Data_Kelas_" + dateString; // This will set the file name
+                    return "Export_Data_admin_" + dateString; // This will set the file name
                 },
                 exportOptions: {
                     columns: [0, 1, 2, 3] // Only export visible columns

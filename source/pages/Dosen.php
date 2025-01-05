@@ -94,7 +94,7 @@ $dataKelas = $classData->getData();
                         <input type="text" class="form-control" name="no_telepon" id="no_telepon">
                     </div>
                     <div class="form-group">
-                        <label>Username </label>
+                        <label>Nip/ Username </label>
                         <input type="text" class="form-control" name="username" id="username">
                     </div>
 
@@ -200,7 +200,7 @@ $dataKelas = $classData->getData();
             buttons: [{
                 extend: 'excelHtml5',
                 text: 'Export to Excel',
-                title: "Data Kelas", // Title of the sheet (header)
+                title: "Data Dosen", // Title of the sheet (header)
                 filename: function() {
                     var currentDate = new Date();
                     var day = String(currentDate.getDate()).padStart(2, '0'); // Add leading zero if necessary
@@ -212,7 +212,7 @@ $dataKelas = $classData->getData();
 
                     // Format as DD-MM-YYYY_HH:MM:SS for the filename
                     var dateString = day + '-' + month + '-' + year + '_' + hours + ':' + minutes + ':' + seconds;
-                    return "Export_Data_Kelas_" + dateString; // This will set the file name
+                    return "Export_Data_Dosen_" + dateString; // This will set the file name
                 },
                 exportOptions: {
                     columns: [0, 1, 2, 3, 4, 5] // Only export visible columns
@@ -221,9 +221,9 @@ $dataKelas = $classData->getData();
             customize: function(xlsx) {
                 var sheet = xlsx.xl.worksheets['sheet1.xml'];
 
-                // Change the first row (header) to "Data Kelas"
+                // Change the first row (header) to "Data Dosen"
                 var headerRow = sheet.getElementsByTagName('row')[0]; // First row (header row)
-                headerRow.firstChild.textContent = "Data Kelas"; // Set the header text to "Data Prodi"
+                headerRow.firstChild.textContent = "Data Dosen"; // Set the header text to "Data Prodi"
 
                 // Make the header bold and centered (optional)
                 var styles = xlsx.xl.styles;
